@@ -1,0 +1,5 @@
+git add -A
+git commit -m "change the js and index.html"
+
+git status
+git push origin master
