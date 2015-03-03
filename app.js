@@ -5,17 +5,48 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var db = require('./connectDB.js')
 var routes = require('./routes/index');
-var users = require('./routes/users');
 
-var app = express();
+
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
-
+/*
+ * extends express reponse object
+ */
+express.response.sendError = function(mess) {
+    this.send({
+        status: 0,
+        mess: mess,
+        data: null
+    });
+}
+express.response.sendSuccess = function(mess) {
+    this.send({
+        status: 1,
+        mess: mess,
+        data: null
+    });
+}
+express.response.sendData = function(data, mess) {
+    this.send({
+        status: 1,
+        mess: mess,
+        data: data
+    });
+}
+express.response.sendRedirect = function(url) {
+    this.send({
+        status: 2,
+        mess: url,
+        data: null
+    });
+}
+var app = express();
 // uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/storage/public/logo.jpg'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,8 +54,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/views')));
 app.use(express.static(path.join(__dirname, '/storage/public')));
 
-app.use('/', routes);
-app.use('/users', users);
+// give the routes to control the require
+routes(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

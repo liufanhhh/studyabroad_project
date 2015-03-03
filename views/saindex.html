@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="cn" ng-app="indexApp">
+  <head>
+    <title>留学点评网</title>
+
+    <!-- The information of the website and the valid scale factor -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="留学机构点评团购网站" />
+    <meta name="keywords" content="留学点评网 团购留学" />
+
+    <!-- The import of the css -->
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    
+    <!-- The import of the javascript -->
+    <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-resource/angular-resource.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-route/angular-route.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-strap/dist/modules/modal.min.js"></script>
+    <script type="text/javascript" src="js/saindex.js"></script>
+  </head>
+
+
+<body ng-controller="IndexController">
+  <!-- 导航条部分 -->
+<!--   <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="">留学点评网</a>   
+      </div>
+      <div>
+        <ul class="nav navbar-nav">
+         <li class="active"><a href=""> 网站首页 </a></li>
+          <li ><a href="">星级机构</a></li>
+          <li><a href="">团起来</a></li>
+          <li ><a href="">同城活动</a></li>
+          <li><a href="">学校信息</a></li>
+          <li><a href="">我的进度</a></li>
+          <li><a href="">讨论专区</a></li>
+          <li><a href="">资源下载</a></li>
+          </ul>
+        </div>
+      </div>
+  </nav> -->
+  <!-- 登陆注册部分 -->
+  <div>
+      <ul class="">
+      <li><button ng-click="register_show=true"><span class="glyphicon glyphicon-user"></span> 注册账号</button></li>|
+      <li><button ng-click="login_show=true"><span class="glyphicon glyphicon-log-in"></span> 登录账号</button></li>|
+      <li><button ng-click="skipToUser"><span class=""></span>个人昵称（连接到主页）</button></li>|
+      <li ng-mouseover="otherfunction_show=true" ng-mouseleave="otherfunction_show=false">
+        <button><span class="">其他功能</span></button>
+        <ul ng-show="otherfunction_show">
+          <li ng-click="feedback_show"><button>反馈</button></li>
+          <div ng-show="feedback_show"></div>
+          <li ng-click="subscribe()"><button>订阅</button></li>
+          <li ng-click="helpUser()"><button>帮助</button></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <!-- 搜索框部分 -->
+  <div class="">
+    <form>
+      <input type=“text” placeholder="输入关键字进行搜索" name="searchMainWord">
+      <button type="submit">搜索</button>
+    </form>
+    <div>
+      商家名称
+    </div>
+  </div>
+  <!-- 网站主体介绍 -->
+  <!-- 标题介绍网站主要功能 -->
+  <header>
+    <h1>留学点评网</h1>
+    <section></section>
+  </header>
+  <!-- 段落介绍分页功能 -->
+  <p>
+    <div>
+      <ul class="nav navbar-nav">
+       <li class="active"><a href=""> 网站首页 </a></li>
+        <li>
+          <a href="">星级机构</a>
+          <section></section>
+        </li>
+        <li>
+          <a href="">团起来</a>
+          <section></section>
+        </li>
+        <li >
+          <a href="">同城活动</a>
+          <section></section>
+        </li>
+        <li>
+          <a href="">学校信息</a>
+          <section></section>
+        </li>
+        <li>
+          <a href="">我的进度</a>
+          <section></section>
+        </li>
+        <li>
+          <a href="">讨论专区</a>
+          <section></section>
+        </li>
+        <li>
+          <a href="">资源下载</a>
+          <section></section>
+        </li>
+        </ul>
+      </div>
+  </p>
+  <footer>
+    联系我们 友情链接
+  </footer>
+
+    <div ng-show="register_show" class="">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="register_show=false">&times;</button>
+                    <h2 class="modal-title">注册</h2>
+                </div>
+                <div class="modal-body">
+                    <form name="registerForm">
+                        <input type="text" class="form-control" placeholder="姓名" required="" autofocus="" name="nickname" ng-model="nickname">
+                        <small style="color:red" ng-show="registerForm.nickname.$dirty && registerForm.nickname.$error.required">*该项必须填写</small>
+                        <input type="email" ng-disabled="invite" class="form-control" placeholder="Email" required="" autofocus="" name="email" ng-model="email">
+                        <small style="color:red" ng-show="registerForm.email.$dirty && registerForm.email.$error.required">*该项必须填写</small>
+                        <small style="color:red" ng-disable ng-show="registerForm.email.$error.email">*email 地址不正确</small>
+                        <input type="password" class="form-control" placeholder="密码" required="" name="password" ng-model="password">
+                        <small style="color:red" ng-show="registerForm.password.$dirty && registerForm.password.$error.required">*该项必须填写</small>
+                        <input type="password" class="form-control" placeholder="确认密码" required="" name="password_cf" ng-model="password_cf">
+                        <small style="color:red" ng-show="registerForm.password_cf.$dirty && registerForm.password_cf.$error.required">*该项必须填写</small>
+                        <small style="color:red" ng-show="registerForm.password.$dirty && registerForm.password_cf.$dirty && !same_password">*两次输入密码不一致</small>
+                        <label class="checkbox">
+                            <input type="checkbox" ng-model="agree" required>同意用户协议
+                        </label>
+                        <button ng-disabled="registerForm.$invalid || !same_password" class="btn btn-success btn-block" type="button" ng-click="register()">
+                            注册
+                        </button>
+                        <div style="text-align: center;color: red;padding-top: 10px;">{{reg_mess}}</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="login_show">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title">登录</h2>
+                </div>
+                <div class="modal-body">
+                    <div ng-show="invite">您已经注册，请登录</div>
+                    <form class="co-login" role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Email" required="" autofocus="" ng-model="email">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="密码" required="" ng-model="password">
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox">
+                                <input type="checkbox" value="remember-me" ng-model="remember">一周之内记住我
+                            </label>
+                        </div>
+                        <div>
+                            <button class="btn btn-success btn-block" type="submit" ng-click="login()">登录</button>
+                            <div style="text-align: center;color: red;padding-top: 10px;">{{log_mess}}</div>
+                            <div class="co-index-login-function"><a class="backregbtn" href="#">注册</a>
+                                <a class="forgetbtn co-right" href="#" ng-click="forget()">忘记密码</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="forgetModal" class="modal fade" ng-controller="FindCtrl">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title">忘记密码</h2>
+                </div>
+                <div class="modal-body">
+                    <form name="f1" class="co-forgot" ng-show="fgt.s==1">
+                        <p>请输入您的 Email 来获取重置验证码：</p>
+                        <input type="email" class="form-control" ng-model="email" name="email" placeholder="Email" required autofocus="">
+                        <label ng-show="f1.email.$dirty && f1.email.$invalid">邮箱无效</label>
+                        <button class="btn btn-success btn-block" ng-disabled="f1.email.$invalid" ng-click="resetPassword()">发送</button>
+                        <div class="co-index-login-function"><a class="backloginbtn" href="#">返回登录</a>
+                        </div>
+                    </form>
+                    <form name="f2" class="co-forgot" ng-show="fgt.s==2">
+                        <p>请您接收验证邮件，并将验证码填入下框：</p>
+                        <input name="token" ng-model="token" class="form-control" type="text" placeholder="验证码" required autofocus="">
+                        <label ng-show="f2.token.$dirty && f2.token.$invalid">验证码错误</label>
+                        <button class="btn btn-success btn-block" ng-disabled="f2.token.$invalid" ng-click="confirmToken()">确定</button>
+                    </form>
+                    <form name="f3" class="co-forgot" ng-show="fgt.s==3">
+                        <p>验证成功，请输入新密码：</p>
+                        <input name="p" class="form-control" type="password" placeholder="新密码" required autofocus="" ng-model="p">
+                        <label ng-show="f3.p.$dirty && f3.p.$invalid">密码无效</label>
+                        <input name="p2" class="form-control" type="password" placeholder="确认新密码" required autofocus="" ng-model="p_c">
+                        <label ng-show="f3.p_c.$dirty && p==p_c">密码不一致</label>
+                        <button class="btn btn-success btn-block" ng-disabled="f3.p.$invalid || p!=p_c" ng-click="confirmPassword()">确认</button>
+                    </form>
+                    <form name="f3" class="co-forgot" ng-show="fgt.s==4">
+                        <div>密码重置成功，请<a href="#" class="backloginbtn">重新登录</a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+
+  </body>
+</html>

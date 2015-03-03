@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('./views/user.html' );
-});
+var Enter = require('./controller/Enter.js');
+var CreateUser = require('./controller/CreateUser.js');
 
-module.exports = router;
+module.exports = function(app) {
+	app.all("/",Enter.enter);
+	app.all("/register",CreateUser.createrNewUser);
+}
