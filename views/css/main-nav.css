@@ -1,0 +1,22 @@
+.main-nav {
+	height: 36px;
+	background-color: #ff7200;
+}
+
+.main-nav .container {
+	height: inherit;
+}
+
+.main-nav .inner-main-nav {
+	height: inherit;
+}
+
+.main-nav a {
+	color : white;
+	width: 60px;
+	text-decoration: none;
+}
+
+.main-nav a:hover {
+	background-color : #ff8400;
+}
