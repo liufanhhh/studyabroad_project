@@ -1,0 +1,9 @@
+.table-container {
+	display: table;
+}
+
+.table-container > * {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
