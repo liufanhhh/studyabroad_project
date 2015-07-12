@@ -1,7 +1,7 @@
 
 .site-nav {
 	background-color: #eee;	
-	height: 30px;
+	height: 35px;
 }
 
 .site-nav .container {
@@ -9,8 +9,11 @@
 }
 
 .site-nav a {
-	width: 15px;
+	width: 42px;
+	color: black;
+	text-decoration: none;
 }
+
 
 .site-nav .container div {
 	height: inherit;
