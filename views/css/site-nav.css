@@ -1,0 +1,29 @@
+
+.site-nav {
+	background-color: #eee;	
+	height: 35px;
+}
+
+.site-nav .container {
+	height: inherit;
+}
+
+.site-nav a {
+	width: 52px;
+	color: black;
+	text-decoration: none;
+	font-size: 12px;
+}
+
+
+.site-nav .container div {
+	height: inherit;
+}
+
+.site-nav .left li {
+	float: left;
+}
+
+.site-nav .right li {
+	float: right;
+}
