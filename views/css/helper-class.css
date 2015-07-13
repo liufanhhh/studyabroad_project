@@ -23,3 +23,7 @@ textarea:focus,
 button:focus {
     outline: none;
 }
+
+.gray-border {
+	border: 1px solid #eee;
+}

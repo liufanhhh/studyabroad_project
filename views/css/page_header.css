@@ -56,6 +56,10 @@
 	background-color: #ff9000;
 }
 
+.search-box a:hover {
+	background-color: #ff7200;
+}
+
 .page-header .search-input {
 	height: 100%;	
 }
@@ -79,4 +83,8 @@
 	color: gray;
 	font-size: 12px;
 	padding-right: 6px;
+}
+
+.hot-key a:hover {
+	color: #ff7200;
 }

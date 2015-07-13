@@ -5,6 +5,7 @@
 
 .main-nav .container {
 	height: inherit;
+	padding-left: 15%;
 }
 
 .main-nav .inner-main-nav {
@@ -13,7 +14,7 @@
 
 .main-nav a {
 	color : white;
-	width: 60px;
+	width: 105px;
 	text-decoration: none;
 }
 
