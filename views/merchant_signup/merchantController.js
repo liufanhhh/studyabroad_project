@@ -1,0 +1,3 @@
+function merchantController($scope) {
+
+}

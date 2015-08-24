@@ -1,0 +1,13 @@
+merchant_name
+manager_name
+merchant_email
+mobile
+manager_title
+location
+website
+language
+identity_number
+
+logo: picture
+agreement
+business_licence

@@ -31,25 +31,5 @@ function formController($scope){
 		}
 	});
 
-	$scope.personList=[];
-
-	$scope.register=function(){
-		$scope.personList.push({
-       	 	name : $scope.person.name,
-       	 	email : $scope.person.email
-	 });
-		alert("注册成功");
-/*		清空输入项的数据*/
-		$scope.person.name="";
-		$scope.person.email="";
-		$scope.person.pswd1="";
-		$scope.person.pswd2="";
-		$scope.person.check=false;
-	}
-
-	$scope.removePerson = function (index) {
-            $scope.personList.splice(index, 1);
-        };
-
 
 }

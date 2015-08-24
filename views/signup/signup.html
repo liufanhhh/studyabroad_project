@@ -2,14 +2,14 @@
 <html>
 <head>
 	<script src="angular.min.js"></script>
-	<script src="msController.js"></script>
+	<script src="signupController.js"></script>
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="login-form.css">
+    <link rel="stylesheet" href="signup-form.css">
 </head>	
 
 <body>
 
-<div ng-app="" >
+<div ng-app="">
 
   <div ng-controller="formController" class="login-form">
 	<h1>用户注册</h1>
@@ -63,7 +63,7 @@
   		</div>
   		<br>
 <!-- 			除了ng自带的表单验证外，加上密码验证，才可以注册 -->
-  		<button type="submit" class="btn btn-primary" ng-disabled="myForm.$invalid || !samePswd" >注册</button>
+  		<button type="submit" class="btn btn-primary" ng-disabled="loginForm.$invalid || !samePswd" >注册</button>
  
 		</form>
 
