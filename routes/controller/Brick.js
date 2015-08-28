@@ -53,90 +53,91 @@ var querystring = require('querystring');
 
 var http = require('http');
 
-var secret = 'a5e478eb2b3492f16801539268a24af9';
+var secret = '566f94c4e0243740faec24cb86ee0705';
 
 var params = {
 
-ag_type:"fixed",
-amount:0.99,
-uid:"5302",
-sign_version:2,
-currencyCode:"USD",
-apiType:'subscription',
-ag_external_id:"1073_5ae337fcd9ab2a9bdeb3ffa83796eadf",
-ag_name:"diamond",
-widget:"m2_1",
-key:"1729a13115ea3310e214382c31a90b5d"
-
-// uid:"liufanhh2222",
-
-// key:"95983442c2bd9bb20259ea8bcdeebf52",
-
-// product_name:"MMMMobiamo",
-
-// product_id:"121",
-
-// // price_id:"9.99_EUR_DE",
-
-// amount:10.00,
-
-// currency:"THB",
-
-// country:"TH",
-
-// mnc:"99",
-
-// mcc:"520",
-
+// ag_type:"fixed",
+// amount:0.99,
+// uid:"5302",
 // sign_version:2,
+// currencyCode:"USD",
+// apiType:'subscription',
+// ag_external_id:"1073_5ae337fcd9ab2a9bdeb3ffa83796eadf",
+// ag_name:"diamond",
+// widget:"m2_1",
+// key:"1729a13115ea3310e214382c31a90b5d"
 
-// ts: Math.floor(Date.now() / 1000)
+uid:"liufanhh2222",
+
+key:"ad678b420aa1cecc4a7950a9eef4d765",
+
+product_name:"MMMMobiamo",
+
+product_id:"121",
+
+// price_id:"9.99_EUR_DE",
+
+amount:11000.00,
+
+currency:"IDR",
+
+country:"ID",
+
+mnc:"11",
+
+mcc:"510",
+
+sign_version:2,
+
+ts: Math.floor(Date.now() / 1000)
 
 };
 
 
 params.sign = new Paymentwall.Widget().calculateSignature(params, secret, 2);
 
+console.log(params.sign);
 
 var data = querystring.stringify(params);
 
 console.log(data);
 
-// var options = {
+var options = {
 
-//    host: 'api.paymentwall.com',
+   host: 'api.paymentwall.com',
 
-//    port: 80,
+   port: 80,
 
-//    path: '/api/mobiamo/payment',
+   path: '/api/mobiamo/payment',
 
-//    method: 'POST',
+   method: 'POST',
 
-//    headers: {
+   headers: {
 
-//        'Content-Type': 'application/x-www-form-urlencoded',
+       'Content-Type': 'application/x-www-form-urlencoded',
 
-//        'Content-Length': Buffer.byteLength(data)
+       'Content-Length': Buffer.byteLength(data)
 
-//    }
+   }
 
-// };
+};
 
-// var req = http.request(options, function(res) {
+var req = http.request(options, function(res) {
 
-//    console.log("statusCode'"+res.statusCode);
+   console.log("statusCode'"+res.statusCode);
 
-//    res.setEncoding('utf8');
+   res.setEncoding('utf8');
 
-//    res.on('data', function (chunk) {
+   res.on('data', function (chunk) {
 
-//        console.log("body: " + chunk);
+       console.log("body: " + chunk);
 
-//    });
+   });
 
-// });
+});
 
 
-// req.write(data);
+req.write(data);
 
-// req.end();
+req.end();

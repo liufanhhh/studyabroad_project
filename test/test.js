@@ -6,10 +6,10 @@ Paymentwall.configure(
 );
 
 var onetimetoken = new Paymentwall.Onetimetoken(
-4000000000000002,          // Card number, digits only
-01,         // Expiration month, 2 digits from 01 to 12
+4242424242424242,          // Card number, digits only
+11,         // Expiration month, 2 digits from 01 to 12
 2017,           // Expiration year, 4 digits
-121                // CVC/CVV, 3-4 digits
+678                // CVC/CVV, 3-4 digits
 );
-
-console.log(onetimetoken.getonetimetoken());
+onetimetoken.getonetimetoken();
+console.log('aaa');
