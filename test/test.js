@@ -5,11 +5,26 @@ Paymentwall.configure(
   't_2ffe77340638b142cca2acdc9cd1cf'
 );
 
-var onetimetoken = new Paymentwall.Onetimetoken(
-4000000000000002,          // Card number, digits only
-01,         // Expiration month, 2 digits from 01 to 12
-2017,           // Expiration year, 4 digits
-121                // CVC/CVV, 3-4 digits
+// var onetimetoken = new Paymentwall.Onetimetoken(
+// 4000000000000002,          // Card number, digits only
+// 01,         // Expiration month, 2 digits from 01 to 12
+// 2017,           // Expiration year, 4 digits
+// 121                // CVC/CVV, 3-4 digits
+// );
+// onetimetoken.createOnetimetoken(function(onetimetoken_data){
+// // get the onetimetoken in response
+// console.log('onetimetoken='+onetimetoken_data.token);
+// });
+
+
+var charge = new Paymentwall.Charge(
+0.5,
+'USD',
+'fan liu test',
+'liufanhh@hotmail.com',
+'ashdf',
+'123',
+{'custom': 'aaa'} 
 );
 
-console.log(onetimetoken.getonetimetoken());
+charge.createCharge();
