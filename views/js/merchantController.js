@@ -1,37 +1,6 @@
-var indexApp = angular.module('indexApp', ['ngResource', 'ngRoute']);
+var MerchantProfileApp = angular.module('MerchantProfileAPP', ['ngResource', 'ngRoute']);
 
-/*
- * routes for saindex.html
- */
-indexApp.config(function($routeProvider, $locationProvider) {
-    $routeProvider.
-    when('/', {
-        templateUrl: '/MainHtml/mainpage.html',
-        controller: 'MainController'
-    }).
-    when('/activity', {
-        templateUrl: '/MainHtml/activity.html',
-        controller: 'ActivityController'
-    }).
-    when('/download', {
-        templateUrl: '/MainHtml/download.html',
-        controller: 'DownloadController'
-    }).
-    when('/groupon', {
-        templateUrl: '/MainHtml/groupon.html',
-        controller: 'GrouponController'
-    }).
-    when('/school', {
-        templateUrl: '/MainHtml/school.html',
-        controller: 'SchoolController'
-    });
-
-    // configure html5 to get links working on jsfiddle
-    // $locationProvider.html5Mode(true);
-    console.log("initialize route");
-});
-
-indexApp.controller('IndexController', function($scope, $resource, $routeParams, $location) {
+MerchantProfileApp.controller('MerchantProfileController', function($scope, $resource, $routeParams, $location) {
 	$scope.register_show = false;
 	$scope.login_show = false;
 	$scope.otherfuction_show = false;
@@ -78,25 +47,5 @@ indexApp.controller('IndexController', function($scope, $resource, $routeParams,
 //                 $scope.reg_mess = res.mess;
 //         });
 //     }
-
-});
-
-indexApp.controller('MainController', function($scope, $resource, $routeParams, $location) {
-
-});
-
-indexApp.controller('ActivityController', function($scope, $resource, $routeParams, $location) {
-
-});
-
-indexApp.controller('DownloadController', function($scope, $resource, $routeParams, $location) {
-
-});
-
-indexApp.controller('GrouponController', function($scope, $resource, $routeParams, $location) {
-
-});
-
-indexApp.controller('SchoolController', function($scope, $resource, $routeParams, $location) {
 
 });

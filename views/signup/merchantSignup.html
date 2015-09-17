@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<script src="angular.min.js"></script>
+	<script src="hezuoController.js"></script>
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+</head>	
+
+<body>
+
+<div ng-app="" >
+
+  <div ng-controller="hezuoController" class="">
+	<h1>用户注册</h1>
+		<form name="hezuoForm" role="form" novalidate>
+			
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : hezuoForm.merchant_name.$invalid && !hezuoForm.merchant_name.$pristine, 
+		'has-success' : hezuoForm.merchant_name.$valid }">
+			<label>用户姓名：</label>
+			<input name="merchant_name" class="form-control" type="text" ng-model="merchants.merchant_name" ng-minlength=5 required >
+			<p class="help-block" ng-show="hezuoForm.merchant_name.$error.required && !hezuoForm.merchant_name.$pristine">该项必填</p>
+			<p class="help-block" ng-show="hezuoForm.merchant_name.$error.minlength && !hezuoForm.merchant_name.$pristine">姓名最小长度为5</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="hezuoForm.merchant_name.$valid"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="hezuoForm.merchant_name.$invalid && !hezuoForm.merchant_name.$pristine"></span>
+		</div>
+
+
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : hezuoForm.merchant_email.$invalid && !hezuoForm.merchant_email.$pristine,
+		'has-success' : hezuoForm.merchant_email.$valid }">
+			<label>邮箱地址：</label>
+			<input name="email" class="form-control" type="email" ng-model="merchants.merchant_email" required>
+			<p class="help-block" ng-show="hezuoForm.merchant_email.$error.required && !hezuoForm.merchant_email.$pristine">该项必填</p>
+			<p class="help-block" ng-show="hezuoForm.merchant_email.$error.merchant_email && !hezuoForm.merchant_email.$pristine">不符合merchant_email格式</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="hezuoForm.merchant_email.$valid"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="hezuoForm.merchant_email.$invalid && !hezuoForm.merchant_email.$pristine"></span>
+		</div>
+
+
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : hezuoForm.pswd1.$invalid && !hezuoForm.pswd1.$pristine,
+		'has-success' : samePswd }">
+			<label>设置密码：</label>
+			<input class="form-control" name="pswd1" type="password" ng-model="person.pswd1" ng-minlength=6 required>
+			<p class="help-block" ng-show="hezuoForm.pswd1.$error.required && !hezuoForm.pswd1.$pristine">该项必填</p>		
+			<p class="help-block" ng-show="hezuoForm.pswd1.$error.minlength && !hezuoForm.pswd1.$pristine">密码最小长度为6</p>		
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="hezuoForm.pswd1.$valid && samePswd"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="hezuoForm.pswd1.$invalid && !hezuoForm.pswd1.$pristine"></span>
+		</div>
+
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : (hezuoForm.pswd2.$invalid || !samePswd) && !hezuoForm.pswd2.$pristine,
+		'has-success' : samePswd }">
+			<label>再次输入密码：</label>
+			<input class="form-control" name="pswd2" type="password" ng-model="person.pswd2" ng-minlength=6 required>
+			<p class="help-block" ng-show="hezuoForm.pswd2.$error.required && !hezuoForm.pswd2.$pristine">该项必填</p>		
+			<p class="help-block" ng-show="hezuoForm.pswd2.$error.minlength && !hezuoForm.pswd2.$pristine">密码最小长度为6</p>		
+			<p class="help-block" ng-show="!samePswd && !hezuoForm.pswd2.$pristine">两次填写密码不一致</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="hezuoForm.pswd2.$valid && samePswd"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="hezuoForm.pswd2.$invalid && !hezuoForm.pswd2.$pristine"></span>
+		</div>
+
+		<div>
+  			<input name="personCheck" type="checkbox" ng-model="person.check" required>  是否同意用户守则
+  		</div>
+  		<br>
+<!-- 			除了ng自带的表单验证外，加上密码验证，才可以注册 -->
+  		<button type="submit" class="btn btn-primary" ng-disabled="myForm.$invalid || !samePswd" >注册</button>
+ 
+		</form>
+
+		 
+
+   </div>
+  
+</div>
+
+
+
+</body>
+</html>
+
