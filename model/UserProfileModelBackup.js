@@ -6,7 +6,7 @@ var mongoose = require("mongoose");
 
 //-----------------schema for user-----------------//
 
-var UserProfileSchema = mongoose.Schema({
+var UserSchema = mongoose.Schema({
     // _id: mongoose.Schema.ObjectId,
     time: Date,
     nickname: String,
@@ -14,11 +14,15 @@ var UserProfileSchema = mongoose.Schema({
     email: String,
     password: String,
     mobile: String,
-    current_school: String,
-    current_major: String,
-    language_level: String,
+    school: String,
+    major: String,
+    skill: String,
+    job: String,
+    location: String,
+    website: String,
+    language: String,
     identitynumber:String,
-    secrekey: mongoose.Schema.ObjectId,
+    pic: mongoose.Schema.ObjectId,
     config: {
         ntf: {
             email: Boolean,
@@ -32,7 +36,6 @@ var UserProfileSchema = mongoose.Schema({
         }
     },
     confirm: Boolean,
-    create_time: String
 });
 
 
@@ -113,8 +116,8 @@ UserSchema.statics.createSimpleUser = function(nickname, email, password, cb) {
                 all: false
             }
         },
-        confirm: false,
-        create_time: new Date()
+        confirm: true,
+        time: new Date()
     }, cb);
 }
 
@@ -188,4 +191,4 @@ UserSchema.method.findByEmailPassword = function(cb) {
 
 //-------------------export-------------------------//
 
-module.exports = mongoose.model("UserProfileModel", UserSchema);
+module.exports = mongoose.model("UserModel", UserSchema);

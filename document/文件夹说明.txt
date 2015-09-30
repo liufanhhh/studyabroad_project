@@ -13,3 +13,4 @@ views 前端代码
 		 变量：小写，两个名词的变量用_链接 例子 user_profile
 		 特殊变量： 对象为全部首字母大写，如controller名称，文件夹名称等 例子 MainHtml
 		 前端class名称用-链接 例子app-form
+		 所有变量名和文件名不用缩写
