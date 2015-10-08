@@ -6,7 +6,7 @@ var mongoose = require("mongoose");
 
 //-----------------schema for user-----------------//
 
-var MerchantProfile = mongoose.Schema({
+var MerchantProfileSchema = mongoose.Schema({
     time: Date,
     nickname: String,
     realname: String,
@@ -39,19 +39,19 @@ var MerchantProfile = mongoose.Schema({
 
 
 //----------------static method--------------------//
-UserSchema.statics.findUserById = function(id, cb) {
+MerchantProfileSchema.statics.findUserById = function(id, cb) {
     this.findOne({
         _id: id
     }, cb);
 }
 
-UserSchema.statics.findUserByNickname = function(nickname, cb) {
+MerchantProfileSchema.statics.findUserByNickname = function(nickname, cb) {
     this.findOne({
         nickname:nickname
     }, cb);
 }
 
-UserSchema.statics.findUserByEmail = function(email, cb) {
+MerchantProfileSchema.statics.findUserByEmail = function(email, cb) {
     this.findOne({
         email: email
     }, cb);
@@ -61,7 +61,7 @@ function escapeRegExp(str) {
   return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 }
 
-UserSchema.statics.findUsersByNameOrEmail = function(name_email, cb) {
+MerchantProfileSchema.statics.findUsersByNameOrEmail = function(name_email, cb) {
     qs = escapeRegExp(name_email);
     this.find({
         $or: [{
@@ -76,7 +76,7 @@ UserSchema.statics.findUsersByNameOrEmail = function(name_email, cb) {
     }, cb);
 
 }
-UserSchema.statics.updatePasswordByEmail = function(name_email, newpassword, cb){
+MerchantProfileSchema.statics.updatePasswordByEmail = function(name_email, newpassword, cb){
     var conditions = {email: name_email};
     var update = {$set :{password: newpassword}};
     this.update(conditions,update,false,cb)
@@ -84,7 +84,7 @@ UserSchema.statics.updatePasswordByEmail = function(name_email, newpassword, cb)
 
 
 
-UserSchema.statics.findByEmailPassword = function(email, password, cb) {
+MerchantProfileSchema.statics.findByEmailPassword = function(email, password, cb) {
     this.findOne({
         email: email,
         password: password,
@@ -92,13 +92,13 @@ UserSchema.statics.findByEmailPassword = function(email, password, cb) {
     }, cb);
 }
 
-UserSchema.statics.updateUserById = function(id, new_user_doc, cb) {
+MerchantProfileSchema.statics.updateUserById = function(id, new_user_doc, cb) {
     this.findOneAndUpdate({
         _id: id
     }, new_user_doc, cb);
 }
 
-UserSchema.statics.createSimpleUser = function(nickname, email, password, cb) {
+MerchantProfileSchema.statics.createSimpleUser = function(nickname, email, password, cb) {
     this.create({
         nickname: nickname,
         password: password,
@@ -120,7 +120,7 @@ UserSchema.statics.createSimpleUser = function(nickname, email, password, cb) {
     }, cb);
 }
 
-UserSchema.statics.createInviteUser = function(email, name, cb) {
+MerchantProfileSchema.statics.createInviteUser = function(email, name, cb) {
     // 外部保证本步更新或者创建的User均是没有确认注册的
     this.findOneAndUpdate({
         email: email
@@ -146,7 +146,7 @@ UserSchema.statics.createInviteUser = function(email, name, cb) {
     }, cb);
 }
 
-UserSchema.statics.confirmInviteById = function(id, nickname, password, cb) {
+MerchantProfileSchema.statics.confirmInviteById = function(id, nickname, password, cb) {
     this.findOneAndUpdate({
         _id: id,
     }, {
@@ -157,13 +157,13 @@ UserSchema.statics.confirmInviteById = function(id, nickname, password, cb) {
     }, cb);
 }
 
-UserSchema.statics.removeById = function(id, cb) {
+MerchantProfileSchema.statics.removeById = function(id, cb) {
     this.remove({
         _id: id,
     })
 }
 
-UserSchema.statics.saveUser = function(user, cb) {
+MerchantProfileSchema.statics.saveUser = function(user, cb) {
     this.findOneAndUpdate({
         _id: user._id
     }, {
@@ -180,7 +180,7 @@ UserSchema.statics.saveUser = function(user, cb) {
 }
 //---------------non-static method------------------//
 
-UserSchema.method.findByEmailPassword = function(cb) {
+MerchantProfileSchema.method.findByEmailPassword = function(cb) {
     this.model("User").find({
         email: "yinys08@163.com",
         password: "123"
@@ -190,4 +190,4 @@ UserSchema.method.findByEmailPassword = function(cb) {
 
 //-------------------export-------------------------//
 
-module.exports = mongoose.model("UserModel", UserSchema);
+module.exports = mongoose.model("UserModel", MerchantProfileSchema);
