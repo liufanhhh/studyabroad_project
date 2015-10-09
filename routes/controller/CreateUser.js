@@ -8,40 +8,54 @@ exports.newuserCreate = function(req, res) {
     var password = req.body.password;
     var userid = req.body.userid;
     var user_status = req.body.user_status;
+    var message = "Hello World";
+
+    var findUserByNickname = Q.nfbind(UserProfileModel.findUserByNickname.bind(UserProfileModel));
+
+    var nameFind = function(exist){
+        var deferred = Q.defer();
+        if (exist) {
+            message = "用户名重复";
+            deferred.resolve(1);
+            return deferred.promise;
+        }else{
+            UserProfileModel.findUserByEmail(email,function(err,user){
+                if (user) {
+                    deferred.resolve(1);
+                    message = "邮箱重复";
+                }else {
+                    deferred.resolve(0);
+                };
+            });
+            return deferred.promise;
+        };
+    }
+
+    var emailFind = function(exist){
+        var deferred = Q.defer();
+        if (exist==0){
+            UserProfileModel.createSimpleUser(user_nickname,user_realname,email,password,userid,function(err,user){
+                deferred.resolve(user);
+                message = "注册成功";
+            });
+        return deferred.promise;
+        }else{
+            deferred.resolve(1);
+            return deferred.promise;
+        }
+    }
 
 
-    if (user_status=='user') {
-        UserProfileModel.findUserByNickname(user_nickname,function(err, user){
-            if (user&&user.confirm) {
-                res.sendError("用户名重复");
-            }
-            else if (err) {
-                res.sendError("系统繁忙，数据库错误");
-            }
-            else{
-                UserProfileModel.findUserByEmail(email,function(err,user){
-                    if (user&&user.confirm) {
-                        res.sendError("邮箱重复");
-                    }
-                    else if (err) {
-                        res.sendError("系统繁忙，数据库错误");
-                    }
-                    else {
-                        UserProfileModel.createSimpleUser(nickname, email, password,function(err,user){
-                            if (err) {
-                                res.sendError("注册失败");
-                            }
-                            else{
-                                res.sendSuccess("感谢"+user.nickname+"的支持,注册成功");
-                            }
-                        });
-                    }
-                });
-            }
-        });
-    } else{
-
-    };
+    findUserByNickname(user_nickname)
+    .then(nameFind)
+    .then(emailFind)
+    .then(
+    function(data){
+        res.send(message);
+    },function(error){
+        res.sendError("注册失败");
+        console.log(error);
+    });
     
 
 }
