@@ -1,3 +1,5 @@
+var Q = require('q');
+
 var UserProfileModel = require("../../model/UserProfileModel.js");
 var MerchantProfileModel =  require("../../model/UserProfileModel.js");
 

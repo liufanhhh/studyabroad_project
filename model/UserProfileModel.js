@@ -31,6 +31,7 @@ var UserProfileSchema = mongoose.Schema({
             all: Boolean
         }
     },
+    trypush:[],
     confirm: Boolean,
     create_time: String
 });
@@ -81,6 +82,11 @@ UserProfileSchema.statics.updatePasswordByEmail = function(name_email, newpasswo
 }
 
 
+UserProfileSchema.statics.updateEmailByRealname = function(realname, email, cb) {
+    this.findOneAndUpdate({
+        realname: realname
+    }, {$addToSet:{trypush:email}}, cb);
+}
 
 UserProfileSchema.statics.findByEmailPassword = function(email, password, cb) {
     this.findOne({
@@ -90,10 +96,10 @@ UserProfileSchema.statics.findByEmailPassword = function(email, password, cb) {
     }, cb);
 }
 
-UserProfileSchema.statics.updateUserById = function(id, new_user_doc, cb) {
+UserProfileSchema.statics.updateUserById = function(id, email, cb) {
     this.findOneAndUpdate({
         _id: id
-    }, new_user_doc, cb);
+    }, {$set:{email:email}}, cb);
 }
 
 UserProfileSchema.statics.createSimpleUser = function(nickname, realname, email, password, userid, cb) {
