@@ -54,7 +54,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/views')));
-app.use(express.static(path.join(__dirname, '/storage/public')));
 
 // give the routes to control the require
 routes(app);

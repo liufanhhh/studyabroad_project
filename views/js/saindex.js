@@ -3,6 +3,7 @@ var IndexAPP = angular.module('IndexAPP', ['ngResource', 'ngRoute']);
 /*
  * routes for saindex.html
  */
+console.log("here is fine");
 IndexAPP.config(function($routeProvider, $locationProvider) {
     $routeProvider.
     when('/', {
