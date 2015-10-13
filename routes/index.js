@@ -7,6 +7,8 @@ var MerchantProfile = require('./controller/MerchantProfile.js');
 var Test = require('./controller/Test.js');
 
 module.exports = function(app) {
+
+
 	app.all("/",Enter.indexpageEnter);
 	app.all("/user/signup/page",Enter.userSignUpEnter);
 	app.all("/register",CreateUser.newuserCreate);
@@ -15,4 +17,6 @@ module.exports = function(app) {
 	app.all("/merchant/profile/upload",MerchantProfile.profileUpload);
 
 	app.all("/picture",Test.pictureGet);
+	app.all("/login",Enter.userLogin)
+
 }

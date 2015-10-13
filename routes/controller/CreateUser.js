@@ -19,7 +19,6 @@ exports.newuserCreate = function(req, res) {
         if (exist) {
             message = "用户名重复";
             deferred.resolve(1);
-            return deferred.promise;
         }else{
             UserProfileModel.findUserByEmail(email,function(err,user){
                 if (user) {
@@ -29,8 +28,8 @@ exports.newuserCreate = function(req, res) {
                     deferred.resolve(0);
                 };
             });
-            return deferred.promise;
         };
+        return deferred.promise;
     }
 
     var emailFind = function(exist){
@@ -40,11 +39,10 @@ exports.newuserCreate = function(req, res) {
                 deferred.resolve(user);
                 message = "注册成功";
             });
-        return deferred.promise;
         }else{
             deferred.resolve(1);
-            return deferred.promise;
         }
+        return deferred.promise;
     }
 
 
@@ -53,11 +51,9 @@ exports.newuserCreate = function(req, res) {
     .then(emailFind)
     .then(
     function(data){
-        res.send(message);
+        res.sendSuccess(message);
     },function(error){
         res.sendError("注册失败");
         console.log(error);
     });
-    
-
 }
