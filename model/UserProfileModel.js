@@ -3,6 +3,7 @@
  */
 
 var mongoose = require("mongoose");
+var bcrypt = require('bcrypt-nodejs');
 
 //-----------------schema for user-----------------//
 
@@ -36,6 +37,14 @@ var UserProfileSchema = mongoose.Schema({
     create_time: String
 });
 
+//---------Shuai's method for hashing the password------------
+UserProfileSchema.methods.generateHash = function(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+}
+
+UserProfileSchema.methods.isValidPassword = function(password) {
+  return bcrypt.compareSync(password, this.password); 
+}
 
 //----------------static method--------------------//
 UserProfileSchema.statics.findUserById = function(id, cb) {
