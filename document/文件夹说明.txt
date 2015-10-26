@@ -8,3 +8,9 @@ storage 存储内容 default 默认头像和图片
 				public  机构的图片和介绍等
 				user个人发布的资源或者照片等
 views 前端代码
+
+代码规范 函数：第一个单词首字母小写，一般一至两个单词，名词+动词 动词首字母大写 例子 identify()   userIdentify()
+		 变量：小写，两个名词的变量用_链接 例子 user_profile
+		 特殊变量： 对象为全部首字母大写，如controller名称，文件夹名称等 例子 MainHtml
+		 前端class名称用-链接 例子app-form
+		 所有变量名和文件名不用缩写

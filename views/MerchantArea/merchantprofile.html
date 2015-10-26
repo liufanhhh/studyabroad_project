@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+	<script src="../js/merchantController.js"></script>
+    
+    <link rel="stylesheet" href="../css/merchant-form.css">
+</head>	
+
+<body>
+
+<div ng-app="MerchantProfileApp">
+
+	<div ng-controller="MerchantProfileController" class="merchant-form">
+		<h1>商家注册</h1>
+		<form name="merchantForm" role="form" ng-submit="MerchantRegister" novalidate>
+
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : merchantForm.merchant_name.$invalid && !merchantForm.merchant_name.$pristine, 
+		'has-success' : merchantForm.merchant_name.$valid }">
+			<label>merchant_name: </label>
+			<input name="merchant_name" class="form-control" type="text" ng-model="merchant.merchant_name" ng-minlength=5 required >
+			<p class="help-block" ng-show="merchantForm.merchant_name.$error.required && !merchantForm.merchant_name.$pristine">该项必填</p>
+			<p class="help-block" ng-show="merchantForm.merchant_name.$error.minlength && !merchantForm.merchant_name.$pristine">merchant_name最小长度为5</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="merchantForm.merchant_name.$valid"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="merchantForm.merchant_name.$invalid && !merchantForm.merchant_name.$pristine"></span>
+		</div>
+
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : merchantForm.manager_name.$invalid && !merchantForm.manager_name.$pristine, 
+		'has-success' : merchantForm.manager_name.$valid }">
+			<label>manager_name：</label>
+			<input name="manager_name" class="form-control" type="text" ng-model="merchant.manager_name" ng-minlength=5 required >
+			<p class="help-block" ng-show="merchantForm.manager_name.$error.required && !merchantForm.manager_name.$pristine">该项必填</p>
+			<p class="help-block" ng-show="merchantForm.manager_name.$error.minlength && !merchantForm.manager_name.$pristine">manager_name 最小长度为5</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="merchantForm.manager_name.$valid"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="merchantForm.manager_name.$invalid && !merchantForm.manager_name.$pristine"></span>
+		</div>
+
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : merchantForm.merchant_email.$invalid && !merchantForm.merchant_email.$pristine, 
+		'has-success' : merchantForm.merchant_email.$valid }">
+			<label>merchant_email：</label>
+			<input name="merchant_email" class="form-control" type="email" ng-model="merchant.merchant_email" ng-minlength=5 required >
+			<p class="help-block" ng-show="merchantForm.merchant_email.$error.required && !merchantForm.merchant_email.$pristine">该项必填</p>
+			<p class="help-block" ng-show="merchantForm.merchant_email.$error.minlength && !merchantForm.merchant_email.$pristine">merchant_email 最小长度为5</p>
+			<p class="help-block" ng-show="merchantForm.merchant_email.$error.email && !merchantForm.merchant_email.$pristine">merchant_email 不符合email格式</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="merchantForm.merchant_email.$valid"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="merchantForm.merchant_email.$invalid && !merchantForm.merchant_email.$pristine"></span>
+		</div>
+		
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : merchantForm.mobile.$invalid && !merchantForm.mobile.$pristine, 
+		'has-success' : merchantForm.mobile.$valid }">
+			<label>mobile：</label>
+			<input name="mobile" class="form-control" type="number" ng-model="merchant.mobile" ng-minlength=11 required >
+			<p class="help-block" ng-show="merchantForm.mobile.$error.required && !merchantForm.mobile.$pristine">该项必填</p>
+			<p class="help-block" ng-show="merchantForm.mobile.$error.number && !merchantForm.mobile.$pristine">该项必须填写数字</p>
+			<p class="help-block" ng-show="merchantForm.mobile.$error.minlength && !merchantForm.mobile.$pristine">mobile 长度为11</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="merchantForm.mobile.$valid"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="merchantForm.mobile.$invalid && !merchantForm.mobile.$pristine"></span>
+		</div>
+
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : merchantForm.manager_title.$invalid && !merchantForm.manager_title.$pristine, 
+		'has-success' : merchantForm.manager_title.$valid }">
+			<label>manager_title：</label>
+			<input name="manager_title" class="form-control" type="text" ng-model="merchant.manager_title" ng-minlength=5 required >
+			<p class="help-block" ng-show="merchantForm.manager_title.$error.required && !merchantForm.manager_title.$pristine">该项必填</p>
+			<p class="help-block" ng-show="merchantForm.manager_title.$error.minlength && !merchantForm.manager_title.$pristine">manager_title 最小长度为5</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="merchantForm.manager_title.$valid"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="merchantForm.manager_title.$invalid && !merchantForm.manager_title.$pristine"></span>
+		</div>
+
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : merchantForm.location.$invalid && !merchantForm.location.$pristine, 
+		'has-success' : merchantForm.location.$valid }">
+			<label>location：</label>
+			<input name="location" class="form-control" type="text" ng-model="merchant.location" ng-minlength=5 required >
+			<p class="help-block" ng-show="merchantForm.location.$error.required && !merchantForm.location.$pristine">该项必填</p>
+			<p class="help-block" ng-show="merchantForm.location.$error.minlength && !merchantForm.location.$pristine">location 最小长度为5</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="merchantForm.location.$valid"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="merchantForm.location.$invalid && !merchantForm.location.$pristine"></span>
+		</div>
+
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : merchantForm.website.$invalid && !merchantForm.website.$pristine, 
+		'has-success' : merchantForm.website.$valid }">
+			<label>website：</label>
+			<input name="website" class="form-control" type="url" ng-model="merchant.website" ng-minlength=5 required >
+			<p class="help-block" ng-show="merchantForm.website.$error.required && !merchantForm.website.$pristine">该项必填</p>
+			<p class="help-block" ng-show="merchantForm.website.$error.url && !merchantForm.website.$pristine">该项必须符合url格式</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="merchantForm.website.$valid"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="merchantForm.website.$invalid && !merchantForm.website.$pristine"></span>
+		</div>
+
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : merchantForm.language.$invalid && !merchantForm.language.$pristine, 
+		'has-success' : merchantForm.language.$valid }">
+			<label>language：</label>
+			<input name="language" class="form-control" type="text" ng-model="merchant.language" required >
+			<p class="help-block" ng-show="merchantForm.language.$error.required && !merchantForm.language.$pristine">该项必填</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="merchantForm.language.$valid"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="merchantForm.language.$invalid && !merchantForm.language.$pristine"></span>
+		</div>
+
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : merchantForm.identity_number.$invalid && !merchantForm.identity_number.$pristine, 
+		'has-success' : merchantForm.identity_number.$valid }">
+			<label>identity_number：</label>
+			<input name="identity_number" class="form-control" type="number" ng-model="merchant.identity_number" ng-minlength=23 required >
+			<p class="help-block" ng-show="merchantForm.identity_number.$error.required && !merchantForm.identity_number.$pristine">该项必填</p>
+			<p class="help-block" ng-show="merchantForm.identity_number.$error.minlength && !merchantForm.identity_number.$pristine">identity_number 最小长度为23</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="merchantForm.identity_number.$valid"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="merchantForm.identity_number.$invalid && !merchantForm.identity_number.$pristine"></span>
+		</div>
+
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : merchantForm.agreement.$invalid && !merchantForm.agreement.$pristine, 
+		'has-success' : merchantForm.agreement.$valid }">
+			<label>agreement：</label>
+			<input name="agreement" class="form-control" type="number" ng-model="merchant.agreement" required >
+			<p class="help-block" ng-show="merchantForm.agreement.$error.required && !merchantForm.agreement.$pristine">该项必填</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="merchantForm.agreement.$valid"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="merchantForm.agreement.$invalid && !merchantForm.agreement.$pristine"></span>
+		</div>
+
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : merchantForm.business_licence.$invalid && !merchantForm.business_licence.$pristine, 
+		'has-success' : merchantForm.business_licence.$valid }">
+			<label>business_licence：</label>
+			<input name="business_licence" class="form-control" type="number" ng-model="merchant.business_licence" ng-minlength=23 required >
+			<p class="help-block" ng-show="merchantForm.business_licence.$error.required && !merchantForm.business_licence.$pristine">该项必填</p>
+			<p class="help-block" ng-show="merchantForm.business_licence.$error.minlength && !merchantForm.business_licence.$pristine">business_licence 最小长度为23</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="merchantForm.business_licence.$valid"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="merchantForm.business_licence.$invalid && !merchantForm.business_licence.$pristine"></span>
+		</div>
+
+
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : merchantForm.business_licence.$invalid && !merchantForm.business_licence.$pristine, 
+		'has-success' : merchantForm.business_licence.$valid }">
+		  <label>merchant logo: </label>
+		  <input type="file" name="logo" accept="image/*" required >
+			<p class="help-block" ng-show="merchantForm.business_licence.$error.required && !merchantForm.business_licence.$pristine">该项必填</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="merchantForm.business_licence.$valid"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="merchantForm.business_licence.$invalid && !merchantForm.business_licence.$pristine"></span>
+		</div>
+
+
+			<div>
+	  			<input name="check" type="checkbox" ng-model="merchant.check"> 同意遵守商家协定
+	  		</div>
+	  		<br>
+	  		<button type="submit" class="btn btn-primary" ng-disabled="merchantForm.$invalid" >注册</button>

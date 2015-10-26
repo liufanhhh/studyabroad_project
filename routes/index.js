@@ -3,10 +3,20 @@ var router = express.Router();
 
 var Enter = require('./controller/Enter.js');
 var CreateUser = require('./controller/CreateUser.js');
-var Brick = require('./controller/Brick.js');
+var MerchantProfile = require('./controller/MerchantProfile.js');
+var Test = require('./controller/Test.js');
 
 module.exports = function(app) {
-	app.all("/",Enter.enter);
-	app.all("/register",CreateUser.createrNewUser);
-	app.all("/brick",Brick.brick);
+
+
+	app.all("/",Enter.indexpageEnter);
+	app.all("/user/signup/page",Enter.userSignUpEnter);
+	app.all("/register",CreateUser.newuserCreate);
+
+	app.all("/merchant/cooperate",Enter.merchantCooperate);
+	app.all("/merchant/profile/upload",MerchantProfile.profileUpload);
+
+	app.all("/picture",Test.pictureGet);
+	app.all("/login",Enter.userLogin)
+
 }
