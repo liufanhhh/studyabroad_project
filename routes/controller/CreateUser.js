@@ -1,7 +1,12 @@
 var Q = require('q');
 
 var UserProfileModel = require("../../model/UserProfileModel.js");
-var MerchantProfileModel =  require("../../model/UserProfileModel.js");
+var MerchantProfileModel =  require("../../model/MerchantProfileModel.js");
+var bcrypt = require('bcrypt-nodejs');
+
+exports.userSignUpEnter = function(req,res) {
+    res.sendfile("./views/SignUpLogin/signUp.html");
+}
 
 exports.newuserCreate = function(req, res) {
     var user_realname = req.body.realname;
@@ -35,7 +40,8 @@ exports.newuserCreate = function(req, res) {
     var emailFind = function(exist){
         var deferred = Q.defer();
         if (exist==0){
-            UserProfileModel.createSimpleUser(user_nickname,user_realname,email,password,userid,function(err,user){
+          var newPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+            UserProfileModel.createSimpleUser(user_nickname,user_realname,email,newPassword,userid,user_status,function(err,user){
                 deferred.resolve(user);
                 message = "注册成功";
             });

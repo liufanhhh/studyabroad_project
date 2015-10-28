@@ -8,6 +8,9 @@ var bodyParser = require('body-parser');
 var db = require('./connectDB.js')
 var routes = require('./routes/index');
 
+var passport = require('passport');
+var session = require('express-session');
+
 
 
 // view engine setup
@@ -54,6 +57,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/views')));
+
+require('./passport-config')(passport);
+
+app.use(session({ secret: 'Shia' }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // give the routes to control the require
 routes(app);

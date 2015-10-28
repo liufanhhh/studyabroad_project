@@ -3,6 +3,7 @@
  */
 
 var mongoose = require("mongoose");
+var bcrypt = require('bcrypt-nodejs');
 
 //-----------------schema for user-----------------//
 
@@ -33,9 +34,18 @@ var UserProfileSchema = mongoose.Schema({
     },
     trypush:[],
     confirm: Boolean,
+    status: String,
     create_time: String
 });
 
+//---------Shuai's method for hashing the password------------
+UserProfileSchema.methods.generateHash = function(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+}
+
+UserProfileSchema.methods.isValidPassword = function(password) {
+  return bcrypt.compareSync(password, this.password); 
+}
 
 //----------------static method--------------------//
 UserProfileSchema.statics.findUserById = function(id, cb) {
@@ -102,7 +112,7 @@ UserProfileSchema.statics.updateUserById = function(id, email, cb) {
     }, {$set:{email:email}}, cb);
 }
 
-UserProfileSchema.statics.createSimpleUser = function(nickname, realname, email, password, userid, cb) {
+UserProfileSchema.statics.createSimpleUser = function(nickname, realname, email, password, userid, status, cb) {
     this.create({
         nickname: nickname,
         realname: realname,
@@ -122,6 +132,7 @@ UserProfileSchema.statics.createSimpleUser = function(nickname, realname, email,
             }
         },
         confirm: false,
+        status: status,
         create_time: new Date()
     }, cb);
 }
