@@ -34,6 +34,7 @@ var UserProfileSchema = mongoose.Schema({
     },
     trypush:[],
     confirm: Boolean,
+    status: String,
     create_time: String
 });
 
@@ -111,7 +112,7 @@ UserProfileSchema.statics.updateUserById = function(id, email, cb) {
     }, {$set:{email:email}}, cb);
 }
 
-UserProfileSchema.statics.createSimpleUser = function(nickname, realname, email, password, userid, cb) {
+UserProfileSchema.statics.createSimpleUser = function(nickname, realname, email, password, userid, status, cb) {
     this.create({
         nickname: nickname,
         realname: realname,
@@ -131,6 +132,7 @@ UserProfileSchema.statics.createSimpleUser = function(nickname, realname, email,
             }
         },
         confirm: false,
+        status: status,
         create_time: new Date()
     }, cb);
 }

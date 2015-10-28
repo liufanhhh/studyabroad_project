@@ -1,7 +1,9 @@
 var UserProfileModel = require("../../model/MerchantProfileModel.js");
 
 
-
+exports.merchantPage = function(req,res){
+    return res.sendfile('./views/MerchantArea/MerchantIndex.html');
+}
 
 exports.profileUpload = function(req, res) {
 	console.log(req.nickname);
