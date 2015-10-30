@@ -1,10 +1,10 @@
-var IndexAPP = angular.module('IndexAPP', ['ngResource', 'ngRoute']);
+var IndexApp = angular.module('IndexApp', ['ngResource', 'ngRoute']);
 
 /*
  * routes for saindex.html
  */
 console.log("here is fine");
-IndexAPP.config(function($routeProvider, $locationProvider) {
+IndexApp.config(function($routeProvider, $locationProvider) {
     $routeProvider.
     when('/', {
         templateUrl: '/MainHtml/mainpage.html',
@@ -32,7 +32,7 @@ IndexAPP.config(function($routeProvider, $locationProvider) {
     console.log("initialize route");
 });
 
-IndexAPP.controller('IndexController', function($scope, $resource, $routeParams, $location) {
+IndexApp.controller('IndexController', function($scope, $resource, $routeParams, $location) {
 	$scope.register_show = false;
 	$scope.login_show = false;
 	$scope.otherfuction_show = false;
@@ -82,22 +82,22 @@ IndexAPP.controller('IndexController', function($scope, $resource, $routeParams,
 
 });
 
-IndexAPP.controller('MainController', function($scope, $resource, $routeParams, $location) {
+IndexApp.controller('MainController', function($scope, $resource, $routeParams, $location) {
 
 });
 
-IndexAPP.controller('ActivityController', function($scope, $resource, $routeParams, $location) {
+IndexApp.controller('ActivityController', function($scope, $resource, $routeParams, $location) {
 
 });
 
-IndexAPP.controller('DownloadController', function($scope, $resource, $routeParams, $location) {
+IndexApp.controller('DownloadController', function($scope, $resource, $routeParams, $location) {
 
 });
 
-IndexAPP.controller('GrouponController', function($scope, $resource, $routeParams, $location) {
+IndexApp.controller('GrouponController', function($scope, $resource, $routeParams, $location) {
 
 });
 
-IndexAPP.controller('SchoolController', function($scope, $resource, $routeParams, $location) {
+IndexApp.controller('SchoolController', function($scope, $resource, $routeParams, $location) {
 
 });
