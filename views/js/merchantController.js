@@ -1,8 +1,8 @@
-var MerchantApp = angular.module('MerchantApp', ['ngResource', 'ngRoute']);
+var MerchantApp = angular.module('MerchantApp', ['ngResource', 'ngRoute','angularFileUpload']);
 
-MerchantApp.controller('MerchantProfileController', function($scope, $resource, $routeParams, $location) {
+MerchantApp.controller('MerchantProfileController', function($scope, $resource, $routeParams, $location ,FileUploader) {
 	var uploader = $scope.uploader = new FileUploader({
-	    url: '/picture',
+	    url: '/merchant/profile/picture',
 	});
 
 	// FILTERS
@@ -63,4 +63,11 @@ MerchantApp.controller('MerchantProfileController', function($scope, $resource, 
 	    }
 	};
 
+	$scope.imgupload = function(){
+		$resource("/merchant/profile/picture").save({
+			file: $scope.profile
+		}, function(res) {
+			console.log(res.mess);
+		});
+	};
 });

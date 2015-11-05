@@ -12,14 +12,11 @@
 	<script src="/bower_components/angular/angular.min.js"></script>
 	<script src="/bower_components/angular-resource/angular-resource.min.js"></script>
 	<script src="/bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
-	<script src="/bower_components/ng-file-upload/ng-file-upload-all.js"></script>
-	<script src="/bower_components/ng-file-upload/ng-file-upload.min.js"></script>
 	<script src="/bower_components/angular-route/angular-route.min.js"></script>
 	<script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 	<script src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
 	<script src="/bower_components/angular-strap/dist/modules/modal.min.js"></script>
 	<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
 	<script src="../js/merchantController.js"></script>
     
 
@@ -27,44 +24,6 @@
 
 <body ng-app="MerchantApp">
 
-<!-- Example: nv-file-select="" uploader="{Object}" options="{Object}" filters="{String}" -->
-        <input type="file" nv-file-select=""  uploader="uploader" />
-
-        <h2>The queue. Length: {{ uploader.queue.length }}</h2>
-        <ul>
-            <li ng-repeat="item in uploader.queue">
-                <div>Name: {{ item.file.name }}</div>
-                <div>Size: {{ item.file.size/1024/1024|number:2 }} Mb</div>
-                <div ng-show="uploader.isHTML5">
-                    Progress: {{ item.progress }}
-                    <div class="item-progress-box">
-                        <div class="item-progress" ng-style="{ 'width': item.progress + '%' }"></div>
-                    </div>
-                </div>
-                <div >
-
-                        <div ng-thumb="{ file: item.file, width: 100 }"></div>
-                        <div ng-thumb="{ file: item._file, height: 100 }"></div>
-                        <div ng-thumb="{ file: item._file, width: 100, height: 100 }"></div>
-                </div>
-                <div>
-                    <button ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">Upload</button>
-                    <button ng-click="item.cancel()" ng-disabled="!item.isUploading">Cancel</button>
-                    <button ng-click="item.remove()">Remove</button>
-                </div>
-            </li>
-        </ul>
-        <div>
-            <div>
-                Total progress: {{ uploader.progress }}
-                <div class="total-progress-box">
-                    <div class="total-progress" ng-style="{ 'width': uploader.progress + '%' }"></div>
-                </div>
-            </div>
-            <button ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">Upload all</button>
-            <button ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">Cancel all</button>
-            <button ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">Remove all</button>
-        </div>
 
 	<div ng-controller="MerchantProfileController" class="merchant-form">
 		<h1>商家注册</h1>
@@ -184,12 +143,17 @@
 		<div class="form-group has-feedback" ng-class="{ 'has-error' : merchantForm.business_licence.$invalid && !merchantForm.business_licence.$pristine, 
 		'has-success' : merchantForm.business_licence.$valid }">
 		  <label>merchant logo: </label>
-		  <input type="file" name="logo" accept="image/*" required >
+		  <input type="file" name="logo" accept="image/*"  nv-file-select=""  uploader="uploader" required/>
 			<p class="help-block" ng-show="merchantForm.business_licence.$error.required && !merchantForm.business_licence.$pristine">该项必填</p>
 			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="merchantForm.business_licence.$valid"></span>
 			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="merchantForm.business_licence.$invalid && !merchantForm.business_licence.$pristine"></span>
 		</div>
 
+		<button ng-click="uploader.queue[0].upload()">上传图片</button>
+		Name: {{ uploader.queue[0].file.name }} Size: {{ uploader.queue[0].file.size/1024/1024|number:2 }} Mb
+		Progress: {{ uploader.progress }}
+		<input type="file" ng-model="profile" accept="image/*"  nv-file-select=""  uploader="uploader" required/>
+		<button ng-click="imgupload()">上传图片</button>
 
 			<div>
 	  			<input name="check" type="checkbox" ng-model="merchant.check"> 同意遵守商家协定

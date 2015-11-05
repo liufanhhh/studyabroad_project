@@ -6,6 +6,7 @@ var Enter = require('./controller/Enter.js');
 var CreateUser = require('./controller/CreateUser.js');
 var Login = require('./controller/Login.js');
 var MerchantArea = require('./controller/MerchantArea.js');
+var ImgUpload = require('./controller/ImgUpload.js');
 
 
 var Test = require('./controller/Test.js');
@@ -23,6 +24,7 @@ module.exports = function(app) {
   	app.get('/loginFailure',Login.failedLogin);
   	app.get('/loginSuccess', Login.isLoggedIn);
 
+  	app.post("/merchant/profile/picture",ImgUpload.imgUpload);
 
 
 
