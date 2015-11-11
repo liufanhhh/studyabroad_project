@@ -15,6 +15,7 @@ var UserProfileSchema = mongoose.Schema({
     email: String,
     password: String,
     mobile: String,
+    wechatNumber: String,
     current_school: String,
     current_major: String,
     language_level: String,
