@@ -24,7 +24,13 @@ var email = "1043099804";
 // });
 
 var realname ="aa";
-UserProfileModel.updateEmailByRealname( realname,"acccd",function(error,userprofile){
+
+var teacher = {
+	name: 'sexteacher',
+	sex: 'female',
+	id: 123
+}
+UserProfileModel.updateEmailByRealname( realname,teacher,function(error,userprofile){
 	if (error) {
 		console.log(error);
 	} else {
