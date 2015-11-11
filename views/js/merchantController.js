@@ -1,6 +1,7 @@
 var MerchantApp = angular.module('MerchantApp', ['ngResource', 'ngRoute','angularFileUpload']);
 
 MerchantApp.controller('MerchantProfileController', function($scope, $resource, $routeParams, $location ,FileUploader) {
+	//file upload
 	var uploader = $scope.uploader = new FileUploader({
 	    url: '/merchant/profile/picture',
 	});
@@ -10,7 +11,8 @@ MerchantApp.controller('MerchantProfileController', function($scope, $resource, 
 	uploader.filters.push({
 	    name: 'customFilter',
 	    fn: function(item /*{File|FileLikeObject}*/, options) {
-	        return this.queue.length < 10;
+	    	var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+	    	return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
 	    }
 	});
 
@@ -20,7 +22,7 @@ MerchantApp.controller('MerchantProfileController', function($scope, $resource, 
 	    console.info('onWhenAddingFileFailed', item, filter, options);
 	};
 	uploader.onAfterAddingFile = function(fileItem) {
-	    console.info('onAfterAddingFile', fileItem);
+	    fileItem.upload();
 	};
 	uploader.onAfterAddingAll = function(addedFileItems) {
 	    console.info('onAfterAddingAll', addedFileItems);
@@ -29,7 +31,7 @@ MerchantApp.controller('MerchantProfileController', function($scope, $resource, 
 	    console.info('onBeforeUploadItem', item);
 	};
 	uploader.onProgressItem = function(fileItem, progress) {
-	    console.info('onProgressItem', fileItem, progress);
+	    $scope.fileUp_load_Progress = progress;
 	};
 	uploader.onProgressAll = function(progress) {
 	    console.info('onProgressAll', progress);
@@ -44,30 +46,14 @@ MerchantApp.controller('MerchantProfileController', function($scope, $resource, 
 	    console.info('onCancelItem', fileItem, response, status, headers);
 	};
 	uploader.onCompleteItem = function(fileItem, response, status, headers) {
-	    console.info('onCompleteItem', fileItem, response, status, headers);
+		$scope.upload_result = response.mess;
 	};
 	uploader.onCompleteAll = function() {
 	    console.info('onCompleteAll');
 	};
 
 	console.info('uploader', uploader);
-
+	console.log($scope.profile);
 
 	// -------------------------------
-
-
-	var controller = $scope.controller = {
-	    isImage: function(item) {
-	        var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
-	        return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
-	    }
-	};
-
-	$scope.imgupload = function(){
-		$resource("/merchant/profile/picture").save({
-			file: $scope.profile
-		}, function(res) {
-			console.log(res.mess);
-		});
-	};
 });
