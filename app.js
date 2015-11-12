@@ -50,7 +50,7 @@ express.response.sendRedirect = function(url) {
 var app = express();
 
 // uncomment after placing your favicon in /public
-app.use(favicon(__dirname + '/storage/public/logo.jpg'));
+app.use(favicon(__dirname + '/views/storage/public/logo.jpg'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

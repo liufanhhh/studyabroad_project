@@ -145,15 +145,19 @@
 		  <input type="file" name="logo" accept="image/*"  nv-file-select=""  uploader="uploader" required/>
 		  	<span ng-show = 'upload_result'>
 			{{upload_result}}
+			<button ng-click = "">删除</button>
 			</span>
 		</div>
 
-
+		<div class="form-group has-feedback" >
 		<label>营业执照: </label>
-		<input type="file" ng-model="profile" accept="image/*"  nv-file-select=""  uploader="uploader" required/>
-			Name: {{ uploader.queue[0].file.name }} Size: {{ uploader.queue[0].file.size/1024/1024|number:2 }} Mb
-		</br>
-			Progress: {{ uploader.progress }}
+		<input type="file" accept="image/*"  nv-file-select=""  uploader="uploader" required/>
+		  	<span ng-show = 'upload_result'>
+			{{upload_result}}
+			<button ng-click = "">删除</button>
+			</span>
+		</div>
+		<input type="file" ng-model="profile">
 
 			<div>
 	  			<input name="check" type="checkbox" ng-model="merchant.check"> 同意遵守商家协定

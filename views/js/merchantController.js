@@ -5,6 +5,9 @@ MerchantApp.controller('MerchantProfileController', function($scope, $resource, 
 	var uploader = $scope.uploader = new FileUploader({
 	    url: '/merchant/profile/picture',
 	});
+	var uploader1 = $scope.uploader1 = new FileUploader({
+	    url: '/merchant/profile/picture',
+	});
 
 	// FILTERS
 
@@ -50,10 +53,11 @@ MerchantApp.controller('MerchantProfileController', function($scope, $resource, 
 	};
 	uploader.onCompleteAll = function() {
 	    console.info('onCompleteAll');
+	    console.info('profile',$scope.profile);
 	};
 
 	console.info('uploader', uploader);
-	console.log($scope.profile);
+
 
 	// -------------------------------
 });

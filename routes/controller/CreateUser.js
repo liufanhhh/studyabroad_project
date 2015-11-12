@@ -1,4 +1,5 @@
 var Q = require('q');
+var fs = require('fs');
 
 var UserProfileModel = require("../../model/UserProfileModel.js");
 var MerchantProfileModel =  require("../../model/MerchantProfileModel.js");
@@ -14,8 +15,8 @@ exports.newuserCreate = function(req, res) {
     var email = req.body.email;
     var password = req.body.password;
     var userid = req.body.userid;
-    var user_status = req.body.user_status;
-    var message = "Hello World";
+
+
 
     var findUserByNickname = Q.nfbind(UserProfileModel.findUserByNickname.bind(UserProfileModel));
 
@@ -41,8 +42,9 @@ exports.newuserCreate = function(req, res) {
         var deferred = Q.defer();
         if (exist==0){
           var newPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-            UserProfileModel.createSimpleUser(user_nickname,user_realname,email,newPassword,userid,user_status,function(err,user){
+            UserProfileModel.createSimpleUser(user_nickname,user_realname,email,newPassword,userid,function(err,user){
                 deferred.resolve(user);
+                fs.mkdir('../views/storage/private/'+userid);
                 message = "注册成功";
             });
         }else{
@@ -62,4 +64,5 @@ exports.newuserCreate = function(req, res) {
         res.sendError("注册失败");
         console.log(error);
     });
+
 }
