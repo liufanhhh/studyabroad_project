@@ -25,12 +25,12 @@ var email = "1043099804";
 
 var realname ="aa";
 
-var teacher = {
-	name: 'sexteacher',
-	sex: 'female',
-	id: 123
+var language_level = {
+	name: 'IELTS',
+	level: 6.5
 }
-UserProfileModel.updateEmailByRealname( realname,teacher,function(error,userprofile){
+UserProfileModel.updateEmailByRealname ( language_level,function(error,userprofile){
+	console.log("length"+userprofile.language_level[1])
 	if (error) {
 		console.log(error);
 	} else {

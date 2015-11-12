@@ -7,18 +7,14 @@ var mongoose = require("mongoose");
 //-----------------schema for user-----------------//
 
 var MerchantProfileSchema = mongoose.Schema({
+    //merchant information
     merchantid: Number,
-    time: Date,
+    create_time: Date,
     merchant_name: String,
     owner_name: String,
     email: String,
     password: String,
     mobile: String,
-    score:{ 
-        pass_rate: Number,
-        article_score: Number,
-        total_score: Number
-    },
     website: String,
     location: String,
     support_area: Array,
@@ -28,19 +24,28 @@ var MerchantProfileSchema = mongoose.Schema({
     tax_registration_certification: String,
     organization_order_certificaion: String,
     star_teacher: Array,
+    special_area: Array
     notify: {
         mobile: Boolean,
         email: Boolean,
         monthly_email: Boolean 
     },
+
+    // website judgement
+    verification: Boolean,
+    score:{ 
+        pass_rate: Number,
+        article_score: Number,
+        total_score: Number
+    },
+    followup_people: Array,
+    //status
     live: Boolean,
     follower: Array,
+    buyer: Array,
     reputation: Boolean,
-    hierarchy: String,
+    hierarchy: String
 
-
-    language: String,
-    confirm: Boolean
 });
 
 

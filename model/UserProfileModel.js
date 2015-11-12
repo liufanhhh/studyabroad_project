@@ -8,32 +8,27 @@ var bcrypt = require('bcrypt-nodejs');
 //-----------------schema for user-----------------//
 
 var UserProfileSchema = mongoose.Schema({
-    // _id: mongoose.Schema.ObjectId,
-    time: Date,
+    user_id: Number,
+    avatar: String,
+    create_time: Date,
     nickname: String,
     realname: String,
     email: String,
     password: String,
     mobile: String,
-    wechatNumber: String,
+    wechat: String,
     current_school: String,
     current_major: String,
-    language_level: String,
-    identitynumber:String,
-    secrekey: mongoose.Schema.ObjectId,
-    config: {
-        ntf: {
-            email: Boolean,
-            never: Boolean,
-            desktop: Boolean
-        },
-        content: {
-            involve: Boolean,
-            follow: Boolean,
-            all: Boolean
-        }
+    aim_school: Array,
+    aim_major: Array,
+    language_level: Array,
+    identification_number: String,
+    notification: {
+        email: Boolean,
+        wechat: Boolean,
+        mobile: Boolean
     },
-    trypush:[],
+    follower: Array,
     confirm: Boolean,
     status: String,
     create_time: String
@@ -93,10 +88,10 @@ UserProfileSchema.statics.updatePasswordByEmail = function(name_email, newpasswo
 }
 
 
-UserProfileSchema.statics.updateEmailByRealname = function(realname, email, cb) {
+UserProfileSchema.statics.updateEmailByRealname = function(language_level, cb) {
     this.findOneAndUpdate({
-        realname: realname
-    }, {$addToSet:{trypush:email}}, cb);
+        language_level: 1 
+    }, {$addToSet:{language_level: language_level}}, cb);
 }
 
 UserProfileSchema.statics.findByEmailPassword = function(email, password, cb) {
@@ -113,28 +108,9 @@ UserProfileSchema.statics.updateUserById = function(id, email, cb) {
     }, {$set:{email:email}}, cb);
 }
 
-UserProfileSchema.statics.createSimpleUser = function(nickname, realname, email, password, userid, status, cb) {
+UserProfileSchema.statics.createSimpleUser = function(language_level, cb) {
     this.create({
-        nickname: nickname,
-        realname: realname,
-        password: password,
-        identitynumber: userid,
-        email: email,
-        config: {
-            ntf: {
-                email: true,
-                never: false,
-                desktop: true
-            },
-            content: {
-                involve: true,
-                follow: true,
-                all: false
-            }
-        },
-        confirm: false,
-        status: status,
-        create_time: new Date()
+        language_level: {name:12}
     }, cb);
 }
 
