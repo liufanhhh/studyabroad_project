@@ -6,7 +6,6 @@ import CONFIG from './../config.json';
 
 export default  ($parse, FileUploader, FileSelect) => {
 
-
     return {
         link: (scope, element, attributes) => {
             var uploader = scope.$eval(attributes.uploader);

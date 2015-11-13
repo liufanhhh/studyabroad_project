@@ -142,7 +142,7 @@
 
 		<div class="form-group has-feedback" >
 		  <label>展示图标: </label>
-		  <input type="file" name="logo" accept="image/*"  nv-file-select=""  uploader="uploader" required/>
+		  <input type="file" name="logo" accept="image/*"  nv-file-select="" options="{url:'/aa',id=cc}"  uploader="uploader" required/>
 		  	<span ng-show = 'upload_result'>
 			{{upload_result}}
 			<button ng-click = "">删除</button>
@@ -151,7 +151,7 @@
 
 		<div class="form-group has-feedback" >
 		<label>营业执照: </label>
-		<input type="file" accept="image/*"  nv-file-select=""  uploader="uploader" required/>
+		<input type="file" accept="image/*" ng-click="show()"  nv-file-select=""  uploader="uploader" required/>
 		  	<span ng-show = 'upload_result'>
 			{{upload_result}}
 			<button ng-click = "">删除</button>

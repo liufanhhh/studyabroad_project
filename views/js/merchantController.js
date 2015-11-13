@@ -3,12 +3,10 @@ var MerchantApp = angular.module('MerchantApp', ['ngResource', 'ngRoute','angula
 MerchantApp.controller('MerchantProfileController', function($scope, $resource, $routeParams, $location ,FileUploader) {
 	//file upload
 	var uploader = $scope.uploader = new FileUploader({
-	    url: '/merchant/profile/picture',
-	});
-	var uploader1 = $scope.uploader1 = new FileUploader({
-	    url: '/merchant/profile/picture',
+	    url: '/aa',
 	});
 
+	$scope.test_url = "aaa";
 	// FILTERS
 
 	uploader.filters.push({
@@ -18,13 +16,16 @@ MerchantApp.controller('MerchantProfileController', function($scope, $resource, 
 	    	return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
 	    }
 	});
-
+	$scope.show = function(){
+		$scope.test_url = 'bbb';
+	}
 	// CALLBACKS
 
 	uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
 	    console.info('onWhenAddingFileFailed', item, filter, options);
 	};
 	uploader.onAfterAddingFile = function(fileItem) {
+	    fileItem.url = '/'+$scope.test_url;
 	    fileItem.upload();
 	};
 	uploader.onAfterAddingAll = function(addedFileItems) {
