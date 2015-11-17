@@ -9,13 +9,14 @@ exports.userSignUpEnter = function(req,res) {
     res.sendfile("./views/SignUpLogin/signUp.html");
 }
 
-exports.newuserCreate = function(req, res) {
+exports.newUserCreate = function(req, res) {
     var user_realname = req.body.realname;
     var user_nickname = req.body.nickname;
     var email = req.body.email;
     var password = req.body.password;
-    var userid = req.body.userid;
-
+    var id_number = req.body.id_number;
+    var message = "";
+    console.log('aa');
 
 
     var findUserByNickname = Q.nfbind(UserProfileModel.findUserByNickname.bind(UserProfileModel));
@@ -41,11 +42,20 @@ exports.newuserCreate = function(req, res) {
     var emailFind = function(exist){
         var deferred = Q.defer();
         if (exist==0){
-          var newPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-            UserProfileModel.createSimpleUser(user_nickname,user_realname,email,newPassword,userid,function(err,user){
-                deferred.resolve(user);
-                fs.mkdir('../views/storage/private/'+userid);
-                message = "注册成功";
+            var newPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+            UserProfileModel.countUserAmount(function(err,user_amount){
+                UserProfileModel.createSimpleUser(user_nickname,user_realname,email,newPassword,id_number, user_amount, function(err,user){
+                    deferred.resolve(user);
+                    fs.mkdir('../../views/storage/private/'+user_amount, function(err){
+                        if (err) {
+                            console.log(err);
+                            message = "注册失败";
+                        }else{
+                            message = "注册成功";
+                        }
+                    });
+
+                });                
             });
         }else{
             deferred.resolve(1);
@@ -59,9 +69,10 @@ exports.newuserCreate = function(req, res) {
     .then(emailFind)
     .then(
     function(data){
-        res.sendSuccess(message);
+        res.sendRedirect('/login',message);
+        console.log(message);
     },function(error){
-        res.sendError("注册失败");
+        res.sendError(message);
         console.log(error);
     });
 

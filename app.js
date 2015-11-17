@@ -40,15 +40,16 @@ express.response.sendData = function(data, mess) {
         data: data
     });
 }
-express.response.sendRedirect = function(url) {
+express.response.sendRedirect = function(url,data) {
     this.send({
         status: 2,
-        mess: url,
-        data: null
+        url: url,
+        data: data
     });
 }
 var app = express();
-
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 // uncomment after placing your favicon in /public
 app.use(favicon(__dirname + '/views/storage/public/logo.jpg'));
 app.use(logger('dev'));
