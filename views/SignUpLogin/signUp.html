@@ -34,7 +34,7 @@
 			
 		<div class="form-group has-feedback" ng-class="{ 'has-error' : loginForm.name.$invalid && !loginForm.name.$pristine, 
 		'has-success' : loginForm.name.$valid }">
-			<label>昵称：</label>
+			<label>用户姓名：</label>
 			<input name="name" class="form-control" type="text" ng-model="person.name" ng-minlength=5 required >
 			<p class="help-block" ng-show="loginForm.name.$error.required && !loginForm.name.$pristine">该项必填</p>
 			<p class="help-block" ng-show="loginForm.name.$error.minlength && !loginForm.name.$pristine">姓名最小长度为5</p>
@@ -42,14 +42,6 @@
 			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm.name.$invalid && !loginForm.name.$pristine"></span>
 		</div>
 
-		<div class="form-group has-feedback" ng-class="{ 'has-error' : loginForm.realname.$invalid && !loginForm.realname.$pristine, 
-		'has-success' : loginForm.realname.$valid }">
-			<label>真实姓名：</label>
-			<input name="realname" class="form-control" type="text" ng-model="person.realname" required >
-			<p class="help-block" ng-show="loginForm.realname.$error.required && !loginForm.realname.$pristine">该项必填</p>
-			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm.realname.$valid"></span>
-			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm.realname.$invalid && !loginForm.name.$pristine"></span>
-		</div>
 
 		<div class="form-group has-feedback" ng-class="{ 'has-error' : loginForm.email.$invalid && !loginForm.email.$pristine,
 		'has-success' : loginForm.email.$valid }">
@@ -83,14 +75,14 @@
 			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm.password_confirmation.$invalid && !loginForm.password_confirmation.$pristine"></span>
 		</div>
 
-		<div class="form-group has-feedback" ng-class="{ 'has-success' : (loginForm.id_number.$invalid && !loginForm.id_number.$pristine)||(!{{id_numberValid}} && !loginForm.id_number.$pristine), 
-		'has-success' : loginForm.id_number.$valid&&{{id_numberValid}}}">
+		<div class="form-group has-feedback" ng-class="{ 'has-success' : (loginForm.userid.$invalid && !loginForm.userid.$pristine)||(!{{useridValid}} && !loginForm.userid.$pristine), 
+		'has-success' : loginForm.userid.$valid&&{{useridValid}}}">
 			<label>身份证号：</label>
-			<input name="id_number" class="form-control" type="text" ng-model="person.id_number" required >
-			<p class="help-block" ng-show="loginForm.id_number.$error.required && !loginForm.id_number.$pristine">该项必填</p>
-			<p class="help-block" ng-show="{{id_numberValid}} && !loginForm.id_number.$pristine">不符合身份证格式</p>
-			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm.id_number.$valid"></span>
-			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm.id_number.$invalid && !loginForm.id_number.$pristine&&{{id_numberValid}}"></span>
+			<input name="userid" class="form-control" type="text" ng-model="person.userid" required >
+			<p class="help-block" ng-show="loginForm.userid.$error.required && !loginForm.userid.$pristine">该项必填</p>
+			<p class="help-block" ng-show="{{useridValid}} && !loginForm.userid.$pristine">不符合身份证格式</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm.userid.$valid"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm.userid.$invalid && !loginForm.userid.$pristine&&{{useridValid}}"></span>
 		</div>
 
 		<div>
@@ -102,22 +94,11 @@
   		</div>
   		<br>
 <!-- 			除了ng自带的表单验证外，加上密码验证，才可以注册 -->
-  		<button type="submit" class="btn btn-primary" ng-disabled="loginForm.$invalid || !same_password||{{id_numberValid}}" >注册</button>
+  		<button type="submit" class="btn btn-primary" ng-disabled="loginForm.$invalid || !same_password||{{useridValid}}" >注册</button>
  
 		</form>
 
-		<div ng-bind = "register_result">
-
-		</div>
-
-		<div>
-			<button ng-click="findUser()">按邮箱查找</button>
-			<input ng-model = "user_email">
-		</div>
-		<div>
-			<button ng-click="findUserNew()">按用户名查找</button>
-			<input ng-model = "user_name">
-		</div>
+		 
 
    </div>
   

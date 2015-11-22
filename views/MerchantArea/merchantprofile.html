@@ -2,28 +2,17 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<!-- The import of the css -->
-	<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../css/merchant-form.css">
 
-	
-	<!-- The import of the javascript -->
-	<script src="/bower_components/jquery/dist/jquery.min.js"></script>
-	<script src="/bower_components/angular/angular.min.js"></script>
-	<script src="/bower_components/angular-resource/angular-resource.min.js"></script>
-	<script src="/bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
-	<script src="/bower_components/angular-route/angular-route.min.js"></script>
-	<script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-	<script src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
-	<script src="/bower_components/angular-strap/dist/modules/modal.min.js"></script>
-	<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
 	<script src="../js/merchantController.js"></script>
     
-
+    <link rel="stylesheet" href="../css/merchant-form.css">
 </head>	
 
-<body ng-app="MerchantApp">
+<body>
 
+<div ng-app="MerchantProfileApp">
 
 	<div ng-controller="MerchantProfileController" class="merchant-form">
 		<h1>商家注册</h1>
@@ -140,35 +129,18 @@
 		</div>
 
 
-		<div class="form-group has-feedback" >
-		  <label>展示图标: </label>
-		  <input type="file" name="logo" accept="image/*"  nv-file-select="" options="{url:'/aa',id=cc}"  uploader="uploader" required/>
-		  	<span ng-show = 'upload_result'>
-			{{upload_result}}
-			<button ng-click = "">删除</button>
-			</span>
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : merchantForm.business_licence.$invalid && !merchantForm.business_licence.$pristine, 
+		'has-success' : merchantForm.business_licence.$valid }">
+		  <label>merchant logo: </label>
+		  <input type="file" name="logo" accept="image/*" required >
+			<p class="help-block" ng-show="merchantForm.business_licence.$error.required && !merchantForm.business_licence.$pristine">该项必填</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="merchantForm.business_licence.$valid"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="merchantForm.business_licence.$invalid && !merchantForm.business_licence.$pristine"></span>
 		</div>
 
-		<div class="form-group has-feedback" >
-		<label>营业执照: </label>
-		<input type="file" accept="image/*" ng-click="show()"  nv-file-select=""  uploader="uploader" required/>
-		  	<span ng-show = 'upload_result'>
-			{{upload_result}}
-			<button ng-click = "">删除</button>
-			</span>
-		</div>
-		<input type="file" ng-model="profile">
 
 			<div>
 	  			<input name="check" type="checkbox" ng-model="merchant.check"> 同意遵守商家协定
 	  		</div>
-	  	</form>
-	 </div>
-	 <div>
-	 	<img ng-src="/storage/aa.jpg">
-	 </div>
-</body>
-
-
-</html>
-
+	  		<br>
+	  		<button type="submit" class="btn btn-primary" ng-disabled="merchantForm.$invalid" >注册</button>

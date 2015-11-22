@@ -1,3 +1,17 @@
+body, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, menu, nav, section {
+margin: 0;
+padding: 0;
+}
+
+a{
+	color: #333;
+	text-decoration: none;
+}
+
+i, em {
+font-style: normal;
+}
+
 .main-content {
 	padding-top: 23px;
 }
@@ -35,7 +49,7 @@
 }
 
 .main-content .teacher-heading {
-	padding: 10px 8px;
+
 }
 
 .teacher-heading {
@@ -46,6 +60,9 @@
 	font-size: 12px;
 }
 
+.panel {
+ 	border-radius: 0;
+ }
 /*begin "top-ins" css*/
 .top-ins img {
 	height: 70px;
@@ -87,4 +104,139 @@
 	text-align: left;
 	padding-left: 10px;
 	font-size: 13px;
+}
+
+
+.content {
+	background-color: rgb(255, 255, 255);
+	border-bottom-color: rgb(153, 153, 153);
+	border-bottom-style: none;
+	border-bottom-width: 0px;
+	border-image-outset: 0px;
+	border-image-repeat: stretch;
+	border-image-slice: 100%;
+	border-image-source: none;
+	border-image-width: 1;
+	border-left-color: rgb(233, 233, 233);
+	border-left-style: solid;
+	border-left-width: 1px;
+	border-right-color: rgb(233, 233, 233);
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-top-color: rgb(233, 233, 233);
+	border-top-style: solid;
+	border-top-width: 1px;
+	color: rgb(153, 153, 153);
+	display: block;
+	font-family: 'Microsoft YaHei', 'Hiragino Sans GB';
+	font-size: 12px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	height: 1000px;
+	line-height: 18px;
+	margin-bottom: 10px;
+	width: 766px;
+}
+
+.filter-box {
+	border-bottom-color: rgb(238, 238, 238);
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	height: 44px;
+	line-height: 44px;
+	padding-bottom: 0px;
+	padding-left: 19px;
+	padding-right: 45px;
+	padding-top: 0px;
+	position: relative;
+}
+
+.filter-box 
+.filter-service {
+	float: right;
+}
+
+.filter-box 
+.filter-service li {
+	position: relative;
+	float: left;
+	z-index: 1;
+	text-align: center;
+}
+
+.filter-box
+.filter-service em {
+	position: absolute;
+	top: 0;
+	right: -1px;
+	color: #e0e0e0;
+}
+
+.filter-box
+.filter-service a {
+	display: block;
+	padding: 0 15px;
+}
+
+.icon-arr-down {
+	background-image: url(https://j3.s2.dpfile.com/mod/app-main-search/1.1.4/css/i/sprite.png);
+	background-position: -40px -160px;
+	background-repeat: no-repeat;
+	color: rgb(51, 51, 51);
+	cursor: auto;
+	display: inline-block;
+	height: 9px;
+	line-height: 44px;
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+	margin-left: 3px;
+	text-align: center;
+	vertical-align: middle;
+	width: 7px;
+}
+
+.shop-list {
+	position: relative;
+	z-index: 9;
+	padding-top: 0;
+}
+
+.shop-list li {
+	position: relative;
+	zoom: 1;
+	float: left;
+	padding-left: 154px;
+	padding: 25px 15px 25px 20px;
+	border-bottom: 1px solid #e9e9e9;
+	display: block;
+}
+
+.shop-list li .pic {
+	position: absolute;
+	left: 20px;
+	top: 25px;
+	float: left;
+	margin-right: 14px;
+}
+
+.shop-list li .txt {
+	position: relative;
+	height: 90px;
+	line-height: 30px;
+}
+
+.shop-list li .svr-info {
+	border-top: dashed 1px #eee;
+	padding: 10px 0;
+	margin-bottom: -22px;
+}
+
+.shop-list li .operate {
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	height: 14px;
+	line-height: 14px;
 }

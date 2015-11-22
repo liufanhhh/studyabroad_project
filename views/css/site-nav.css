@@ -1,29 +1,52 @@
 
 .site-nav {
-	background-color: #eee;	
-	height: 35px;
+	background-color: #f1f1f1;	
+	height: 45px;
 }
-
-.site-nav .container {
-	height: inherit;
-}
-
-.site-nav a {
-	width: 52px;
-	color: black;
-	text-decoration: none;
-	font-size: 12px;
-}
-
-
-.site-nav .container div {
-	height: inherit;
-}
-
-.site-nav .left li {
+.stie-nav .nav-left {
 	float: left;
 }
-
-.site-nav .right li {
+.site-nav .nav-right {
 	float: right;
+}
+.site-nav a,.site-nav em,.site-nav img,.site-nav i {
+	display: block;
+	float: left;
+}
+.site-nav a, .site-nav em {
+	text-decoration: none;
+	font-size: 14px;
+	font-family: "Microsoft YaHei";
+}
+.site-nav .nav-left a {
+	color: #666666;
+	margin: 14px 30px 0 0;
+}
+#log-reg {
+	float: left;
+}
+#log-reg a, #log-reg em {
+	margin: 14px 0 0 0;
+	color: #6699cc;
+}
+#icon-lock {
+	margin: 13px 3px 0 0;
+}
+#contactus {
+	float: left;
+	padding: 0 0px;
+	margin: 0 0 0 10px;
+	width: 100px;
+	height: 45px;
+	background: url(../images/contactus-bg.gif) no-repeat center;
+}
+#contactus a, #contactus i {
+	color: #fff;
+}
+#contactus a {
+	font-size: 14px;
+	margin: 14px 5px 0 6px;
+}
+#contactus i {
+	margin: 15px 0 0 12px;
 }

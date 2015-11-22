@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var busboy = require('connect-busboy');
+
 var db = require('./connectDB.js')
 var routes = require('./routes/index');
 
@@ -40,25 +40,23 @@ express.response.sendData = function(data, mess) {
         data: data
     });
 }
-express.response.sendRedirect = function(url,data) {
+express.response.sendRedirect = function(url) {
     this.send({
         status: 2,
-        url: url,
-        data: data
+        mess: url,
+        data: null
     });
 }
 var app = express();
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
+app.set('view engine', 'ejs');
+app.engine('.html', require('ejs').renderFile);
 // uncomment after placing your favicon in /public
-app.use(favicon(__dirname + '/views/storage/public/logo.jpg'));
+app.use(favicon(__dirname + '/storage/public/logo.jpg'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(busboy());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/views')));
-
 
 require('./passport-config')(passport);
 

@@ -2,7 +2,6 @@
 
 exports.indexpageEnter = function(req, res) {
     console.log("enter saindex.html");
-	// return res.sendfile('./views/MerchantArea/merchantprofile.html');
     res.sendfile("./views/saindex.html");
 }
 

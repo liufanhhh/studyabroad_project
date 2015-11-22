@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="cn" ng-app="IndexApp">
+<html lang="cn" ng-app="IndexAPP">
   <head>
     <title>留学点评网</title>
 
@@ -11,123 +11,106 @@
     <meta name="keywords" content="留学点评网 团购留学" />
 
     <!-- The import of the css -->
-    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/index.css" />
-    
+    <link rel="stylesheet" href="../css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+   
     <!-- The import of the javascript -->
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/bower_components/angular/angular.min.js"></script>
     <script src="/bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="/bower_components/angular-route/angular-route.min.js"></script>
-    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <script src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
-    <script src="/bower_components/angular-strap/dist/modules/modal.min.js"></script>
-    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="js/saindex.js"></script>
+    <style type="text/css">
+    </style>
   </head>
 
   <body>
-
-    <div class="site-nav">
-      <div class="container">
-
-        <div class="pull-left table-container">
-          <a href="#">用户名</a>
-          <a href="#">消息</a>
-          <a href="#">个人中心</a>
-          <a href="/merchant/cooperate">商户中心</a>
-        </div>
-
-        <div class="pull-right table-container">
-          <a href="#">反馈</a>
-          <a href="/user/login/page">登陆</a>
-          <a href="/user/signup/page">注册</a>
-        </div>
-
-      </div> <!-- end of "container" -->
-    </div> <!-- end of "site-nav" -->
-
-
-
-    <div class="page-header">
-      <div class="container">
-        <div class="row">
-
-          <div class="col-md-1 col-md-offset-1">
-            <a href="#">
-            </a>
+    <div class="wrapper">
+      <div class="site-nav">
+        <div class="container">
+          <div class="nav-left">
+            <a href="#">我的消息</a>
+            <a href="#">个人中心</a>
+            <a href="/merchant/cooperate">商户中心</a>
           </div>
 
-          <div class="col-md-2" style="width: 12%">
-            <div class="place table-container">
-              北京<a href="#">&#9660</a>
+          <div class="nav-right">
+            <!-- icon-lock should act as bg, but now it is an img -->
+            <img oncontextmenu="return false" ondragstart="return false" onselectstart="return false"
+            onselect="document.selection.empty()" src="images/icon-lock.gif" id="icon-lock">
+            <div id="log-reg">
+              <a href="javascript:void(0)">登陆</a><em>/</em>
+              <a href="/user/signup/page">注册</a>
             </div>
+            <div id="contactus">
+              <i class="icon-envelope-alt"></i><a href="#">联系我们</a>
+            </div>
+            <!-- <img oncontextmenu="return false" ondragstart="return false" onselectstart="return false"
+            onselect="document.selection.empty()" src="images/contactus-bg.gif" id="contactus-bg" alt="contactus-bg"> -->
           </div>
 
-          <div class="col-md-7">
-            <div class="search-box">
-              <div class="search-input pull-left table-container">
-                <div><input type="text" placeholder="搜索机构或地区团购" /></div>
-              </div>
-              <!-- <input type="text" /> -->
-              <a href="#" class="search-button table-container pull-right"><p style="color: white">Go</p></a>
-            </div>
+        </div> <!-- end of "container" -->
+      </div> <!-- end of "site-nav" -->
 
-            <div class="hot-key">
-              <a href="#">一对一</a>
-              <a href="#">雅思培训</a>
-              <a href="#">留学</a>
-            </div>
+
+
+      <div class="page-header">
+        <div class="container">
+          <div id="logo">
+            <a href="#">聚留学</a>
           </div>
+          <div id="search-box">
+            <input type="text" id="text">
+            <button id="button"><em>搜索</em></button>
+          </div>
+        </div> <!-- end of "container" -->
+      </div> <!-- end of "page-header" -->
 
-
+      <div class="shop-nav">
+        <div class="container">
+          <div id="category">
+            <em>所有项目</em>
+          </div>
+          <div id="shop-nav-items">
+            <ul id="nav-items">
+              <li id="nav-abroad">
+                留学
+              </li>
+              <li id="nav-121">
+                一对一
+              </li>
+              <li id="ielts">
+                雅思培训
+              </li>
+            </ul>
+          </div>
         </div>
-        
-      </div> <!-- end of "container" -->
-    </div> <!-- end of "page-header" -->
-
-
-    <div class="main-nav">
-      <div class="container"> 
-        <div class="inner-main-nav table-container pull-left">
-          <a href="#/">留学点评</a>
-          <a href="#/groupon">团起来</a>
-          <a href="#/school">学校点评</a>
-          <a href="#/activity">同城活动</a>
-          <a href="#/download">热门资源下载</a>
-          <a href="#">导航(这个不用)</a>          <!-- 导航点进去之后是什么效果？ -->
-        </div>
-      </div> <!-- end of "container" -->
-    </div> <!-- end of "main-nav" -->
-
-    <div ng-view></div>
-
-
-    <div class="container">
-      <hr>
-      <div class="footer" style="text-align: center">
-        XX COMPANY @2015
-        <br>
-        <br>
       </div>
-    </div>  
 
-    <form action="/login" method="post">
-    
-      <h1>Login Page</h1>
-      
-      <label for="email">Email: </label>
-      <input id="email" type="text" name="email">
-      
-      <br>
-      <label for="password">Password: </label>
-      <input id="password" type="password" name="password">
+      <div class="match-box">
+        <div class="container">
+          <div id="selector">
+            <div class="selectorLine">
+              <div class="sl-parentkey">
+                机构所在地：
+              </div>
+              <div class="sl-subkey">
+                <ul>
+                  <li>
+                    不限
+                  </li>
+                  <li>
+                    北京
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <br>
-      <br>
-      <input type="submit" value="Login">
-    
-    </form>
+      <div ng-view></div>
 
+    </div>
   </body>
 </html>

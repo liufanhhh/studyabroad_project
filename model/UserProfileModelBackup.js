@@ -3,11 +3,10 @@
  */
 
 var mongoose = require("mongoose");
-var bcrypt = require('bcrypt-nodejs');
 
 //-----------------schema for user-----------------//
 
-var UserProfileSchema = mongoose.Schema({
+var UserSchema = mongoose.Schema({
     // _id: mongoose.Schema.ObjectId,
     time: Date,
     nickname: String,
@@ -15,11 +14,15 @@ var UserProfileSchema = mongoose.Schema({
     email: String,
     password: String,
     mobile: String,
-    current_school: String,
-    current_major: String,
-    language_level: String,
+    school: String,
+    major: String,
+    skill: String,
+    job: String,
+    location: String,
+    website: String,
+    language: String,
     identitynumber:String,
-    secrekey: mongoose.Schema.ObjectId,
+    pic: mongoose.Schema.ObjectId,
     config: {
         ntf: {
             email: Boolean,
@@ -32,35 +35,24 @@ var UserProfileSchema = mongoose.Schema({
             all: Boolean
         }
     },
-    trypush:[],
     confirm: Boolean,
-    status: String,
-    create_time: String
 });
 
-//---------Shuai's method for hashing the password------------
-UserProfileSchema.methods.generateHash = function(password) {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-}
-
-UserProfileSchema.methods.isValidPassword = function(password) {
-  return bcrypt.compareSync(password, this.password); 
-}
 
 //----------------static method--------------------//
-UserProfileSchema.statics.findUserById = function(id, cb) {
+UserSchema.statics.findUserById = function(id, cb) {
     this.findOne({
         _id: id
     }, cb);
 }
 
-UserProfileSchema.statics.findUserByNickname = function(nickname, cb) {
+UserSchema.statics.findUserByNickname = function(nickname, cb) {
     this.findOne({
         nickname:nickname
     }, cb);
 }
 
-UserProfileSchema.statics.findUserByEmail = function(email, cb) {
+UserSchema.statics.findUserByEmail = function(email, cb) {
     this.findOne({
         email: email
     }, cb);
@@ -70,7 +62,7 @@ function escapeRegExp(str) {
   return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 }
 
-UserProfileSchema.statics.findUsersByNameOrEmail = function(name_email, cb) {
+UserSchema.statics.findUsersByNameOrEmail = function(name_email, cb) {
     qs = escapeRegExp(name_email);
     this.find({
         $or: [{
@@ -85,20 +77,15 @@ UserProfileSchema.statics.findUsersByNameOrEmail = function(name_email, cb) {
     }, cb);
 
 }
-UserProfileSchema.statics.updatePasswordByEmail = function(name_email, newpassword, cb){
+UserSchema.statics.updatePasswordByEmail = function(name_email, newpassword, cb){
     var conditions = {email: name_email};
     var update = {$set :{password: newpassword}};
     this.update(conditions,update,false,cb)
 }
 
 
-UserProfileSchema.statics.updateEmailByRealname = function(realname, email, cb) {
-    this.findOneAndUpdate({
-        realname: realname
-    }, {$addToSet:{trypush:email}}, cb);
-}
 
-UserProfileSchema.statics.findByEmailPassword = function(email, password, cb) {
+UserSchema.statics.findByEmailPassword = function(email, password, cb) {
     this.findOne({
         email: email,
         password: password,
@@ -106,18 +93,16 @@ UserProfileSchema.statics.findByEmailPassword = function(email, password, cb) {
     }, cb);
 }
 
-UserProfileSchema.statics.updateUserById = function(id, email, cb) {
+UserSchema.statics.updateUserById = function(id, new_user_doc, cb) {
     this.findOneAndUpdate({
         _id: id
-    }, {$set:{email:email}}, cb);
+    }, new_user_doc, cb);
 }
 
-UserProfileSchema.statics.createSimpleUser = function(nickname, realname, email, password, userid, status, cb) {
+UserSchema.statics.createSimpleUser = function(nickname, email, password, cb) {
     this.create({
         nickname: nickname,
-        realname: realname,
         password: password,
-        identitynumber: userid,
         email: email,
         config: {
             ntf: {
@@ -131,13 +116,12 @@ UserProfileSchema.statics.createSimpleUser = function(nickname, realname, email,
                 all: false
             }
         },
-        confirm: false,
-        status: status,
-        create_time: new Date()
+        confirm: true,
+        time: new Date()
     }, cb);
 }
 
-UserProfileSchema.statics.createInviteUser = function(email, name, cb) {
+UserSchema.statics.createInviteUser = function(email, name, cb) {
     // 外部保证本步更新或者创建的User均是没有确认注册的
     this.findOneAndUpdate({
         email: email
@@ -163,7 +147,7 @@ UserProfileSchema.statics.createInviteUser = function(email, name, cb) {
     }, cb);
 }
 
-UserProfileSchema.statics.confirmInviteById = function(id, nickname, password, cb) {
+UserSchema.statics.confirmInviteById = function(id, nickname, password, cb) {
     this.findOneAndUpdate({
         _id: id,
     }, {
@@ -174,13 +158,13 @@ UserProfileSchema.statics.confirmInviteById = function(id, nickname, password, c
     }, cb);
 }
 
-UserProfileSchema.statics.removeById = function(id, cb) {
+UserSchema.statics.removeById = function(id, cb) {
     this.remove({
         _id: id,
     })
 }
 
-UserProfileSchema.statics.saveUser = function(user, cb) {
+UserSchema.statics.saveUser = function(user, cb) {
     this.findOneAndUpdate({
         _id: user._id
     }, {
@@ -197,7 +181,7 @@ UserProfileSchema.statics.saveUser = function(user, cb) {
 }
 //---------------non-static method------------------//
 
-UserProfileSchema.method.findByEmailPassword = function(cb) {
+UserSchema.method.findByEmailPassword = function(cb) {
     this.model("User").find({
         email: "yinys08@163.com",
         password: "123"
@@ -207,4 +191,4 @@ UserProfileSchema.method.findByEmailPassword = function(cb) {
 
 //-------------------export-------------------------//
 
-module.exports = mongoose.model("UserProfileModel", UserProfileSchema);
+module.exports = mongoose.model("UserModel", UserSchema);

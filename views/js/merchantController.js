@@ -1,64 +1,51 @@
-var MerchantApp = angular.module('MerchantApp', ['ngResource', 'ngRoute','angularFileUpload']);
+var MerchantProfileApp = angular.module('MerchantProfileAPP', ['ngResource', 'ngRoute']);
 
-MerchantApp.controller('MerchantProfileController', function($scope, $resource, $routeParams, $location ,FileUploader) {
-	//file upload
-	var uploader = $scope.uploader = new FileUploader({
-	    url: '/aa',
-	});
+MerchantProfileApp.controller('MerchantProfileController', function($scope, $resource, $routeParams, $location) {
+	$scope.register_show = false;
+	$scope.login_show = false;
+	$scope.otherfuction_show = false;
+	$scope.feedback_show = false;
+	$scope.agree = true;
+    //注册验证中的密码相同检验
+    $scope.same_password=false;
+    /*  监视密码2的输入，如果输入和密码1的相同，则可以注册。
+    若不同，或者两个密码都为空，则不可注册。*/
+//     $scope.$watch("password_cf", function(newVal,oldVal,scope){
+//         if (newVal === oldVal){
+//         }
+//         else if(!$scope.password_cf){
+//             $scope.same_password=false;
+//         }
+//         else if($scope.password !== $scope.password_cf){
+//             $scope.same_password=false;
+//         }
+//         else if($scope.password === $scope.password_cf){
+//             $scope.same_password=true;
+//         }
+//     });
+// /*  按监视密码2的方法监视密码1*/
+//     $scope.$watch("password", function(newVal,oldVal,scope){
+//         if (newVal === oldVal){
+//         }
+//         else if(!$scope.password){
+//             $scope.same_password=false;
+//         }
+//         else if($scope.password !== $scope.password_cf){
+//             $scope.same_password=false;
+//         }
+//         else if($scope.password === $scope.password_cf){
+//             $scope.same_password=true;
+//         }
+//     });
 
-	$scope.test_url = "aaa";
-	// FILTERS
+//     $scope.register = function() {
+//         $resource("/register").get({
+//             nickname: $scope.nickname,
+//             email: $scope.email,
+//             password: $scope.password
+//         }, function(res) {
+//                 $scope.reg_mess = res.mess;
+//         });
+//     }
 
-	uploader.filters.push({
-	    name: 'customFilter',
-	    fn: function(item /*{File|FileLikeObject}*/, options) {
-	    	var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
-	    	return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
-	    }
-	});
-	$scope.show = function(){
-		$scope.test_url = 'bbb';
-	}
-	// CALLBACKS
-
-	uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
-	    console.info('onWhenAddingFileFailed', item, filter, options);
-	};
-	uploader.onAfterAddingFile = function(fileItem) {
-	    fileItem.url = '/'+$scope.test_url;
-	    fileItem.upload();
-	};
-	uploader.onAfterAddingAll = function(addedFileItems) {
-	    console.info('onAfterAddingAll', addedFileItems);
-	};
-	uploader.onBeforeUploadItem = function(item) {
-	    console.info('onBeforeUploadItem', item);
-	};
-	uploader.onProgressItem = function(fileItem, progress) {
-	    $scope.fileUp_load_Progress = progress;
-	};
-	uploader.onProgressAll = function(progress) {
-	    console.info('onProgressAll', progress);
-	};
-	uploader.onSuccessItem = function(fileItem, response, status, headers) {
-	    console.info('onSuccessItem', fileItem, response, status, headers);
-	};
-	uploader.onErrorItem = function(fileItem, response, status, headers) {
-	    console.info('onErrorItem', fileItem, response, status, headers);
-	};
-	uploader.onCancelItem = function(fileItem, response, status, headers) {
-	    console.info('onCancelItem', fileItem, response, status, headers);
-	};
-	uploader.onCompleteItem = function(fileItem, response, status, headers) {
-		$scope.upload_result = response.mess;
-	};
-	uploader.onCompleteAll = function() {
-	    console.info('onCompleteAll');
-	    console.info('profile',$scope.profile);
-	};
-
-	console.info('uploader', uploader);
-
-
-	// -------------------------------
 });

@@ -1,7 +1,7 @@
 var passport = require('passport');
 
 exports.pageLogin = function(req,res) {
-	return res.sendfile('./views/MerchantArea/merchantprofile.html');
+	return res.sendfile('./views/Login.html');
 }
 
 exports.isLoggedIn = function(req, res) {

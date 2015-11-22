@@ -1,5 +1,4 @@
 var Q = require('q');
-var fs = require('fs');
 
 var UserProfileModel = require("../../model/UserProfileModel.js");
 var MerchantProfileModel =  require("../../model/MerchantProfileModel.js");
@@ -9,15 +8,14 @@ exports.userSignUpEnter = function(req,res) {
     res.sendfile("./views/SignUpLogin/signUp.html");
 }
 
-exports.newUserCreate = function(req, res) {
+exports.newuserCreate = function(req, res) {
     var user_realname = req.body.realname;
     var user_nickname = req.body.nickname;
     var email = req.body.email;
     var password = req.body.password;
-    var id_number = req.body.id_number;
-    var message = "";
-    console.log('aa');
-
+    var userid = req.body.userid;
+    var user_status = req.body.user_status;
+    var message = "Hello World";
 
     var findUserByNickname = Q.nfbind(UserProfileModel.findUserByNickname.bind(UserProfileModel));
 
@@ -42,20 +40,10 @@ exports.newUserCreate = function(req, res) {
     var emailFind = function(exist){
         var deferred = Q.defer();
         if (exist==0){
-            var newPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-            UserProfileModel.countUserAmount(function(err,user_amount){
-                UserProfileModel.createSimpleUser(user_nickname,user_realname,email,newPassword,id_number, user_amount, function(err,user){
-                    deferred.resolve(user);
-                    fs.mkdir('../../views/storage/private/'+user_amount, function(err){
-                        if (err) {
-                            console.log(err);
-                            message = "注册失败";
-                        }else{
-                            message = "注册成功";
-                        }
-                    });
-
-                });                
+          var newPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+            UserProfileModel.createSimpleUser(user_nickname,user_realname,email,newPassword,userid,user_status,function(err,user){
+                deferred.resolve(user);
+                message = "注册成功";
             });
         }else{
             deferred.resolve(1);
@@ -69,11 +57,9 @@ exports.newUserCreate = function(req, res) {
     .then(emailFind)
     .then(
     function(data){
-        res.sendRedirect('/login',message);
-        console.log(message);
+        res.sendSuccess(message);
     },function(error){
-        res.sendError(message);
+        res.sendError("注册失败");
         console.log(error);
     });
-
 }

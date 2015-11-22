@@ -1,0 +1,33 @@
+#selector {
+	float: left;
+	border-width: 1px;
+	border-color: #ddd;
+	border-style: solid;
+	padding: 20px 20px 20px 20px;
+	margin: 10px 0 0 20px;
+	font-family: Arial,宋体;
+	width: 90%;
+}
+#selector .selectorLine {
+	
+}
+#selector .selectorLine .sl-parentkey {
+	color: #888;
+	font-size: 14px;
+	float: left;
+	width: 10%;
+}
+@media (max-width: 1200px) {
+	#selector .selectorLine .sl-parentkey {
+	width: 15%;
+	}
+}
+#selector .selectorLine .sl-subkey {
+	color: #000;
+	font-size: 14px;
+	float: left;
+}
+#selector .selectorLine .sl-subkey ul li {
+	margin: 0 0 0 40px;
+	float: left;
+}
