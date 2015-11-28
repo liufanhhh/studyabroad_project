@@ -7,6 +7,8 @@ var CreateUser = require('./controller/CreateUser.js');
 var Login = require('./controller/Login.js');
 var MerchantArea = require('./controller/MerchantArea.js');
 
+var UserInformation = require('./controller/UserInformation.js');
+
 
 var Test = require('./controller/Test.js');
 
@@ -22,8 +24,8 @@ module.exports = function(app) {
   	app.post('/login', Login.userLogin);
   	app.get('/loginFailure',Login.failedLogin);
   	app.get('/loginSuccess', Login.isLoggedIn);
-
-
+  	app.post('/user/information',UserInformation.getOneUser);
+  	app.get('/user/information',UserInformation.getOneUserNew);
 
 
 

@@ -16,6 +16,7 @@ exports.getOneUserNew = function(req,res) {
 			res.sendError(err);
 		} else{
 			res.sendData(user,"success");
+			$scope.username = res.user.nickname;
 		}
 	});	
 }
