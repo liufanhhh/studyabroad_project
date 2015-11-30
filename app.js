@@ -4,12 +4,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 
 var db = require('./connectDB.js')
 var routes = require('./routes/index');
 
 var passport = require('passport');
-var session = require('express-session');
+
 
 
 

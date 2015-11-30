@@ -13,7 +13,6 @@ var UserInformation = require('./controller/UserInformation.js');
 var Test = require('./controller/Test.js');
 
 
-
 module.exports = function(app) {
 
 	app.all("/",Enter.indexpageEnter);
