@@ -5,7 +5,7 @@ var MerchantProfileModel =  require("../../model/MerchantProfileModel.js");
 var bcrypt = require('bcrypt-nodejs');
 
 exports.userSignUpEnter = function(req,res) {
-    res.sendfile("./views/SignUpLogin/signUp.html");
+    res.sendfile("./views/html/SignUpLogin/signUp.html");
 }
 
 exports.newuserCreate = function(req, res) {

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<!-- The import of the javascript -->
+	<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="/bower_components/angular/angular.min.js"></script>
+	<script src="/bower_components/angular-resource/angular-resource.min.js"></script>
+	<script src="/bower_components/angular-route/angular-route.min.js"></script>
+	<script src="/bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
+	<script src="../../js/merchantController.js"></script>
+   
+    <link rel="stylesheet" href="../css/merchant-form.css">
+</head>	
+
+
+
+<body>
+
+	<div ng-app="MerchantProfileApp">
+
+		<div  ng-controller="MerchantProfileController" class="merchant-form">
+			<div ng-repeat = "file in merchant">
+				<label>{{file.name}}: </label>
+
+				<div nv-file-drop="" uploader="uploader" options="{ url: '{{file.url}}'}">
+				    拖动上传文件到这里
+				</div>
+
+				<input type="file" nv-file-select="" uploader="uploader" options="{ url: '{{file.url}}'}">				
+			</div>
+		</div>
+
+	</div>
+
+</body>
