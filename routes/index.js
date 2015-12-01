@@ -17,7 +17,7 @@ module.exports = function(app) {
 
 	app.all("/",Enter.indexpageEnter);
 	app.all("/user/signup/page",CreateUser.userSignUpEnter);
-  app.all("/user/login/page",Login.pageLogin);
+    app.all("/user/login/page",Login.pageLogin);
 	app.post("/register",CreateUser.newuserCreate);
 	app.get('/login', Login.pageLogin);
 	app.post('/login', Login.userLogin);
@@ -29,7 +29,7 @@ module.exports = function(app) {
 
 
 
-	app.all("/merchant/information/logo",MerchantProfile.merchantPage);
+	app.post("/merchant/information/logo",MerchantProfile.merchantPage);
 
 
 

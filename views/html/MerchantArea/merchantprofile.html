@@ -21,7 +21,18 @@
 	<div ng-app="MerchantProfileApp">
 
 		<div  ng-controller="MerchantProfileController" class="merchant-form">
-			<div ng-repeat = "file in merchant">
+			<input type="text" ng-model = "merchant.name" />商户名称
+			<input type="text" ng-model = "merchant.email" />商户邮箱
+			<input type="text" ng-model = "merchant.contact_person" />联系人姓名
+			<input type="text" ng-model = "merchant.website" />商户官网
+			<input type="text" ng-model = "merchant.location" />商户公司地址
+			<button ng-click = "addedNewArea()">增加一个留学地区</button>
+			<div ng-repeat = "area in merchant.support_area">
+			<input type="text" ng-model = "merchant.support_area[$index]" />
+			</div>
+			
+			<button ng-click="addNewMerchant()">确定添加商户</button>
+			<div ng-repeat = "file in merchant.identification" ng-show = "added_success" >
 				<label>{{file.name}}: </label>
 
 				<div nv-file-drop="" uploader="uploader" options="{ url: '{{file.url}}'}">

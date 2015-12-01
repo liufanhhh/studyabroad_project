@@ -11,6 +11,7 @@ var MerchantInformationSchema = mongoose.Schema({
     merchantid: Number,
     create_time: Date,
     merchant_name: String,
+    contact_person_name: String,
     owner_name: String,
     email: String,
     password: String,
@@ -38,10 +39,12 @@ var MerchantInformationSchema = mongoose.Schema({
         article_score: Number,
         total_score: Number
     },
-    followup_people: [{
+    followup_people: [
+    /*{
         name: String,
         reason: String
-    }],
+    }*/
+    ],
 
     //status
     live: Boolean,

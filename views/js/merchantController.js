@@ -1,27 +1,53 @@
 var MerchantProfileApp = angular.module('MerchantProfileApp', ['ngResource', 'ngRoute','angularFileUpload']);
 
 MerchantProfileApp.controller('MerchantProfileController', function($scope, $resource, $routeParams, $location, FileUploader) {
-	
+	$scope.added_success = false;
 	$scope.merchant = {
-		logo: {
-			name: "商户展示图片",
-			uploading: false,
-			completed: false,
-			url: "/merchant/information/logo"
-		},
-		tax_registration: {
-			name: "营业执照",
-			upload: false,
-			completed: false,
-			url: "/merchant/information/tax_registration"
-		},
-		organization_order: {
-			name: "组织机构代码证",
-			upload: false,
-			completed: false,
-			url: "/merchant/information/organization_order"
+		name: "",
+		email: "",
+		contact_person: "",
+		mobile: "",
+		website: "",
+		location: "",
+		support_area: [],
+		identification: {
+			score:{ 
+			    pass_rate: Number,
+			    article_score: Number,
+			    total_score: Number
+			},
+			logo: {
+				name: "商户展示图片",
+				uploading: false,
+				completed: false,
+				url: "/merchant/information/logo"
+			},
+			business_license: {
+				name: "营业执照",
+				upload: false,
+				completed: false,
+				url: "/merchant/information/business_license"
+			},
+			tax_registration: {
+				name: "公司税号",
+				upload: false,
+				completed: false,
+				url: "/merchant/information/tax_registration"
+			},
+			organization_order: {
+				name: "组织机构代码证",
+				upload: false,
+				completed: false,
+				url: "/merchant/information/organization_order"
+			}
 		}
 	};
+	$scope.merchant.support_area[0] = "";
+
+
+	$scope.addedNewArea = function(){
+		$scope.merchant.support_area.push('');
+	};	
 
 
 	var uploader = $scope.uploader = new FileUploader({removeAfterUpload: true,autoUpload: true});
@@ -41,7 +67,26 @@ MerchantProfileApp.controller('MerchantProfileController', function($scope, $res
 	};
 
 	uploader.onErrorItem = function(fileItem, response, status, headers) {
+		if (fileItem.url === "/merchant/information/logo") {
+			logo.uploading = false;
+		} else if(fileItem.url === "/merchant/information/tax_registration"){
+			tax_registration.uploading = false;
+		} else {
+			organization_order.uploading = false;
+		};
 	    console.info('onErrorItem', fileItem, response, status, headers);
 	};
+
+	uploader.SuccessItem = function(fileItem, response, status, headers) {
+		if (fileItem.url === "/merchant/information/logo") {
+			logo.completed = true;
+		} else if(fileItem.url === "/merchant/information/tax_registration"){
+			tax_registration.completed = true;
+		} else {
+			organization_order.completed = true;
+		};
+	    console.info('onSuccessItem', fileItem, response, status, headers);
+	};
+
 
 });
