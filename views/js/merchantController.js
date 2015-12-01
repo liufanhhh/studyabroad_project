@@ -1,6 +1,7 @@
 var MerchantProfileApp = angular.module('MerchantProfileApp', ['ngResource', 'ngRoute','angularFileUpload']);
 
 MerchantProfileApp.controller('MerchantProfileController', function($scope, $resource, $routeParams, $location, FileUploader) {
+	$scope.change = 0;
 	$scope.added_success = false;
 	$scope.merchant = {
 		name: "",
@@ -10,12 +11,12 @@ MerchantProfileApp.controller('MerchantProfileController', function($scope, $res
 		website: "",
 		location: "",
 		support_area: [],
+		score:{ 
+		    pass_rate: '',
+		    article_score: '',
+		    total_score: ''
+		},
 		identification: {
-			score:{ 
-			    pass_rate: Number,
-			    article_score: Number,
-			    total_score: Number
-			},
 			logo: {
 				name: "商户展示图片",
 				uploading: false,
@@ -42,12 +43,32 @@ MerchantProfileApp.controller('MerchantProfileController', function($scope, $res
 			}
 		}
 	};
-	$scope.merchant.support_area[0] = "";
 
 
 	$scope.addedNewArea = function(){
-		$scope.merchant.support_area.push('');
-	};	
+		$scope.merchant.support_area[$scope.change] = "留学地区"+$scope.change;
+		$scope.change++;
+	};
+
+	$scope.addNewMerchant = function(){
+		$resource("/merchant/profile/create").save({
+			merchant{
+				name: 	$scope.merchant.name,
+				email: 	$scope.merchant.email,
+				contact_person: 	$scope.merchant.contact_person,
+				mobile: 	$scope.merchant.mobile,
+				website: 	$scope.merchant.website,
+				location: 	$scope.merchant.location,
+				support_area: 	$scope.merchant.support_area,
+				pass_rate: 	$scope.merchant.score.pass_rate,
+				article_score: 	$scope.merchant.score.article_score,
+				total_score: $scope.merchant.score.total_score
+			}
+		}, function(res) {
+			console.log(res.mess);
+		});
+	};		
+
 
 
 	var uploader = $scope.uploader = new FileUploader({removeAfterUpload: true,autoUpload: true});
