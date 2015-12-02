@@ -1,9 +1,11 @@
-var MerchantProfileApp = angular.module('MerchantProfileApp', ['ngResource', 'ngRoute','angularFileUpload']);
+var MerchantProfileAdminApp = angular.module('MerchantProfileAdminApp', ['ngResource', 'ngRoute','angularFileUpload']);
 
-MerchantProfileApp.controller('MerchantProfileController', function($scope, $resource, $routeParams, $location, FileUploader) {
-	$scope.website_name;
-	$scope.user_amount;
-	$scope.merchant_amount;
+MerchantProfileAdminApp.controller('MerchantProfileController', function($scope, $resource, $routeParams, $location, FileUploader) {
+	$scope.website = {
+		name: "liufan",
+		user_amount: "",
+		merchant_amount: ""
+	};
 	$scope.change = 0;
 	$scope.added_success = false;
 	$scope.merchant = {
@@ -27,7 +29,7 @@ MerchantProfileApp.controller('MerchantProfileController', function($scope, $res
 				url: "/merchant/information/logo"
 			},
 			business_license: {
-				name: "营业执照",
+				name: "营业执照",            
 				upload: false,
 				completed: false,
 				url: "/merchant/information/business_license"
@@ -48,11 +50,10 @@ MerchantProfileApp.controller('MerchantProfileController', function($scope, $res
 	};
 
 	$scope.addedNewWebsite = function(){
-		console.log($scope.website_name);
 		$resource("/website/profile/create").get({
-			website_name: $scope.website_name,
-			user_amount: $scope.user_amount,
-			merchant_amount: $scope.merchant_amount
+			website_name: $scope.website.name,
+			user_amount: $scope.website.user_amount,
+			merchant_amount: $scope.website.merchant_amount
 		},function (res) {
 			console.log(res.mess);
 		})
@@ -63,8 +64,9 @@ MerchantProfileApp.controller('MerchantProfileController', function($scope, $res
 	};
 
 	$scope.addNewMerchant = function(){
+		console.log(website.name);
 		$resource("/merchant/profile/create").save({
-			merchant{
+			merchant: {
 				name: 	$scope.merchant.name,
 				email: 	$scope.merchant.email,
 				contact_person: 	$scope.merchant.contact_person,

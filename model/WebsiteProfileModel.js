@@ -16,14 +16,14 @@ var WebsiteProfileSchema = mongoose.Schema({
 //----------------static method--------------------//
 
 WebsiteProfileSchema.statics.getInformation = function(name, cb) {
-    this.find({name:name}, cb);
+    this.findOne({name:name}, cb);
 }
 
 WebsiteProfileSchema.statics.createWebsiteInformation = function(name, user_amount, merchant_amount, cb) {
     this.create({
         name: name,
-        user_amount: user_amount||0,
-        merchant_amount: merchant_amount||0
+        user_amount: user_amount,
+        merchant_amount: merchant_amount
     }, cb);
 }
 

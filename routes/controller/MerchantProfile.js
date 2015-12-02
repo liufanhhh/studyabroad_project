@@ -1,26 +1,60 @@
+var Q = require('q');
+
 var MerchantProfile = require("../../model/MerchantProfileModel.js");
 var WebsiteProfile = require("../../model/WebsiteProfileModel.js");
 
 exports.createNewMerchant = function(req,res){
   var merchant = req.body.merchant;
-  var sameName = MerchantProfile.findMerchantByName(merchant.name).exec;
+  var deferred = Q.defer();
+  var websit_name = "liufan";
 
-  var handleNameResult = function(result){
-    if (result==null) {
-      return WebsiteProfile.getInformation().exec;
-    }else {
-      return new Error('商户名相同');
-    };
-  };
+  var sameName = function () {
+    MerchantProfile.findMerchantByName(merchant.name, function (err, exist) {
+      if (exist) {
+        deferred.reject("商户名相同");
+      } else if (err){
+        deferred.reject(err);
+      } else{
+        deferred.resolve(exist);
+      }
+      return deferred.promise;
+    });
+  }
+
+  var handleNameResult = function(exist){
+    WebsiteProfile.getInformation(websit_name,function (err, website_profile) {
+      if (website_profile) {
+        var merchant_amount = website_profile.merchant_amount+1;
+        WebsiteProfile.setMerchantsAmount(websit_name, merchant_amount, function (error, result) {
+          if (err) {
+            deferred.reject(err);
+          } else if(result){
+            deferred.resolve(result.merchant_amount);
+          } else{
+            deferred.reject("设置失败");
+          };
+          return deferred.promise;
+        })
+      } else if(err) {
+        deferred.reject(err);
+        return deferred.promise;
+      };
+  }
 
   var createMerchant = function (result) {
-    if (result==null) {
-      return new Error('数据库错误');
+    if (result) {
+      MerchantProfileModel.createNewMerchant(merchant_amount, merchant, function(err, new_merchant){
+        if (err) {
+          deferred.reject(err);
+        } else{
+          deferred.resolve(new_merchant);
+        };
+        return deferred.promise;
+      })
     }else {
-      var merchant_id = result.merchant_amount+1;
-      return MerchantProfile.createNewMerchant(merchant).exec;
+      deferred.reject("设置失败");
     };
-  };
+  }
 
   sameName
   .then(handleNameResult)
