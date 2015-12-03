@@ -7,7 +7,7 @@ console.log("here is fine");
 IndexAPP.config(function($routeProvider, $locationProvider) {
     $routeProvider.
     when('/', {
-        templateUrl: '/MainHtml/mainpage.html',
+        templateUrl: '/MainHtml/main-content.html',
         controller: 'MainController'
     }).
     when('/activity', {

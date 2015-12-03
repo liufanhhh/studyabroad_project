@@ -1,0 +1,12 @@
+
+.footer {
+	text-align: center;
+	font-family: "Microsoft YaHei";
+	color: #444;
+	bottom: 0;
+	left: 0;
+	height: 50px;
+	width: 100%;
+	border-top: 1px #ddd solid;
+	position: fixed;
+}

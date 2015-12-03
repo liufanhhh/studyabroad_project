@@ -53,6 +53,7 @@
       </div> <!-- end of "site-nav" -->
 
 
+
       <div class="page-header">
         <div class="container">
           <div id="logo">
@@ -95,12 +96,107 @@
               </div>
               <div class="sl-subkey">
                 <ul>
-                  <li>
-                    不限
-                  </li>
-                  <li>
-                    北京
-                  </li>
+                  <!-- 用户点击某一li标签元素后，如“北京”，用DOM把'不限'的class拿下来交给北京，北京即可变成蓝底白字-->
+                  <li class="selected">不限</li>
+                  <li>北京</li>
+                  <li>上海</li>
+                  <li>天津</li>
+                  <li>广州</li>
+                  <li>深圳</li>
+                </ul>
+              </div>
+              <div class="sl-addkey">
+                <ul>
+                  <li>多选<i class="icon-plus-sign-alt"></i></li>
+                  <li>更多<i class="icon-angle-down"></i></li>
+                </ul>
+              </div>
+            </div>
+            <div class="selectorLine">
+              <div class="sl-parentkey">
+                擅长申请地区：
+              </div>
+              <div class="sl-subkey">
+                <ul>
+                  <li>不限</li>
+                  <li class="selected">美国</li>
+                  <li>英国</li>
+                  <li>法国</li>
+                  <li>德国</li>
+                  <li>日本</li>
+                  <li>澳大利亚</li>
+                </ul>
+              </div>
+              <div class="sl-addkey">
+                <ul>
+                  <li>多选<i class="icon-plus-sign-alt"></i></li>
+                  <li>更多<i class="icon-angle-down"></i></li>
+                </ul>
+              </div>
+            </div>
+            <div class="half-selectorLine">
+              <div class="sl-parentkey">
+                是否参加团购：
+              </div>
+              <div class="sl-subkey">
+                <ul>
+                  <li class="selected">不限</li>
+                  <li>是</li>
+                </ul>
+              </div>
+            </div>
+            <div class="half-selectorLine">
+              <div class="sl-parentkey">
+                是否代办签证：
+              </div>
+              <div class="sl-subkey">
+                <ul>
+                  <li class="selected">不限</li>
+                  <li>是</li>
+                </ul>
+              </div>
+            </div>
+            <div class="half-selectorLine">
+              <div class="sl-parentkey">
+                提供培训服务：
+              </div>
+              <div class="sl-subkey">
+                <ul>
+                  <li class="selected">不限</li>
+                  <li>是</li>
+                </ul>
+              </div>
+            </div>
+            <div class="half-selectorLine">
+              <div class="sl-parentkey">
+                提供出国后续服务：
+              </div>
+              <div class="sl-subkey">
+                <ul>
+                  <li class="selected">不限</li>
+                  <li>是</li>
+                </ul>
+              </div>
+            </div>
+            <div class="half-selectorLine">
+              <div class="sl-parentkey">
+                教育部资格认证：
+              </div>
+              <div class="sl-subkey">
+                <ul>
+                  <li class="selected">不限</li>
+                  <li>是</li>
+                </ul>
+              </div>
+            </div>
+            <div class="half-selectorLine">
+              <div class="sl-parentkey">
+                提供申请邮箱密码：
+              </div>
+              <div class="sl-subkey">
+                <ul>
+                  <li class="selected">不限</li>
+                  <li>是</li>
                 </ul>
               </div>
             </div>
@@ -109,7 +205,10 @@
       </div>
 
       <div ng-view></div>
-
+      
+      <div class="footer">
+          @2015 北京抵岸文化传播有限公司
+      </div>
     </div>
   </body>
 </html>

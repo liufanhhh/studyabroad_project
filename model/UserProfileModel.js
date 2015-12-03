@@ -32,9 +32,10 @@ var UserProfileSchema = mongoose.Schema({
             all: Boolean
         }
     },
+    trypush:[],
     confirm: Boolean,
     status: String,
-    create_time: Date
+    create_time: String
 });
 
 //---------Shuai's method for hashing the password------------

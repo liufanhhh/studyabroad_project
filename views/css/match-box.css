@@ -3,31 +3,65 @@
 	border-width: 1px;
 	border-color: #ddd;
 	border-style: solid;
-	padding: 20px 20px 20px 20px;
+	padding: 16px 20px 8px 20px;
 	margin: 10px 0 0 20px;
 	font-family: Arial,宋体;
-	width: 90%;
+	width: 100%;
 }
 #selector .selectorLine {
-	
+	width: 100%;
+	float: left;
+	margin-bottom: 12px;
+}
+#selector .half-selectorLine {
+	width: 50%;
+	float: left;
+	margin-bottom: 12px;
 }
 #selector .selectorLine .sl-parentkey {
 	color: #888;
 	font-size: 14px;
 	float: left;
-	width: 10%;
+	width: 12%;
+	padding-top: 4px;
+}
+#selector .half-selectorLine .sl-parentkey {
+	color: #888;
+	font-size: 14px;
+	float: left;
+	width: 24%;
+	padding-top: 4px;
 }
 @media (max-width: 1200px) {
 	#selector .selectorLine .sl-parentkey {
 	width: 15%;
 	}
+	#selector .half-selectorLine .sl-parentkey {
+	width: 30%;
+	}
 }
-#selector .selectorLine .sl-subkey {
-	color: #000;
+#selector .selectorLine .sl-subkey, #selector .half-selectorLine .sl-subkey {
+	color: #444;
 	font-size: 14px;
 	float: left;
 }
-#selector .selectorLine .sl-subkey ul li {
+#selector .selectorLine .sl-subkey ul li, #selector .half-selectorLine .sl-subkey ul li {
 	margin: 0 0 0 40px;
+	float: left;
+	padding: 4px 6px;
+}
+#selector .selectorLine .sl-subkey ul .selected, #selector .half-selectorLine .sl-subkey ul .selected {
+	background-color: #46a7ba;
+	border-radius: 2px;
+	color: #fff;
+}
+#selector .selectorLine .sl-addkey, #selector .half-selectorLine .sl-addkey {
+	color: #46a7ba;
+	font-size: 14px;
+	float: right;
+}
+#selector .selectorLine .sl-addkey ul li, #selector .half-selectorLine .sl-addkey ul li {
+	margin: 0 0 0 40px;
+	font-family: "Microsoft YaHei";
 	float: left;
 }

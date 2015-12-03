@@ -1,7 +1,6 @@
 var SignUpAPP = angular.module('SignUpAPP', ['ngResource', 'ngRoute']);
 
 SignUpAPP.controller('SignUpController',function($scope, $resource, $routeParams, $location){
-	
 	$scope.person = {};
 	$scope.same_password=false;
 	$scope.useridValid = false;
