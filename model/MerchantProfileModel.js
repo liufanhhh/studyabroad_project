@@ -57,6 +57,7 @@ var MerchantProfileSchema = mongoose.Schema({
 //----------------static method--------------------//
 MerchantProfileSchema.statics.createNewMerchant = function(merchant_id, merchant, cb) {
     var merchant_id = merchant_id;
+    console.log(merchant_id);
     var create_time = new Date();
     var merchant_name = merchant.name;
     var contact_person_name = merchant.contact_person;
@@ -70,7 +71,6 @@ MerchantProfileSchema.statics.createNewMerchant = function(merchant_id, merchant
     var pass_rate = merchant.pass_rate||6;
     var article_score = merchant.article_score||6;
     var total_score = merchant.total_score||6;
-
     this.create({
         //merchant information
         merchant_id: merchant_id,

@@ -32,7 +32,7 @@ WebsiteProfileSchema.statics.setMerchantsAmount = function(name, amount, cb){
     this.findOneAndUpdate({
         name: name
     }, {
-        amount: amount
+        merchant_amount: amount
     }, cb);
 }
 
@@ -40,7 +40,7 @@ WebsiteProfileSchema.statics.setUsersAmount = function(name, amount, cb){
     this.findOneAndUpdate({
         name: name
     }, {
-        amount: amount
+        user_amount: amount
     }, cb);
 }
 

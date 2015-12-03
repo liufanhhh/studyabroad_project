@@ -5,61 +5,59 @@ var WebsiteProfile = require("../../model/WebsiteProfileModel.js");
 
 exports.createNewMerchant = function(req,res){
   var merchant = req.body.merchant;
-  var deferred = Q.defer();
   var websit_name = "liufan";
-
-  var sameName = function () {
-    MerchantProfile.findMerchantByName(merchant.name, function (err, exist) {
-      if (exist) {
-        deferred.reject("商户名相同");
-      } else if (err){
-        deferred.reject(err);
-      } else{
-        deferred.resolve(exist);
-      }
-      return deferred.promise;
-    });
-  }
+  var sameName = Q.nfbind(MerchantProfile.findMerchantByName.bind(MerchantProfile));
 
   var handleNameResult = function(exist){
-    WebsiteProfile.getInformation(websit_name,function (err, website_profile) {
-      if (website_profile) {
+    var deferred = Q.defer();
+    if (exist) {
+      deferred.reject("商户名相同");
+    }else{
+      WebsiteProfile.getInformation(websit_name,function (err, website_profile) {
         var merchant_amount = website_profile.merchant_amount+1;
-        WebsiteProfile.setMerchantsAmount(websit_name, merchant_amount, function (error, result) {
-          if (err) {
-            deferred.reject(err);
-          } else if(result){
-            deferred.resolve(result.merchant_amount);
-          } else{
-            deferred.reject("设置失败");
-          };
-          return deferred.promise;
-        })
-      } else if(err) {
-        deferred.reject(err);
+        deferred.resolve(merchant_amount);
         return deferred.promise;
-      };
+      });
+    }
+    return deferred.promise;
   }
 
-  var createMerchant = function (result) {
-    if (result) {
-      MerchantProfileModel.createNewMerchant(merchant_amount, merchant, function(err, new_merchant){
-        if (err) {
-          deferred.reject(err);
+  var changeWebsiteProfile = function (amount) {
+    var amount = amount;
+    var deferred = Q.defer();
+    if (!amount) {
+      deferred.reject("设置失败");
+    }else{
+      WebsiteProfile.setMerchantsAmount(websit_name, amount, function (error, result) {
+        if(result){
+          result.merchant_amount++;
+          deferred.resolve(result.merchant_amount);
         } else{
-          deferred.resolve(new_merchant);
+          deferred.reject("设置失败");
         };
         return deferred.promise;
-      })
-    }else {
-      deferred.reject("设置失败");
-    };
+      });
+    }
+    return deferred.promise;
   }
 
-  sameName
+  var createMerchant = function (amount){
+    var deferred = Q.defer();
+    if (!amount) {
+      deferred.reject("设置失败");
+    }else{
+      MerchantProfile.createNewMerchant(amount, merchant, function(err, new_merchant){
+        deferred.resolve(new_merchant);
+        return deferred.promise;
+      });
+    }
+  }
+
+  sameName(merchant.name)
   .then(handleNameResult)
+  .then(changeWebsiteProfile)
   .then(createMerchant)
-  .then(
+  .done(
     function(data){
         res.sendData(data,"创建成功");
     },function(error){

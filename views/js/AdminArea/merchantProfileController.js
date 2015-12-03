@@ -64,7 +64,6 @@ MerchantProfileAdminApp.controller('MerchantProfileController', function($scope,
 	};
 
 	$scope.addNewMerchant = function(){
-		console.log(website.name);
 		$resource("/merchant/profile/create").save({
 			merchant: {
 				name: 	$scope.merchant.name,
