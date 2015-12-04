@@ -1,5 +1,5 @@
 var Q = require('q');
-
+var fs = require('fs');
 var MerchantProfile = require("../../model/MerchantProfileModel.js");
 var WebsiteProfile = require("../../model/WebsiteProfileModel.js");
 
@@ -48,9 +48,10 @@ exports.createNewMerchant = function(req,res){
     }else{
       MerchantProfile.createNewMerchant(amount, merchant, function(err, new_merchant){
         deferred.resolve(new_merchant);
-        return deferred.promise;
+        // return deferred.promise;
       });
     }
+    return deferred.promise;
   }
 
   sameName(merchant.name)
@@ -59,7 +60,8 @@ exports.createNewMerchant = function(req,res){
   .then(createMerchant)
   .done(
     function(data){
-        res.sendData(data,"创建成功");
+      fs.mkdir("./views/storage/Merchant/"+data.merchant_id);
+      res.sendData(data,"创建成功");
     },function(error){
         res.sendError("创建失败");
         console.log(error);
@@ -67,19 +69,31 @@ exports.createNewMerchant = function(req,res){
 }
 
 exports.profileUpload = function(req, res) {
-    
-    console.log(req.body.formData);
+  var path = req.originalUrl;
+  var filename = "";
+  if (path == "/merchant/profile/logo") {
+    filename = "logo";
+  } else if (path == "/merchant/profile/tax_registration"){
+    filename = "tax_registration";
+  } else if(path == "/merchant/profile/organization_order"){
+    filename = "organization_order";
+  } else if(path == "/merchant/profile/business_license"){
+    filename = "business_license";
+  };
 
-    req.pipe(req.busboy);
-
-    req.busboy.on('file', function (fieldname, file, filename) {
-      var stream = fs.createWriteStream(__dirname + '/upload/' + filename);
-      file.pipe(stream);
-      stream.on('close', function () {
-        console.log('File ' + filename + ' is uploaded');
-        res.json({
-          filename: filename
-        });
+  req.busboy.on('file', function (fieldname, file, filename) {
+    console.log(file);
+    var stream = fs.createWriteStream("./views/storage/Merchant/"+"1"+ filename);
+    file.pipe(stream);
+    stream.on('close', function () {
+      console.log('File ' + filename + ' is uploaded');
+      res.json({
+        filename: filename
       });
     });
+  });
+
+  req.pipe(req.busboy);
+
+
 }

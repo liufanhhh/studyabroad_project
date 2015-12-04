@@ -35,6 +35,11 @@ module.exports = function(app) {
 
 	app.post("/merchant/profile/create", MerchantProfile.createNewMerchant);
 
+	app.post("/merchant/profile/logo", MerchantProfile.profileUpload);
+	app.post("/merchant/profile/business_license", MerchantProfile.profileUpload);
+	app.post("/merchant/profile/tax_registration", MerchantProfile.profileUpload);
+	app.post("/merchant/profile/organization_order", MerchantProfile.profileUpload);
+
 
 
 }
