@@ -58,7 +58,6 @@
 	width: 100%;
 }
 .footer-bottom span {
-	float: left;
 	margin-top: 20px;
 }
 .company {
@@ -66,4 +65,7 @@
 }
 .footer-span1 {
 	margin: 30px;
+}
+.footer-bottom-col {
+	margin-top: 20px;
 }
