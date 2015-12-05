@@ -33,6 +33,10 @@ ul,li {
 .wrapper {
   position: relative;
   min-height: 100%;
+  display: block;
+  table-layout: fixed;
+  margin: 0 auto;
+  padding: 0;
 }
 .container {
   padding-right: 15px;
