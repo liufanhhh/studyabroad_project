@@ -3,6 +3,7 @@ var MerchantProfileApp = angular.module('MerchantProfileApp', ['ngResource', 'ng
 MerchantProfileApp.controller('MerchantProfileController', function($scope, $resource, $routeParams, $location, FileUploader) {
 	$scope.change = 0;
 	$scope.added_success = false;
+	$scope.showProfile = false;
 	$scope.merchant = {
 		name: "",
 		email: "",
@@ -68,6 +69,17 @@ MerchantProfileApp.controller('MerchantProfileController', function($scope, $res
 			console.log(res.mess);
 		});
 	};		
+
+	$scope.findMerchant = function(){
+		$resource("/merchant/profile/find").get({
+			merchant{
+				name: 	$scope.merchant.name,
+				email: 	$scope.merchant.email,
+			}
+		}, function(res) {
+			$scope.merchant = res.data;
+		});		
+	}
 
 
 
