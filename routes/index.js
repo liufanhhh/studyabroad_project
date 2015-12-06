@@ -28,12 +28,14 @@ module.exports = function(app) {
 	app.get("/loginFailure",Login.failedLogin);
 	app.get("/loginSuccess", Login.isLoggedIn);
 	app.get("/user/information",UserInformation.getOneUserNew);
+	app.post("/merchant/profile/find", MerchantProfile.findOneMerchant);	
 
 	app.post("/register",CreateUser.newuserCreate);
 	app.post("/login", Login.userLogin);
 	app.post("/user/information",UserInformation.getOneUser);
-
 	app.post("/merchant/profile/create", MerchantProfile.createNewMerchant);
+
+
 
 	app.post("/merchant/profile/logo", MerchantProfile.profileUpload);
 	app.post("/merchant/profile/business_license", MerchantProfile.profileUpload);

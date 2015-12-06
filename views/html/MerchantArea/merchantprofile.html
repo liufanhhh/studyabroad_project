@@ -18,9 +18,11 @@
 
 <body ng-app="MerchantProfileApp">
 
+	{{create_status}}
+
 	<div  ng-controller="MerchantProfileController" class="merchant-form">
-		<button ng-click="new_merchant = true">添加商户</button>
-		<button ng-click="find_merchant = true">查找商户</button>
+		<button ng-click="showAddArea()">添加商户</button>
+		<button ng-click="showFindArea()">查找商户</button>
 		<button ng-click="new_website = true">更改网站信息</button>
 
 		<div ng-if = "new_website">
@@ -57,6 +59,7 @@
 				<button ng-click = "findMerchant()">搜索</button>
 
 				<!-- 例子  -->
+				{{merchant.id}} 商户id
 				{{merchant.contact_person}}联系人姓名 
 				{{merchant.website}}商户官网
 				{{merchant.location}}商户公司地址
