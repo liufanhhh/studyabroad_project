@@ -1,6 +1,9 @@
 var MerchantProfileApp = angular.module('MerchantProfileApp', ['ngResource', 'ngRoute','angularFileUpload']);
 
 MerchantProfileApp.controller('MerchantProfileController', function($scope, $resource, $routeParams, $location, FileUploader) {
+	$scope.website_name;
+	$scope.user_amount;
+	$scope.merchant_amount;
 	$scope.change = 0;
 	$scope.added_success = false;
 	$scope.showProfile = false;
@@ -45,7 +48,16 @@ MerchantProfileApp.controller('MerchantProfileController', function($scope, $res
 		}
 	};
 
-
+	$scope.addedNewWebsite = function(){
+		console.log($scope.website_name);
+		$resource("/website/profile/create").get({
+			website_name: $scope.website_name,
+			user_amount: $scope.user_amount,
+			merchant_amount: $scope.merchant_amount
+		},function (res) {
+			console.log(res.mess);
+		})
+	}
 	$scope.addedNewArea = function(){
 		$scope.merchant.support_area[$scope.change] = "留学地区"+$scope.change;
 		$scope.change++;

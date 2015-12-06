@@ -20,7 +20,16 @@
 
 	<div  ng-controller="MerchantProfileController" class="merchant-form">
 		<button ng-click="new_merchant = true">添加商户</button>
-		<button ng-click="find_merchant()">查找商户</button>
+		<button ng-click="find_merchant = true">查找商户</button>
+		<button ng-click="new_website = true">更改网站信息</button>
+
+		<div ng-if = "new_website">
+			<input type="text" ng-model = "website_name" />网站名称
+			<input type="text" ng-model = "user_amount" />用户总数
+			<input type="text" ng-model = "merchant_amount" />商户总数
+			<button ng-click="addedNewWebsite()">更改网站信息</button>
+		</div>
+
 		
 		<div ng-if = "new_merchant">
 			<input type="text" ng-model = "merchant.name" />商户名称

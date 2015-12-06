@@ -55,45 +55,53 @@ var MerchantProfileSchema = mongoose.Schema({
 });
 
 //----------------static method--------------------//
-UserProfileSchema.statics.createNewMerchant = function(merchant, cb) {
-    var merchant_id = merchant., merchant_name, contact_person_name, email, mobile, website, location, 
+MerchantProfileSchema.statics.createNewMerchant = function(merchant_id, merchant, cb) {
+    var merchant_id = merchant_id;
+    console.log(merchant_id);
+    var create_time = new Date();
+    var merchant_name = merchant.name;
+    var contact_person_name = merchant.contact_person;
+    var owner_name = merchant.owner_name||null;
+    var email = merchant.email||null;
+    var password = merchant.password||"lxdp123";
+    var mobile = merchant.mobile||null;
+    var website = merchant.website||null;
+    var location = merchant.location||null;
+    var support_area = merchant.support_area||null;
+    var pass_rate = merchant.pass_rate||6;
+    var article_score = merchant.article_score||6;
+    var total_score = merchant.total_score||6;
     this.create({
+        //merchant information
         merchant_id: merchant_id,
-        create_time: new Date(),
+        create_time: create_time,
         merchant_name: merchant_name,
         contact_person_name: contact_person_name,
+        owner_name: owner_name,
         email: email,
-        password: "liuxuedianping",
-        contact_person:     $scope.merchant.contact_person,
-        mobile:     mobile,
-        website:    $scope.merchant.website,
-        location:   $scope.merchant.location,
-        support_area:   $scope.merchant.support_area,
-        score:{ 
-            pass_rate:  $scope.merchant.score.pass_rate,
-            article_score:  $scope.merchant.score.article_score,
-            total_score: $scope.merchant.score.total_score
-        }
-        nickname: nickname,
-        realname: realname,
         password: password,
-        identitynumber: userid,
-        email: email,
-        config: {
-            ntf: {
-                email: true,
-                never: false,
-                desktop: true
-            },
-            content: {
-                involve: true,
-                follow: true,
-                all: false
-            }
+        mobile: mobile,
+        website: website,
+        location: location,
+        support_area: support_area,
+        notify: {
+            mobile: false,
+            email: false,
+            monthly_email: false 
         },
-        confirm: false,
-        status: status,
-        create_time: new Date()
+        
+        // website judgement
+        verification: false,
+        score:{ 
+            pass_rate: pass_rate,
+            article_score: article_score,
+            total_score: total_score
+        },
+
+        //status
+        live: false,
+        reputation: true,
+        hierarchy: "normal"
     }, cb);
 }
 
@@ -117,9 +125,7 @@ MerchantProfileSchema.statics.findMerchantById = function(id, cb) {
 
 MerchantProfileSchema.statics.countMerchantsAmount = function(conditions, cb) {
     var conditions = conditions||null;
-    this.count({
-        conditions
-    }, cb);
+    this.count({}, cb);
 }
 
 

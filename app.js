@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
+var busboy = require('connect-busboy');
 
 var db = require('./connectDB.js')
 var routes = require('./routes/index');
@@ -54,7 +55,8 @@ app.set('view engine', 'ejs');
 app.engine('.html', require('ejs').renderFile);
 // uncomment after placing your favicon in /public
 app.use(favicon(__dirname + '/storage/public/logo.jpg'));
-app.use(logger('dev'));
+app.use(logger('dev'));busboy
+app.use(busboy());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

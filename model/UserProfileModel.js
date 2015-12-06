@@ -55,7 +55,7 @@ UserProfileSchema.statics.findUserById = function(id, cb) {
 UserProfileSchema.statics.countUsersAmount = function(conditions, cb) {
     var conditions = conditions||null;
     this.count({
-        conditions
+        conditions: conditions
     }, cb);
 }
 

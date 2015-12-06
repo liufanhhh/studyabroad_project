@@ -52,12 +52,19 @@ exports.createWebsiteInformation = function (req,res) {
 	var website_name = req.query.website_name;
 	var user_amount = req.query.user_amount||0;
 	var merchant_amount = req.query.merchant_amount||0;
-
-	WebsiteProfile.createWebsiteInformation(website_name, user_amount, merchant_amount, function (error, website_profile) {
-		if (err) {
+	console.log(website_name);
+	WebsiteProfile.getInformation(website_name, function(error, website_profile){
+		console.log(website_profile);
+		if (website_profile == null) {
+			WebsiteProfile.createWebsiteInformation(website_name, user_amount, merchant_amount, function (error, website_profile) {
+				if (error) {
+					res.sendError("设定失败");
+				}else {
+					res.sendSuccess("成功初始化网站信息");
+				}
+			});
+		} else{
 			res.sendError("设定失败");
-		}else {
-			res.sendSuccess("成功初始化网站信息");
-		}
-	}
+		};
+	});
 }

@@ -1,0 +1,122 @@
+var MerchantProfileAdminApp = angular.module('MerchantProfileAdminApp', ['ngResource', 'ngRoute','angularFileUpload']);
+
+MerchantProfileAdminApp.controller('MerchantProfileController', function($scope, $resource, $routeParams, $location, FileUploader) {
+	$scope.website = {
+		name: "liufan",
+		user_amount: "",
+		merchant_amount: ""
+	};
+	$scope.change = 0;
+	$scope.added_success = false;
+	$scope.merchant = {
+		name: "",
+		email: "",
+		contact_person: "",
+		mobile: "",
+		website: "",
+		location: "",
+		support_area: [],
+		score:{ 
+		    pass_rate: '',
+		    article_score: '',
+		    total_score: ''
+		},
+		identification: {
+			logo: {
+				name: "商户展示图片",
+				uploading: false,
+				completed: false,
+				url: "/merchant/profile/logo"
+			},
+			business_license: {
+				name: "营业执照",            
+				upload: false,
+				completed: false,
+				url: "/merchant/profile/business_license"
+			},
+			tax_registration: {
+				name: "公司税号",
+				upload: false,
+				completed: false,
+				url: "/merchant/profile/tax_registration"
+			},
+			organization_order: {
+				name: "组织机构代码证",
+				upload: false,
+				completed: false,
+				url: "/merchant/profile/organization_order"
+			}
+		}
+	};
+
+	$scope.addedNewWebsite = function(){
+		$resource("/website/profile/create").get({
+			website_name: $scope.website.name,
+			user_amount: $scope.website.user_amount,
+			merchant_amount: $scope.website.merchant_amount
+		},function (res) {
+			console.log(res.mess);
+		})
+	}
+	$scope.addedNewArea = function(){
+		$scope.merchant.support_area[$scope.change] = "留学地区"+$scope.change;
+		$scope.change++;
+	};
+
+	$scope.addNewMerchant = function(){
+		$resource("/merchant/profile/create").save({
+			merchant: {
+				name: 	$scope.merchant.name,
+				email: 	$scope.merchant.email,
+				contact_person: 	$scope.merchant.contact_person,
+				mobile: 	$scope.merchant.mobile,
+				website: 	$scope.merchant.website,
+				location: 	$scope.merchant.location,
+				support_area: 	$scope.merchant.support_area,
+				pass_rate: 	$scope.merchant.score.pass_rate,
+				article_score: 	$scope.merchant.score.article_score,
+				total_score: $scope.merchant.score.total_score
+			}
+		}, function(res) {
+			console.log(res.mess);
+		});
+	};		
+
+
+
+	var uploader = $scope.uploader = new FileUploader({removeAfterUpload: true,autoUpload: true});
+
+	uploader.onProgressItem = function(fileItem, progress) {
+		if (fileItem.url === "/merchant/profile/logo") {
+			$scope.merchant.identification.logo.uploading = true;
+		} else if(fileItem.url === "/merchant/profile/tax_registration"){
+			$scope.merchant.identification.tax_registration.uploading = true;
+		} else if(fileItem.url === "/merchant/profile/organization_order"){
+			$scope.merchant.identification.organization_order.uploading = true;
+		} else;
+	    console.info('onProgressItem', fileItem, progress);
+	};
+
+	uploader.onErrorItem = function(fileItem, response, status, headers) {
+		if (fileItem.url === "/merchant/profile/logo") {
+			$scope.merchant.identification.logo.uploading = false;
+		} else if(fileItem.url === "/merchant/profile/tax_registration"){
+			$scope.merchant.identification.tax_registration.uploading = false;
+		} else {
+			$scope.merchant.identification.organization_order.uploading = false;
+		};
+	    console.info('onErrorItem', fileItem, response, status, headers);
+	};
+
+	uploader.SuccessItem = function(fileItem, response, status, headers) {
+		if (fileItem.url === "/merchant/profile/logo") {
+			$scope.merchant.identification.logo.completed = true;
+		} else if(fileItem.url === "/merchant/profile/tax_registration"){
+			$scope.merchant.identification.tax_registration.completed = true;
+		} else {
+			$scope.merchant.identification.organization_order.completed = true;
+		};
+	    console.info('onSuccessItem', fileItem, response, status, headers);
+	};
+
+});

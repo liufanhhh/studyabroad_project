@@ -1,33 +1,67 @@
+var Q = require('q');
+var fs = require('fs');
 var MerchantProfile = require("../../model/MerchantProfileModel.js");
 var WebsiteProfile = require("../../model/WebsiteProfileModel.js");
 
 exports.createNewMerchant = function(req,res){
   var merchant = req.body.merchant;
-  var sameName = MerchantProfile.findMerchantByName(merchant.name).exec;
+  var websit_name = "liufan";
+  var sameName = Q.nfbind(MerchantProfile.findMerchantByName.bind(MerchantProfile));
 
-  var handleNameResult = function(result){
-    if (result==null) {
-      return WebsiteProfile.getInformation().exec;
-    }else {
-      return new Error('商户名相同');
-    };
-  };
+  var handleNameResult = function(exist){
+    var deferred = Q.defer();
+    if (exist) {
+      deferred.reject("商户名相同");
+    }else{
+      WebsiteProfile.getInformation(websit_name,function (err, website_profile) {
+        var merchant_amount = website_profile.merchant_amount+1;
+        deferred.resolve(merchant_amount);
+        return deferred.promise;
+      });
+    }
+    return deferred.promise;
+  }
 
-  var createMerchant = function (result) {
-    if (result==null) {
-      return new Error('数据库错误');
-    }else {
-      var merchant_id = result.merchant_amount+1;
-      return MerchantProfile.createNewMerchant(merchant).exec;
-    };
-  };
+  var changeWebsiteProfile = function (amount) {
+    var amount = amount;
+    var deferred = Q.defer();
+    if (!amount) {
+      deferred.reject("设置失败");
+    }else{
+      WebsiteProfile.setMerchantsAmount(websit_name, amount, function (error, result) {
+        if(result){
+          result.merchant_amount++;
+          deferred.resolve(result.merchant_amount);
+        } else{
+          deferred.reject("设置失败");
+        };
+        return deferred.promise;
+      });
+    }
+    return deferred.promise;
+  }
 
-  sameName
+  var createMerchant = function (amount){
+    var deferred = Q.defer();
+    if (!amount) {
+      deferred.reject("设置失败");
+    }else{
+      MerchantProfile.createNewMerchant(amount, merchant, function(err, new_merchant){
+        deferred.resolve(new_merchant);
+        // return deferred.promise;
+      });
+    }
+    return deferred.promise;
+  }
+
+  sameName(merchant.name)
   .then(handleNameResult)
+  .then(changeWebsiteProfile)
   .then(createMerchant)
-  .then(
+  .done(
     function(data){
-        res.sendData(data,"创建成功");
+      fs.mkdir("./views/storage/Merchant/"+data.merchant_id);
+      res.sendData(data,"创建成功");
     },function(error){
         res.sendError("创建失败");
         console.log(error);
@@ -35,19 +69,31 @@ exports.createNewMerchant = function(req,res){
 }
 
 exports.profileUpload = function(req, res) {
-    
-    console.log(req.body.formData);
+  var path = req.originalUrl;
+  var filename = "";
+  if (path == "/merchant/profile/logo") {
+    filename = "logo";
+  } else if (path == "/merchant/profile/tax_registration"){
+    filename = "tax_registration";
+  } else if(path == "/merchant/profile/organization_order"){
+    filename = "organization_order";
+  } else if(path == "/merchant/profile/business_license"){
+    filename = "business_license";
+  };
 
-    req.pipe(req.busboy);
-
-    req.busboy.on('file', function (fieldname, file, filename) {
-      var stream = fs.createWriteStream(__dirname + '/upload/' + filename);
-      file.pipe(stream);
-      stream.on('close', function () {
-        console.log('File ' + filename + ' is uploaded');
-        res.json({
-          filename: filename
-        });
+  req.busboy.on('file', function (fieldname, file, filename) {
+    console.log(file);
+    var stream = fs.createWriteStream("./views/storage/Merchant/"+"1"+ filename);
+    file.pipe(stream);
+    stream.on('close', function () {
+      console.log('File ' + filename + ' is uploaded');
+      res.json({
+        filename: filename
       });
     });
+  });
+
+  req.pipe(req.busboy);
+
+
 }
