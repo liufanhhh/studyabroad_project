@@ -97,3 +97,8 @@ exports.profileUpload = function(req, res) {
 
 
 }
+
+
+Hi Vanya,
+
+I have made a payment through Alipay and Unionpay. Alipay direct can remember user by uid but it will have some layout issues. The old flow of Alipay worked well but both of them won't return back
