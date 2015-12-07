@@ -70,25 +70,29 @@ exports.createNewMerchant = function(req,res){
 
 exports.profileUpload = function(req, res) {
   var path = req.originalUrl;
-  var filename = "";
+  var file_name = "";
   if (path == "/merchant/profile/logo") {
-    filename = "logo";
+    file_name = "logo";
   } else if (path == "/merchant/profile/tax_registration"){
-    filename = "tax_registration";
+    file_name = "tax_registration";
   } else if(path == "/merchant/profile/organization_order"){
-    filename = "organization_order";
+    file_name = "organization_order";
   } else if(path == "/merchant/profile/business_license"){
-    filename = "business_license";
+    file_name = "business_license";
   };
+
+  req.busboy.on('field', function(fieldname, val) {
+    console.log(fieldname, val);
+  });
 
   req.busboy.on('file', function (fieldname, file, filename) {
     console.log(file);
-    var stream = fs.createWriteStream("./views/storage/Merchant/"+"1"+ filename);
+    var stream = fs.createWriteStream("./views/storage/Merchant/"+"1"+ file_name);
     file.pipe(stream);
     stream.on('close', function () {
       console.log('File ' + filename + ' is uploaded');
       res.json({
-        filename: filename
+        filename: file_name
       });
     });
   });
@@ -96,29 +100,32 @@ exports.profileUpload = function(req, res) {
   req.pipe(req.busboy);
 }
 
-exports.findOneMerchant = function(req,res) {
-  var merchant_id = req.query.merchant_id||null;
-  var merchant_name = req.query.merchant_name||null;
-  var merchant_email = req.query.merchant_email||null;
-  if (merchant_id) {
-    MerchantProfile.findMerchantByMID(merchant_id,function(err, merchant){
-      res.sendData(merchant,"success");
-    }); 
-  } else if(merchant_name){
+exports.findOneMerchant = function (req, res) {
+  var merchant_name = req.query.merchant_name;
+  var merchant_email = req.query.merchant_email;
+  console.log(merchant_name);
+  console.log(merchant_email);
+  if (merchant_name) {
     MerchantProfile.findMerchantByName(merchant_name,function(err, merchant){
-      res.sendData(merchant,"success");
+      if (err) {
+        res.sendError(err);
+      } else{
+        console.log(merchant);
+        res.sendData(merchant,"success");
+      }
     }); 
-  } else if(merchant_email){
+  } else if (merchant_email){
     MerchantProfile.findMerchantByEmail(merchant_email,function(err, merchant){
-      res.sendData(merchant,"success");
-    });     
+      if (err) {
+        res.sendError(err);
+      } else{
+        console.log(merchant);
+        res.sendData(merchant,"success");
+      }
+    }); 
   } else{
-    
+    res.sendError("至少需要邮箱或商户名中的一个");
   };
-
 }
 
 
-Hi Vanya,
-
-I have made a payment through Alipay and Unionpay. Alipay direct can remember user by uid but it will have some layout issues. The old flow of Alipay worked well but both of them won't return back
