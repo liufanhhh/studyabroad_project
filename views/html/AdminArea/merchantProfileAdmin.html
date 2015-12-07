@@ -18,15 +18,21 @@
 
 <body ng-app="MerchantProfileAdminApp">
 
+
+
+<body ng-app="MerchantProfileApp">
+
+	{{create_status}}
+
 	<div  ng-controller="MerchantProfileController" class="merchant-form">
-		<button ng-click="new_merchant = true">添加商户</button>
-		<button ng-click="find_merchant = true">查找商户</button>
+		<button ng-click="showAddArea()">添加商户</button>
+		<button ng-click="showFindArea()">查找商户</button>
 		<button ng-click="new_website = true">更改网站信息</button>
 
 		<div ng-if = "new_website">
-			<input type="text" ng-model = "website.name" />网站名称{{website_name}}
-			<input type="text" ng-model = "website.user_amount" />用户总数
-			<input type="text" ng-model = "website.merchant_amount" />商户总数
+			<input type="text" ng-model = "website_name" />网站名称
+			<input type="text" ng-model = "user_amount" />用户总数
+			<input type="text" ng-model = "merchant_amount" />商户总数
 			<button ng-click="addedNewWebsite()">更改网站信息</button>
 		</div>
 
@@ -48,41 +54,35 @@
 			</div><br>
 			
 			<button ng-click="addNewMerchant()">确定添加商户</button><br>
-
-			<div ng-repeat = "file in merchant.identification">
-				<label>{{file.name}}: </label>
-
-				<div nv-file-drop="" uploader="uploader" options="{ url: '{{file.url}}'}">
-				    拖动上传文件到这里
-				</div>
-
-				<input type="file" nv-file-select="" uploader="uploader" options="{ url: '{{file.url}}'}">				
-			</div>
 		</div>
 
 		<div ng-if = "find_merchant">
-			<div ng-repeat = "one in merchants">
-				<input type="text" ng-model = "one.name" />商户名称
-				<input type="text" ng-model = "one.email" />商户邮箱
-				<input type="text" ng-model = "one.contact_person" />联系人姓名
-				<input type="text" ng-model = "one.website" />商户官网
-				<input type="text" ng-model = "one.location" />商户公司地址
+				<input type="text" ng-model = "merchant.name" />商户名称
+				<input type="text" ng-model = "merchant.email" />商户邮箱
 
-				<div ng-repeat = "submitted_file in one">
-					<div ng-if >
-					<label>{{file.name}}: </label>
+				<button ng-click = "findMerchant()">搜索</button>
 
-					<div nv-file-drop="" uploader="uploader" options="{ url: '{{file.url}}'}">
-					    拖动上传文件到这里
-					</div>
-
-					<input type="file" nv-file-select="" uploader="uploader" options="{ url: '{{file.url}}'}">	
-					
-				</div>
-
-			</div>
+				<!-- 例子  -->
+				{{merchant.id}} 商户id
+				{{merchant.contact_person}}联系人姓名 
+				{{merchant.website}}商户官网
+				{{merchant.location}}商户公司地址
+				{{merchant.score.pass_rate}}申请通过率
+				{{merchant.score.article_score}}文书评分
+				{{merchant.score.total_score}}综合评分
 		</div>
 	
+		<div ng-repeat = "file in merchant.identification" ng-if = "profileShow">
+			<label>{{file.name}}: </label>
+
+			<div nv-file-drop="" uploader="uploader" options="{ url: '{{file.url}}'}">
+			    拖动上传文件到这里
+			</div>
+
+			<input type="file" nv-file-select="" uploader="uploader" options="{ url: '{{file.url}}'}">	
+			
+		</div>
+
 	</div>
 
 </body>

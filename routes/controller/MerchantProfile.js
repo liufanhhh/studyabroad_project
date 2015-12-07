@@ -94,7 +94,27 @@ exports.profileUpload = function(req, res) {
   });
 
   req.pipe(req.busboy);
+}
 
+exports.findOneMerchant = function(req,res) {
+  var merchant_id = req.query.merchant_id||null;
+  var merchant_name = req.query.merchant_name||null;
+  var merchant_email = req.query.merchant_email||null;
+  if (merchant_id) {
+    MerchantProfile.findMerchantByMID(merchant_id,function(err, merchant){
+      res.sendData(merchant,"success");
+    }); 
+  } else if(merchant_name){
+    MerchantProfile.findMerchantByName(merchant_name,function(err, merchant){
+      res.sendData(merchant,"success");
+    }); 
+  } else if(merchant_email){
+    MerchantProfile.findMerchantByEmail(merchant_email,function(err, merchant){
+      res.sendData(merchant,"success");
+    });     
+  } else{
+    
+  };
 
 }
 

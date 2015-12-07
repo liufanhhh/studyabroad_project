@@ -117,6 +117,12 @@ MerchantProfileSchema.statics.findMerchantByName = function(merchant_name, cb) {
     }, cb);
 }
 
+MerchantProfileSchema.statics.findMerchantByEmail = function(merchant_email, cb) {
+    this.findOne({
+        email: merchant_email
+    }, cb);
+}
+
 MerchantProfileSchema.statics.findMerchantById = function(id, cb) {
     this.findOne({
         _id: id

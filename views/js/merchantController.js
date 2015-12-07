@@ -2,11 +2,16 @@ var MerchantProfileApp = angular.module('MerchantProfileApp', ['ngResource', 'ng
 
 MerchantProfileApp.controller('MerchantProfileController', function($scope, $resource, $routeParams, $location, FileUploader) {
 	$scope.website_name;
+	$scope.create_status;
 	$scope.user_amount;
 	$scope.merchant_amount;
 	$scope.change = 0;
 	$scope.added_success = false;
+	$scope.showProfile = false;
+	$scope.new_merchant = false;
+	$scope.find_merchant = false;
 	$scope.merchant = {
+		id: "",
 		name: "",
 		email: "",
 		contact_person: "",
@@ -57,10 +62,21 @@ MerchantProfileApp.controller('MerchantProfileController', function($scope, $res
 			console.log(res.mess);
 		})
 	}
+
 	$scope.addedNewArea = function(){
 		$scope.merchant.support_area[$scope.change] = "留学地区"+$scope.change;
 		$scope.change++;
 	};
+
+	$scope.showAddArea = function(){
+		$scope.new_merchant = true;
+		$scope.find_merchant = false;
+	}
+
+	$scope.showFindArea = function(){
+		$scope.new_merchant = false;
+		$scope.find_merchant = true;
+	}
 
 	$scope.addNewMerchant = function(){
 		$resource("/merchant/profile/create").save({
@@ -78,8 +94,28 @@ MerchantProfileApp.controller('MerchantProfileController', function($scope, $res
 			}
 		}, function(res) {
 			console.log(res.mess);
+			$scope.create_status = "创建成功";
+			$scope.new_merchant = false;
+			$scope.find_merchant = true;
 		});
 	};		
+
+	$scope.findMerchant = function(){
+		$resource("/merchant/profile/find").get({
+			merchant{
+				name: 	$scope.merchant.name,
+				email: 	$scope.merchant.email
+			}
+		}, function(res) {
+			if (res.mess = "success") {
+				$scope.showProfile = true;
+				$scope.merchant = res.data;
+			} else{
+				cosole.log(res.mess);
+			};
+
+		});		
+	}
 
 
 
