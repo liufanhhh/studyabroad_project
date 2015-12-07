@@ -23,14 +23,14 @@
 	margin: 14px 30px 0 0;
 }
 #log-reg {
+	margin: 12px 0 0 0;
+	padding-left: 18px;
 	float: left;
+	background: url(../images/icon-lock.gif) no-repeat center left;
 }
 #log-reg a, #log-reg em {
-	margin: 14px 0 0 0;
+	margin: 2px 0 0 0;
 	color: #6699cc;
-}
-#icon-lock {
-	margin: 13px 3px 0 0;
 }
 #contactus {
 	float: left;
