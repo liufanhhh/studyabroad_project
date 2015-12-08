@@ -69,32 +69,31 @@ exports.createNewMerchant = function(req,res){
 }
 
 exports.profileUpload = function(req, res) {
-  var path = req.originalUrl;
   var file_name = "";
-  if (path == "/merchant/profile/logo") {
-    file_name = "logo";
-  } else if (path == "/merchant/profile/tax_registration"){
-    file_name = "tax_registration";
-  } else if(path == "/merchant/profile/organization_order"){
-    file_name = "organization_order";
-  } else if(path == "/merchant/profile/business_license"){
-    file_name = "business_license";
-  };
 
-  req.busboy.on('field', function(fieldname, val) {
-    console.log(fieldname, val);
+
+  req.busboy.on('field', function(fieldname, value) {
+    console.log("fieldname"+fieldname+"value"+value);
+    if (fieldname=="file_name") {
+      file_name = value;
+    } else{
+      file_name = value+"/"+file_name;
+    };
   });
 
   req.busboy.on('file', function (fieldname, file, filename) {
-    console.log(file);
-    var stream = fs.createWriteStream("./views/storage/Merchant/"+"1"+ file_name);
-    file.pipe(stream);
-    stream.on('close', function () {
-      console.log('File ' + filename + ' is uploaded');
-      res.json({
-        filename: file_name
+    var file_path = "./views/storage/Merchant/"+ file_name;
+
+    
+      var steam = fs.createWriteStream(file_path);
+      file.pipe(steam);
+      steam.on('close', function () {
+        console.log('File ' + filename + ' is uploaded');
+        res.json({
+          filename: file_name
+        });
       });
-    });
+
   });
 
   req.pipe(req.busboy);
@@ -103,8 +102,6 @@ exports.profileUpload = function(req, res) {
 exports.findOneMerchant = function (req, res) {
   var merchant_name = req.query.merchant_name;
   var merchant_email = req.query.merchant_email;
-  console.log(merchant_name);
-  console.log(merchant_email);
   if (merchant_name) {
     MerchantProfile.findMerchantByName(merchant_name,function(err, merchant){
       if (err) {

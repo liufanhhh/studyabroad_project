@@ -36,25 +36,21 @@ MerchantProfileAdminApp.controller('MerchantProfileController', function($scope,
 		identification: {
 			logo: {
 				name: "商户展示图片",
-				uploading: false,
 				completed: false,
 				url: "/merchant/profile/logo"
 			},
 			business_license: {
 				name: "营业执照",
-				upload: false,
 				completed: false,
 				url: "/merchant/profile/business_license"
 			},
 			tax_registration: {
 				name: "公司税号",
-				upload: false,
 				completed: false,
 				url: "/merchant/profile/tax_registration"
 			},
 			organization_order: {
 				name: "组织机构代码证",
-				upload: false,
 				completed: false,
 				url: "/merchant/profile/organization_order"
 			}
@@ -124,46 +120,35 @@ MerchantProfileAdminApp.controller('MerchantProfileController', function($scope,
 		});		
 	}
 
-
-
 	var uploader = $scope.uploader = new FileUploader({removeAfterUpload: true,autoUpload: true});
+
 	uploader.onBeforeUploadItem = function(item) {
+		var filename = item.file.type;
+		var filename = filename.substring(filename.indexOf("\/"),filename.length);
+		var filename = filename.replace(/\//,"\.");
+		console.log(filename);
 		if (item.url === "/merchant/profile/logo") {
-			$scope.merchant.identification.logo.uploading = true;
+			filename = "logo"+filename;
 		} else if(item.url === "/merchant/profile/tax_registration"){
-			$scope.merchant.identification.tax_registration.uploading = true;
-		} else {
-			$scope.merchant.identification.organization_order.uploading = true;
+			filename = "tax_registration"+filename;
+		} else {	`
+			filename = "organization_order"+filename;
 		};
-		item.formData[0] = {a:"abcd"};
+		item.formData[0] = {file_name: filename};
+		item.formData[1] = {merchant_id: $scope.finded_merchant.merchant_id};
 	    console.info('onBeforeUploadItem', item);
 	};
-	uploader.onProgressItem = function(fileItem, progress) {
 
+	uploader.onProgressItem = function(fileItem, progress) {
 	    console.info('onProgressItem', fileItem, progress);
 	};
 
 	uploader.onErrorItem = function(fileItem, response, status, headers) {
-		if (fileItem.url === "/merchant/profile/logo") {
-			$scope.merchant.identification.logo.uploading = false;
-		} else if(fileItem.url === "/merchant/profile/tax_registration"){
-			$scope.merchant.identification.tax_registration.uploading = false;
-		} else {
-			$scope.merchant.identification.organization_order.uploading = false;
-		};
 	    console.info('onErrorItem', fileItem, response, status, headers);
 	};
 
 	uploader.SuccessItem = function(fileItem, response, status, headers) {
-		if (fileItem.url === "/merchant/profile/logo") {
-			$scope.merchant.identification.logo.completed = true;
-		} else if(fileItem.url === "/merchant/profile/tax_registration"){
-			$scope.merchant.identification.tax_registration.completed = true;
-		} else {
-			$scope.merchant.identification.organization_order.completed = true;
-		};
 	    console.info('onSuccessItem', fileItem, response, status, headers);
 	};
-
 
 });
