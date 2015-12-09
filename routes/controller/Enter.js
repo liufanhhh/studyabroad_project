@@ -2,11 +2,9 @@
 
 exports.indexpageEnter = function(req, res) {
     console.log("enter saindex.html");
-    res.sendfile("./views/html/AdminArea/merchantprofileAdmin.html");
+    res.sendfile("./views/saindex.html");
 }
-
-exports.testpageEnter = function(req, res) {
-    console.log("enter saindex.html");
-    res.sendfile("./views/test.html");
+exports.adminpageEnter = function(req, res) {
+    res.sendfile("./views/html/AdminArea/merchantProfileAdmin.html");
 }
 
