@@ -74,23 +74,29 @@ exports.profileUpload = function(req, res) {
 
   req.busboy.on('field', function(fieldname, value) {
     if (fieldname == "file_name") {
-      file_name = file_name;
+      file_name = value;
+      console.log("1"+value);
     } else if (fieldname == "merchant_id"){
       merchant_id = value;
       file_name = value+"/"+file_name;
+      console.log("2"+file_name);
     };
   });
 
-  var file_path = "./views/storage/Merchant/"+ file_name;
-  var storage_path = "/storage/Merchant/"+file_name;
   
   req.busboy.on('file', function (fieldname, file, filename) {
+
+    var file_path = "./views/storage/Merchant/"+ file_name;
+    var storage_path = "/storage/Merchant/"+file_name;
+
+    console.log(file_name);
     var steam = fs.createWriteStream(file_path);
     file.pipe(steam);
     steam.on('error', function () {
         res.sendError("上传失败，请重新上传");
     });
     steam.on('close', function () {
+      console.log("storage_path"+storage_path);
       MerchantProfile.uploadLogo(merchant_id, storage_path, function(err, merchant){
         if (err) {
           res.sendError("上传失败，请重新上传");
@@ -114,7 +120,6 @@ exports.findOneMerchant = function (req, res) {
       if (err) {
         res.sendError(err);
       } else{
-        console.log(merchant);
         res.sendData(merchant,"success");
       }
     }); 
@@ -123,7 +128,6 @@ exports.findOneMerchant = function (req, res) {
       if (err) {
         res.sendError(err);
       } else{
-        console.log(merchant);
         res.sendData(merchant,"success");
       }
     }); 
@@ -132,4 +136,14 @@ exports.findOneMerchant = function (req, res) {
   };
 }
 
-
+exports.getMerchantsLogo = function (req, res) {
+  console.log("aa");
+  MerchantProfile.getMerchantsLogo(function (err, logos) {
+    console.log(logos);
+    if (err) {
+      res.sendError(err);
+    } else{
+      res.sendData(logos,"success");
+    }
+  });
+}

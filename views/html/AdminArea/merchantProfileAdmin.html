@@ -17,13 +17,18 @@
 
 
 <body ng-app="MerchantProfileAdminApp">
-	<img ng-src = "/storage/Merchant/1/logo.png">
-	{{create_status}}
 
 	<div  ng-controller="MerchantProfileController" class="merchant-form">
+		<div ng-repeat = "logo in logos">
+			{{logo.name}}
+			<img ng-src = "{{logo.logo}}"/>
+		</div>
+
 		<button ng-click="showAddArea()">添加商户</button>
 		<button ng-click="showFindArea()">查找商户</button>
-		<button ng-click="addedNewWebsite()">添加留学点评网</button>
+		<button ng-click="addedNewWebsite()">添加网站</button>
+
+
 
 		
 		<div ng-if = "new_merchant">

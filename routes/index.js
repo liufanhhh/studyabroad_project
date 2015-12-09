@@ -19,6 +19,8 @@ module.exports = function(app) {
 	app.all("/user/signup/page",CreateUser.userSignUpEnter);
     app.all("/user/login/page",Login.pageLogin);
 
+
+	app.get("/merchant/logos", MerchantProfile.getMerchantsLogo);	
     app.get("/website/profile/create",ResetWebsiteProfile.createWebsiteInformation);
     app.get("/website/profile/usersAmountCount",ResetWebsiteProfile.countUsersAmount);
     app.get("/website/profile/usersAmountSet",ResetWebsiteProfile.setUsersAmount);

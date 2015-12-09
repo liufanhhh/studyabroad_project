@@ -8,7 +8,7 @@ MerchantProfileAdminApp.controller('MerchantProfileController', function($scope,
 	};
 
 	$scope.create_status;
-
+	$scope.logos;
 	$scope.change = 0;
 	$scope.added_success = false;
 	$scope.showProfile = false;
@@ -53,7 +53,6 @@ MerchantProfileAdminApp.controller('MerchantProfileController', function($scope,
 	};
 
 	$scope.addedNewWebsite = function(){
-		console.log($scope.website_name);
 		$resource("/website/profile/create").get({
 			website_name: "留学点评网",
 			user_amount: 0,
@@ -62,6 +61,21 @@ MerchantProfileAdminApp.controller('MerchantProfileController', function($scope,
 			console.log(res.mess);
 		})
 	}
+
+	function getMerchantsLogo () {
+		$resource("/merchant/logos").get({},function (res) {
+			console.log("aa");
+			if (res.status===1) {
+				$scope.logos = res.data;
+				console.info(res.data);
+			} else{
+				console.log(res.mess);
+				console.info(res.data);
+			};
+		});
+	}
+
+	getMerchantsLogo();
 
 	$scope.addedNewArea = function(){
 		$scope.merchant.support_area[$scope.change] = "留学地区"+$scope.change;
