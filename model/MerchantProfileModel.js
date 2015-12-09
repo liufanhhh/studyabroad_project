@@ -111,6 +111,12 @@ MerchantProfileSchema.statics.findMerchantByMID = function(MID, cb) {
     }, cb);
 }
 
+MerchantProfileSchema.statics.uploadLogo = function(MID, path, cb) {
+    this.findOne({
+        merchant_id: MID
+    }, cb);
+}
+
 MerchantProfileSchema.statics.findMerchantByName = function(merchant_name, cb) {
     this.findOne({
         merchant_name: merchant_name

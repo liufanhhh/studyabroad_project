@@ -69,20 +69,24 @@ exports.createNewMerchant = function(req,res){
 }
 
 exports.profileUpload = function(req, res) {
-  var file_name = "";
-
+  var file_name;
+  var fullname;
+  var merchant_id;
 
   req.busboy.on('field', function(fieldname, value) {
     console.log("fieldname"+fieldname+"value"+value);
-    if (fieldname=="file_name") {
+    if (fieldname == "fullname") {
+      fullname = value;
+    } else if (filename == "merchant_id"){
+      merchant_id = value;
+      fullname = value+"/"+fullname;
+    } else if(fieldname == "file_name"){
       file_name = value;
-    } else{
-      file_name = value+"/"+file_name;
     };
   });
 
   req.busboy.on('file', function (fieldname, file, filename) {
-    var file_path = "./views/storage/Merchant/"+ file_name;
+    var file_path = "./views/storage/Merchant/"+ fullname;
 
     
       var steam = fs.createWriteStream(file_path);

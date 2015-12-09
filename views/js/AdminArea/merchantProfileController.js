@@ -125,17 +125,18 @@ MerchantProfileAdminApp.controller('MerchantProfileController', function($scope,
 	uploader.onBeforeUploadItem = function(item) {
 		var filename = item.file.type;
 		var filename = filename.substring(filename.indexOf("\/"),filename.length);
-		var filename = filename.replace(/\//,"\.");
-		console.log(filename);
+		var filename = filename.replace(/\//,"");
+		var fullname;
 		if (item.url === "/merchant/profile/logo") {
-			filename = "logo"+filename;
+			fullname = "logo"+"\."+filename;
 		} else if(item.url === "/merchant/profile/tax_registration"){
-			filename = "tax_registration"+filename;
-		} else {	`
-			filename = "organization_order"+filename;
+			fullname = "tax_registration"+"\."+filename;
+		} else {
+			fullname = "organization_order"+"\."+filename;
 		};
-		item.formData[0] = {file_name: filename};
+		item.formData[0] = {fullname: fullname};
 		item.formData[1] = {merchant_id: $scope.finded_merchant.merchant_id};
+		item.formData[2] = {file_name: filename};
 	    console.info('onBeforeUploadItem', item);
 	};
 
