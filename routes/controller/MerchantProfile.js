@@ -5,7 +5,7 @@ var WebsiteProfile = require("../../model/WebsiteProfileModel.js");
 
 exports.createNewMerchant = function(req,res){
   var merchant = req.body.merchant;
-  var websit_name = "liufan";
+  var websit_name = "留学点评网";
   var sameName = Q.nfbind(MerchantProfile.findMerchantByName.bind(MerchantProfile));
 
   var handleNameResult = function(exist){
@@ -70,33 +70,36 @@ exports.createNewMerchant = function(req,res){
 
 exports.profileUpload = function(req, res) {
   var file_name;
-  var fullname;
   var merchant_id;
 
   req.busboy.on('field', function(fieldname, value) {
-    console.log("fieldname"+fieldname+"value"+value);
-    if (fieldname == "fullname") {
-      fullname = value;
-    } else if (filename == "merchant_id"){
+    if (fieldname == "file_name") {
+      file_name = file_name;
+    } else if (fieldname == "merchant_id"){
       merchant_id = value;
-      fullname = value+"/"+fullname;
-    } else if(fieldname == "file_name"){
-      file_name = value;
+      file_name = value+"/"+file_name;
     };
   });
 
+  var file_path = "./views/storage/Merchant/"+ file_name;
+  var storage_path = "/storage/Merchant/"+file_name;
+  
   req.busboy.on('file', function (fieldname, file, filename) {
-    var file_path = "./views/storage/Merchant/"+ fullname;
+    var steam = fs.createWriteStream(file_path);
+    file.pipe(steam);
+    steam.on('error', function () {
+        res.sendError("上传失败，请重新上传");
+    });
+    steam.on('close', function () {
+      MerchantProfile.uploadLogo(merchant_id, storage_path, function(err, merchant){
+        if (err) {
+          res.sendError("上传失败，请重新上传");
+        } else{
+          res.sendSuccess("上传成功");
+        };
 
-    
-      var steam = fs.createWriteStream(file_path);
-      file.pipe(steam);
-      steam.on('close', function () {
-        console.log('File ' + filename + ' is uploaded');
-        res.json({
-          filename: file_name
-        });
-      });
+      })
+    });
 
   });
 

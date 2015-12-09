@@ -112,8 +112,10 @@ MerchantProfileSchema.statics.findMerchantByMID = function(MID, cb) {
 }
 
 MerchantProfileSchema.statics.uploadLogo = function(MID, path, cb) {
-    this.findOne({
+    this.findOneAndUpdate({
         merchant_id: MID
+    }, {
+        logo: path
     }, cb);
 }
 

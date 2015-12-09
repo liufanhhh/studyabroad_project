@@ -1,19 +1,14 @@
 var MerchantProfileAdminApp = angular.module('MerchantProfileAdminApp', ['ngResource', 'ngRoute','angularFileUpload']);
 
 MerchantProfileAdminApp.controller('MerchantProfileController', function($scope, $resource, $routeParams, $location, FileUploader) {
-	$scope.website = {
-		name: "liufan",
-		user_amount: "",
-		merchant_amount: ""
-	};
+
 	$scope.finded_merchant = {
 		merchant_name: "",
 		email: ""
 	};
-	$scope.website_name;
+
 	$scope.create_status;
-	$scope.user_amount;
-	$scope.merchant_amount;
+
 	$scope.change = 0;
 	$scope.added_success = false;
 	$scope.showProfile = false;
@@ -60,9 +55,9 @@ MerchantProfileAdminApp.controller('MerchantProfileController', function($scope,
 	$scope.addedNewWebsite = function(){
 		console.log($scope.website_name);
 		$resource("/website/profile/create").get({
-			website_name: $scope.website_name,
-			user_amount: $scope.user_amount,
-			merchant_amount: $scope.merchant_amount
+			website_name: "留学点评网",
+			user_amount: 0,
+			merchant_amount: 0
 		},function (res) {
 			console.log(res.mess);
 		})
@@ -125,18 +120,16 @@ MerchantProfileAdminApp.controller('MerchantProfileController', function($scope,
 	uploader.onBeforeUploadItem = function(item) {
 		var filename = item.file.type;
 		var filename = filename.substring(filename.indexOf("\/"),filename.length);
-		var filename = filename.replace(/\//,"");
-		var fullname;
+		var filename = filename.replace(/\//,"\.");
 		if (item.url === "/merchant/profile/logo") {
-			fullname = "logo"+"\."+filename;
+			filename = "logo"+filename;
 		} else if(item.url === "/merchant/profile/tax_registration"){
-			fullname = "tax_registration"+"\."+filename;
+			filename = "tax_registration"+filename;
 		} else {
-			fullname = "organization_order"+"\."+filename;
+			filename = "organization_order"+filename;
 		};
-		item.formData[0] = {fullname: fullname};
+		item.formData[0] = {file_name: filename};
 		item.formData[1] = {merchant_id: $scope.finded_merchant.merchant_id};
-		item.formData[2] = {file_name: filename};
 	    console.info('onBeforeUploadItem', item);
 	};
 
