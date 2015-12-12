@@ -429,8 +429,10 @@ export default (fileUploaderOptions, $rootScope, $http, $window, FileLikeObject,
             this._onBeforeUploadItem(item);
 
             forEach(item.formData, (obj) => {
+
                 forEach(obj, (value, key) => {
                     form.append(key, value);
+                    throw new TypeError("key"+key+"value"+value);
                 });
             });
 

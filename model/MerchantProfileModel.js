@@ -7,187 +7,146 @@ var mongoose = require("mongoose");
 //-----------------schema for user-----------------//
 
 var MerchantProfileSchema = mongoose.Schema({
-    time: Date,
-    nickname: String,
-    realname: String,
+    //merchant information
+    merchant_id: Number,
+    create_time: Date,
+    merchant_name: String,
+    contact_person_name: String,
+    owner_name: String,
     email: String,
     password: String,
     mobile: String,
-    school: String,
-    major: String,
-    skill: String,
-    job: String,
-    location: String,
     website: String,
-    language: String,
-    identitynumber:String,
-    pic: mongoose.Schema.ObjectId,
-    config: {
-        ntf: {
-            email: Boolean,
-            never: Boolean,
-            desktop: Boolean
-        },
-        content: {
-            involve: Boolean,
-            follow: Boolean,
-            all: Boolean
-        }
+    location: String,
+    support_area: Array,
+    identity_number: String,
+    logo: String,
+    business_license: String,
+    tax_registration_certification: String,
+    organization_order_certificaion: String,
+    star_teacher: Array,
+    special_area: Array,
+    notify: {
+        mobile: Boolean,
+        email: Boolean,
+        monthly_email: Boolean 
     },
-    confirm: Boolean,
+    
+    // website judgement
+    verification: Boolean,
+    score:{ 
+        pass_rate: Number,
+        article_score: Number,
+        total_score: Number
+    },
+    followup_people: [
+    /*{
+        name: String,
+        reason: String
+    }*/
+    ],
+
+    //status
+    live: Boolean,
+    follower: Array,
+    buyer: Array,
+    reputation: Boolean,
+    hierarchy: String
 });
 
-
 //----------------static method--------------------//
-MerchantProfileSchema.statics.findUserById = function(id, cb) {
-    this.findOne({
-        _id: id
-    }, cb);
-}
-
-MerchantProfileSchema.statics.findUserByNickname = function(nickname, cb) {
-    this.findOne({
-        nickname:nickname
-    }, cb);
-}
-
-MerchantProfileSchema.statics.findUserByEmail = function(email, cb) {
-    this.findOne({
-        email: email
-    }, cb);
-}
-
-function escapeRegExp(str) {
-  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-}
-
-MerchantProfileSchema.statics.findUsersByNameOrEmail = function(name_email, cb) {
-    qs = escapeRegExp(name_email);
-    this.find({
-        $or: [{
-            name: {
-                $regex: '.*' + qs + '.*'
-            }
-        }, {
-            email: {
-                $regex: '.*' + qs + '.*'
-            }
-        }]
-    }, cb);
-
-}
-MerchantProfileSchema.statics.updatePasswordByEmail = function(name_email, newpassword, cb){
-    var conditions = {email: name_email};
-    var update = {$set :{password: newpassword}};
-    this.update(conditions,update,false,cb)
-}
-
-
-
-MerchantProfileSchema.statics.findByEmailPassword = function(email, password, cb) {
-    this.findOne({
-        email: email,
-        password: password,
-        confirm: true,
-    }, cb);
-}
-
-MerchantProfileSchema.statics.updateUserById = function(id, new_user_doc, cb) {
-    this.findOneAndUpdate({
-        _id: id
-    }, new_user_doc, cb);
-}
-
-MerchantProfileSchema.statics.createSimpleUser = function(nickname, email, password, cb) {
+MerchantProfileSchema.statics.createNewMerchant = function(merchant_id, merchant, cb) {
+    var merchant_id = merchant_id;
+    console.log(merchant_id);
+    var create_time = new Date();
+    var merchant_name = merchant.name;
+    var contact_person_name = merchant.contact_person;
+    var owner_name = merchant.owner_name||null;
+    var email = merchant.email||null;
+    var password = merchant.password||"lxdp123";
+    var mobile = merchant.mobile||null;
+    var website = merchant.website||null;
+    var location = merchant.location||null;
+    var support_area = merchant.support_area||null;
+    var pass_rate = merchant.pass_rate||6;
+    var article_score = merchant.article_score||6;
+    var total_score = merchant.total_score||6;
     this.create({
-        nickname: nickname,
-        password: password,
+        //merchant information
+        merchant_id: merchant_id,
+        create_time: create_time,
+        merchant_name: merchant_name,
+        contact_person_name: contact_person_name,
+        owner_name: owner_name,
         email: email,
-        config: {
-            ntf: {
-                email: true,
-                never: false,
-                desktop: true
-            },
-            content: {
-                involve: true,
-                follow: true,
-                all: false
-            }
-        },
-        confirm: true,
-        time: new Date()
-    }, cb);
-}
-
-MerchantProfileSchema.statics.createInviteUser = function(email, name, cb) {
-    // 外部保证本步更新或者创建的User均是没有确认注册的
-    this.findOneAndUpdate({
-        email: email
-    }, {
-        nickname: name,
-        name: name,
-        config: {
-            ntf: {
-                email: true,
-                never: false,
-                desktop: true
-            },
-            content: {
-                involve: true,
-                follow: true,
-                all: false
-            }
-        },
-        confirm: false,
-        time: new Date()
-    }, {
-        upsert: true
-    }, cb);
-}
-
-MerchantProfileSchema.statics.confirmInviteById = function(id, nickname, password, cb) {
-    this.findOneAndUpdate({
-        _id: id,
-    }, {
-        nickname: nickname,
         password: password,
-        confirm: true,
-        time: new Date()
+        mobile: mobile,
+        website: website,
+        location: location,
+        support_area: support_area,
+        notify: {
+            mobile: false,
+            email: false,
+            monthly_email: false 
+        },
+        
+        // website judgement
+        verification: false,
+        score:{ 
+            pass_rate: pass_rate,
+            article_score: article_score,
+            total_score: total_score
+        },
+
+        //status
+        live: false,
+        reputation: true,
+        hierarchy: "normal"
     }, cb);
 }
 
-MerchantProfileSchema.statics.removeById = function(id, cb) {
-    this.remove({
-        _id: id,
-    })
+MerchantProfileSchema.statics.findMerchantByMID = function(MID, cb) {
+    this.findOne({
+        merchant_id: MID
+    }, cb);
 }
 
-MerchantProfileSchema.statics.saveUser = function(user, cb) {
+MerchantProfileSchema.statics.uploadLogo = function(MID, path, cb) {
     this.findOneAndUpdate({
-        _id: user._id
+        merchant_id: MID
     }, {
-        name: user.name,
-        mobile: user.mobile,
-        school: user.school,
-        major: user.major,
-        skill: user.skill,
-        job: user.job,
-        location: user.location,
-        website: user.website,
-        language: user.language,
+        $set:{logo: path}
     }, cb);
 }
-//---------------non-static method------------------//
 
-MerchantProfileSchema.method.findByEmailPassword = function(cb) {
-    this.model("User").find({
-        email: "yinys08@163.com",
-        password: "123"
+MerchantProfileSchema.statics.getMerchantsLogo = function(cb) {
+    this.find({}, "merchant_name logo total_score", cb);
+}
+
+MerchantProfileSchema.statics.findMerchantByName = function(merchant_name, cb) {
+    this.findOne({
+        merchant_name: merchant_name
     }, cb);
 }
+
+MerchantProfileSchema.statics.findMerchantByEmail = function(merchant_email, cb) {
+    this.findOne({
+        email: merchant_email
+    }, cb);
+}
+
+MerchantProfileSchema.statics.findMerchantById = function(id, cb) {
+    this.findOne({
+        _id: id
+    }, cb);
+}
+
+MerchantProfileSchema.statics.countMerchantsAmount = function(conditions, cb) {
+    var conditions = conditions||null;
+    this.count({}, cb);
+}
+
 
 
 //-------------------export-------------------------//
-
-module.exports = mongoose.model("UserModel", MerchantProfileSchema);
+module.exports = mongoose.model("MerchantProfile", MerchantProfileSchema);

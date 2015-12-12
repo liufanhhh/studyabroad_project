@@ -8,7 +8,6 @@ var bcrypt = require('bcrypt-nodejs');
 //-----------------schema for user-----------------//
 
 var UserProfileSchema = mongoose.Schema({
-    // _id: mongoose.Schema.ObjectId,
     time: Date,
     nickname: String,
     realname: String,
@@ -51,6 +50,13 @@ UserProfileSchema.methods.isValidPassword = function(password) {
 UserProfileSchema.statics.findUserById = function(id, cb) {
     this.findOne({
         _id: id
+    }, cb);
+}
+
+UserProfileSchema.statics.countUsersAmount = function(conditions, cb) {
+    var conditions = conditions||null;
+    this.count({
+        conditions: conditions
     }, cb);
 }
 
