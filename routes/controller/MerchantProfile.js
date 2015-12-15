@@ -108,7 +108,6 @@ exports.profileUpload = function(req, res) {
     });
 
   });
-
   req.pipe(req.busboy);
 }
 
@@ -137,13 +136,24 @@ exports.findOneMerchant = function (req, res) {
 }
 
 exports.getMerchantsLogo = function (req, res) {
-  console.log("aa");
   MerchantProfile.getMerchantsLogo(function (err, logos) {
-    console.log(logos);
     if (err) {
       res.sendError(err);
     } else{
       res.sendData(logos,"success");
+    }
+  });
+}
+
+exports.merchantLogin = function (req, res) {
+  var merchant = req.body.merchant;
+  MerchantProfile.findMerchantByEmail( merchant.email, function (err, merchant_profile) {
+    if (err) {
+      res.sendError(err);
+    } else if (merchant.password == merchant_profile.password){
+      req.session.name = merchant_profile.name;
+    } else{
+      res.sendError("密码错误");      
     }
   });
 }

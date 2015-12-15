@@ -17,3 +17,4 @@ module.exports = db
 exports.close = function() {
 	mongoose.connection.close()
 }
+

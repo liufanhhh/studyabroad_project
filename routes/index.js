@@ -31,6 +31,7 @@ module.exports = function(app) {
 	app.get("/loginSuccess", Login.isLoggedIn);
 	app.get("/user/information",UserInformation.getOneUserNew);
 	app.get("/merchant/profile/find", MerchantProfile.findOneMerchant);	
+	app.get("/merchant/login", MerchantProfile.merchantLogin);
 
 	app.post("/register",CreateUser.newuserCreate);
 	app.post("/login", Login.userLogin);

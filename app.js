@@ -11,7 +11,7 @@ var busboy = require('connect-busboy');
 var db = require('./connectDB.js')
 var routes = require('./routes/index');
 
-var passport = require('passport');
+// var passport = require('passport');
 
 
 
@@ -62,11 +62,24 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/views')));
 
-require('./passport-config')(passport);
+app.use(session({
+    secret: 'Angel',
+    store: new MongoStore({
+        // db:"SessionStore",
+        // host:"localhost",
+        url: 'mongodb://localhost/test-app',
+        ttl: 14 * 24 * 60 * 60 // = 14 days. Default
+    }),
+    cookie: {
+        maxAge: 3600
+    }
+}));
 
-app.use(session({ secret: 'Shia' }));
-app.use(passport.initialize());
-app.use(passport.session());
+// require('./passport-config')(passport);
+
+// app.use(session({ secret: 'Shia' }));
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 // give the routes to control the require
 routes(app);

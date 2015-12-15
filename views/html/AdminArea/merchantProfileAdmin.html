@@ -9,7 +9,7 @@
 	<script src="/bower_components/angular-resource/angular-resource.min.js"></script>
 	<script src="/bower_components/angular-route/angular-route.min.js"></script>
 	<script src="/bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
-	<script src="../../js/AdminArea/merchantProfileController.js"></script>
+	<script src="	/js/AdminArea/merchantProfileController.js"></script>
    
     <link rel="stylesheet" href="../css/merchant-form.css">
 </head>	
@@ -20,7 +20,7 @@
 
 	<div  ng-controller="MerchantProfileController" class="merchant-form">
 		<div ng-repeat = "logo in logos">
-			{{logo.name}}
+			{{logo.merchant_name}}
 			<img ng-src = "{{logo.logo}}"/>
 		</div>
 
