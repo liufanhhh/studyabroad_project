@@ -15,11 +15,15 @@ var Test = require('./controller/Test.js');
 
 module.exports = function(app) {
 
+
+
 	app.all("/",Enter.indexpageEnter);
 	app.all("/admin",Enter.adminpageEnter);
 	app.all("/user/signup/page",CreateUser.userSignUpEnter);
     app.all("/user/login/page",Login.pageLogin);
 
+    app.get("/merchant/:merchantId", Enter.authenticateMerchant, Enter.merchantSessionLogin);
+    app.get("/merchant/login", Enter.authenticateMerchant, Enter.indexpageEnter);
 
 	app.get("/merchant/logos", MerchantProfile.getMerchantsLogo);	
     app.get("/website/profile/create",ResetWebsiteProfile.createWebsiteInformation);
@@ -31,9 +35,10 @@ module.exports = function(app) {
 	app.get("/loginFailure",Login.failedLogin);
 	app.get("/loginSuccess", Login.isLoggedIn);
 	app.get("/user/information",UserInformation.getOneUserNew);
-	app.get("/merchant/profile/find", MerchantProfile.findOneMerchant);	
-	app.get("/merchant/login", MerchantProfile.merchantLogin);
+	app.get("/merchant/profile/find", MerchantProfile.findOneMerchant);
 
+
+	app.post("/merchant/login", MerchantProfile.merchantLogin);
 	app.post("/register",CreateUser.newuserCreate);
 	app.post("/login", Login.userLogin);
 	app.post("/user/information",UserInformation.getOneUser);

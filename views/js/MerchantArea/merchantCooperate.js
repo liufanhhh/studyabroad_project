@@ -62,7 +62,8 @@ merchantCooperateApp.controller('merchantCooperateController',function($scope, $
 		$resource("/merchant/login").save({
 			merchant: $scope.merchant
 		}, function(res) {
-			console.log(res.mess);
+			console.info(res.location);
+			window.location = res.location;
 		});
 	};
 	

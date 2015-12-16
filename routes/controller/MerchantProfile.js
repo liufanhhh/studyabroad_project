@@ -48,7 +48,7 @@ exports.createNewMerchant = function(req,res){
     }else{
       MerchantProfile.createNewMerchant(amount, merchant, function(err, new_merchant){
         deferred.resolve(new_merchant);
-        // return deferred.promise;
+        return deferred.promise;
       });
     }
     return deferred.promise;
@@ -151,9 +151,15 @@ exports.merchantLogin = function (req, res) {
     if (err) {
       res.sendError(err);
     } else if (merchant.password == merchant_profile.password){
-      req.session.name = merchant_profile.name;
+      console.log(merchant_profile.merchant_id);
+      req.session.merchant_id = merchant_profile.merchant_id;
+      console.log("aa");
+      res.status(200).send({location:'/admin'});
     } else{
       res.sendError("密码错误");      
     }
   });
 }
+
+
+
