@@ -69,10 +69,7 @@ app.use(session({
         // host:"localhost",
         url: 'mongodb://localhost/test-app',
         ttl: 14 * 24 * 60 * 60 // = 14 days. Default
-    }),
-    cookie: {
-        maxAge: 3600
-    }
+    })
 }));
 
 // require('./passport-config')(passport);

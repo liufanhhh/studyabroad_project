@@ -18,7 +18,7 @@ module.exports = function(app) {
 
 
 	app.all("/",Enter.indexpageEnter);
-	app.all("/admin",Enter.adminpageEnter);
+	app.all("/admin", Enter.authenticateMerchant, Enter.adminpageEnter);
 	app.all("/user/signup/page",CreateUser.userSignUpEnter);
     app.all("/user/login/page",Login.pageLogin);
 

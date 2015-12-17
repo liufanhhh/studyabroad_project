@@ -146,6 +146,8 @@ exports.getMerchantsLogo = function (req, res) {
 }
 
 exports.merchantLogin = function (req, res) {
+  console.log(req.session);
+  // var session = req.session;
   var merchant = req.body.merchant;
   MerchantProfile.findMerchantByEmail( merchant.email, function (err, merchant_profile) {
     if (err) {
@@ -153,7 +155,8 @@ exports.merchantLogin = function (req, res) {
     } else if (merchant.password == merchant_profile.password){
       console.log(merchant_profile.merchant_id);
       req.session.merchant_id = merchant_profile.merchant_id;
-      console.log("aa");
+      // console.log(session.merchant_id);
+      console.log(req.session);
       res.status(200).send({location:'/admin'});
     } else{
       res.sendError("密码错误");      

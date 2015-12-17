@@ -2,7 +2,7 @@
 
 exports.indexpageEnter = function(req, res) {
 	var session = req.session;
-	console.log(req.session);
+	console.log(req.session.merchant_id);
 	if (session.merchant_id) {
 		res.redirect("/merchant/:"+session.merchant_id);
 	} else if(session.user_id){

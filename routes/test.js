@@ -1,14 +1,9 @@
-var aa = {
-	a: 1,
-	b: 2
+function A()  {
+	a = 1,
+	b = 2
 }
+A.prototype.a = 1;
+var bb = new A();
+bb.a = 2;
 
-var bb = {
-	aa: aa,
-	bb: function(){
-		this.aa.a = 3;
-	}
-}
-
-bb.bb();
-console.log(aa);
+console.log(bb.a);
