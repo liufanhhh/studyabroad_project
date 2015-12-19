@@ -1,79 +1,44 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app="merchantCooperateApp">
 <head>
-	<script src="../bower_components/angular/angular.min.js"></script>
-	<script src="hezuoController.js"></script>
-    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<meta charset="utf-8">
+
+	<!-- The import of the javascript -->
+	<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="/bower_components/angular/angular.min.js"></script>
+	<script src="/bower_components/angular-resource/angular-resource.min.js"></script>
+	<script src="/bower_components/angular-route/angular-route.min.js"></script>
+	<script src="/bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
+	<script src="/bower_components/angular-md5/angular-md5.js"></script>	
+	<script src="/js/MerchantArea/merchantCooperate.js"></script>
+   
+    <link rel="stylesheet" href="/css/merchant-form.css">
 </head>	
 
-<body>
+<body ng-controller="merchantCooperateController">
 
-<div ng-app="" >
+	<div ng-if="login_page">
+		<input type="text" ng-model="merchant.email"/>邮箱
+		<input type="text" ng-model="merchant.password"/>密码
+		<button ng-disable="!same_password" ng-click="login()">登陆</button>
+		还没有账号？点击进行注册
+		<button ng-click="registerPage()">注册</button>
+	</div>
 
-  <div ng-controller="hezuoController" class="">
-	<h1>用户注册</h1>
-		<form name="hezuoForm" role="form" novalidate>
-			
-		<div class="form-group has-feedback" ng-class="{ 'has-error' : hezuoForm.merchant_name.$invalid && !hezuoForm.merchant_name.$pristine, 
-		'has-success' : hezuoForm.merchant_name.$valid }">
-			<label>用户姓名：</label>
-			<input name="merchant_name" class="form-control" type="text" ng-model="merchants.merchant_name" ng-minlength=5 required >
-			<p class="help-block" ng-show="hezuoForm.merchant_name.$error.required && !hezuoForm.merchant_name.$pristine">该项必填</p>
-			<p class="help-block" ng-show="hezuoForm.merchant_name.$error.minlength && !hezuoForm.merchant_name.$pristine">姓名最小长度为5</p>
-			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="hezuoForm.merchant_name.$valid"></span>
-			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="hezuoForm.merchant_name.$invalid && !hezuoForm.merchant_name.$pristine"></span>
-		</div>
+	<div ng-if="register_page">
 
-
-		<div class="form-group has-feedback" ng-class="{ 'has-error' : hezuoForm.merchant_email.$invalid && !hezuoForm.merchant_email.$pristine,
-		'has-success' : hezuoForm.merchant_email.$valid }">
-			<label>邮箱地址：</label>
-			<input name="email" class="form-control" type="email" ng-model="merchants.merchant_email" required>
-			<p class="help-block" ng-show="hezuoForm.merchant_email.$error.required && !hezuoForm.merchant_email.$pristine">该项必填</p>
-			<p class="help-block" ng-show="hezuoForm.merchant_email.$error.merchant_email && !hezuoForm.merchant_email.$pristine">不符合merchant_email格式</p>
-			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="hezuoForm.merchant_email.$valid"></span>
-			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="hezuoForm.merchant_email.$invalid && !hezuoForm.merchant_email.$pristine"></span>
-		</div>
-
-
-		<div class="form-group has-feedback" ng-class="{ 'has-error' : hezuoForm.pswd1.$invalid && !hezuoForm.pswd1.$pristine,
-		'has-success' : samePswd }">
-			<label>设置密码：</label>
-			<input class="form-control" name="pswd1" type="password" ng-model="person.pswd1" ng-minlength=6 required>
-			<p class="help-block" ng-show="hezuoForm.pswd1.$error.required && !hezuoForm.pswd1.$pristine">该项必填</p>		
-			<p class="help-block" ng-show="hezuoForm.pswd1.$error.minlength && !hezuoForm.pswd1.$pristine">密码最小长度为6</p>		
-			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="hezuoForm.pswd1.$valid && samePswd"></span>
-			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="hezuoForm.pswd1.$invalid && !hezuoForm.pswd1.$pristine"></span>
-		</div>
-
-		<div class="form-group has-feedback" ng-class="{ 'has-error' : (hezuoForm.pswd2.$invalid || !samePswd) && !hezuoForm.pswd2.$pristine,
-		'has-success' : samePswd }">
-			<label>再次输入密码：</label>
-			<input class="form-control" name="pswd2" type="password" ng-model="person.pswd2" ng-minlength=6 required>
-			<p class="help-block" ng-show="hezuoForm.pswd2.$error.required && !hezuoForm.pswd2.$pristine">该项必填</p>		
-			<p class="help-block" ng-show="hezuoForm.pswd2.$error.minlength && !hezuoForm.pswd2.$pristine">密码最小长度为6</p>		
-			<p class="help-block" ng-show="!samePswd && !hezuoForm.pswd2.$pristine">两次填写密码不一致</p>
-			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="hezuoForm.pswd2.$valid && samePswd"></span>
-			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="hezuoForm.pswd2.$invalid && !hezuoForm.pswd2.$pristine"></span>
-		</div>
-
-		<div>
-  			<input name="personCheck" type="checkbox" ng-model="person.check" required>  是否同意用户守则
-  		</div>
-  		<br>
-<!-- 			除了ng自带的表单验证外，加上密码验证，才可以注册 -->
-  		<button type="submit" class="btn btn-primary" ng-disabled="myForm.$invalid || !samePswd" >注册</button>
- 
-		</form>
-
-		 
-
-   </div>
-  
-</div>
-
-
+		<input type="text" ng-model="merchant.contact_person_name" />联系人姓名
+		<input type="text" ng-model="merchant.password" />密码
+		<input type="text" ng-model="merchant.password_confirmation" />密码确认
+		<input type="text" ng-model="merchant.name" />公司名称
+		<input type="text" ng-model="merchant.email" />联系人邮件
+		<button ng-disable="!same_password" ng-click="register()">注册账号</button>
+		<br>
+		{{register_result}}
+		已经有账号了？点击进行登陆
+		<button ng-click="loginPage()">注册</button>
+	</div>	
 
 </body>
-</html>
 
+</html>

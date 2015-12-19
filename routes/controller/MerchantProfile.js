@@ -48,7 +48,7 @@ exports.createNewMerchant = function(req,res){
     }else{
       MerchantProfile.createNewMerchant(amount, merchant, function(err, new_merchant){
         deferred.resolve(new_merchant);
-        // return deferred.promise;
+        return deferred.promise;
       });
     }
     return deferred.promise;
@@ -108,7 +108,6 @@ exports.profileUpload = function(req, res) {
     });
 
   });
-
   req.pipe(req.busboy);
 }
 
@@ -137,9 +136,7 @@ exports.findOneMerchant = function (req, res) {
 }
 
 exports.getMerchantsLogo = function (req, res) {
-  console.log("aa");
   MerchantProfile.getMerchantsLogo(function (err, logos) {
-    console.log(logos);
     if (err) {
       res.sendError(err);
     } else{
@@ -147,3 +144,25 @@ exports.getMerchantsLogo = function (req, res) {
     }
   });
 }
+
+exports.merchantLogin = function (req, res) {
+  console.log(req.session);
+  // var session = req.session;
+  var merchant = req.body.merchant;
+  MerchantProfile.findMerchantByEmail( merchant.email, function (err, merchant_profile) {
+    if (err) {
+      res.sendError(err);
+    } else if (merchant.password == merchant_profile.password){
+      console.log(merchant_profile.merchant_id);
+      req.session.merchant_id = merchant_profile.merchant_id;
+      // console.log(session.merchant_id);
+      console.log(req.session);
+      res.status(200).send({location:'/admin'});
+    } else{
+      res.sendError("密码错误");      
+    }
+  });
+}
+
+
+

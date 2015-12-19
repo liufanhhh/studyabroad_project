@@ -120,7 +120,7 @@ MerchantProfileSchema.statics.uploadLogo = function(MID, path, cb) {
 }
 
 MerchantProfileSchema.statics.getMerchantsLogo = function(cb) {
-    this.find({}, "merchant_name logo total_score", cb);
+    this.find({}, "merchant_name logo score", cb);
 }
 
 MerchantProfileSchema.statics.findMerchantByName = function(merchant_name, cb) {
