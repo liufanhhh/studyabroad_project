@@ -6,8 +6,8 @@
   <script src="../angular-md5.js"></script>
 </head>
 <body ng-app="YOUR_APP" ng-controller="MainCtrl" ng-cloak>
-  <img ng-src="http://www.gravatar.com/avatar/{{ email | gravatar }}">
-  <input type="email" ng-model="email" placeholder="Email Address" autofocus>
+  <input type="text" ng-model="person.email" placeholder="Email Address" autofocus>
+  <button ng-click = "changeHash()">create Harsh</button>
   Your email Hash is: {{ message }}
 <!--
 <script src="app/bower_components/angular-md5/angular-md5.js"></script>
@@ -20,8 +20,14 @@
   angular.module('controllers', [])
     .controller('MainCtrl', ['$scope', 'md5', function($scope, md5) {
 
-      $scope.$watch('email' ,function() {
-        $scope.message = md5.createHash($scope.email || '');
+      $scope.person = {};
+      $scope.changeHash = function(){
+        console.log($scope.person.email);
+        $scope.password = md5.createHash($scope.person.email);
+        console.info($scope.password);
+      };
+      $scope.$watch('person.email' ,function() {
+        $scope.message = md5.createHash($scope.person.email||"dd");
       });
 
     }]);

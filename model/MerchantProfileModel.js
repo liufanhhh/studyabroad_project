@@ -138,6 +138,14 @@ MerchantProfileSchema.statics.findMerchantByEmail = function(merchant_email, cb)
 MerchantProfileSchema.statics.findMerchantById = function(id, cb) {
     this.findOne({
         _id: id
+    },cb);
+}
+
+MerchantProfileSchema.statics.updatePassword = function(merchant_id, new_password, cb) {
+    this.findOneAndUpdate({
+        merchant_id: merchant_id
+    }, {
+        password: new_password 
     }, cb);
 }
 

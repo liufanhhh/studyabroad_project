@@ -45,25 +45,59 @@ merchantCooperateApp.controller('merchantCooperateController',function($scope, $
 		$scope.register_page = false;
 	};
 
+	$scope.createHash = function (version, old_password, token1, token2) {
+		var new_password;
+		if (version == 1) {
+			new_password = md5.createHash(md5.createHash(old_password+token1)+token2);
+		} else if (version == 2){
+			new_password = md5.createHash(md5.createHash(md5.createHash(old_password)+token1)+token2);
+		};
+		return new_password;
+	}
+
 	//用户注册
 	$scope.register = function(){
+		$scope.merchant.password = md5.createHash($scope.merchant.password);
 		$resource("/merchant/profile/create").save({
 			merchant: $scope.merchant
 		}, function(res) {
-			$scope.register_result = res.mess;
 			if (res.status == 1) {
-				$scope.login_page = true;
-				$scope.register_page = false;
+				$scope.merchant = res.data;
+				$scope.merchant.password = $scope.createHash(1, $scope.merchant.password, $scope.merchant._id, $scope.merchant.create_time);
+				$scope.merchant.password_confirmation = null;
+				$resource("/merchant/profile/password").save({
+					merchant_id: $scope.merchant.merchant_id,
+					new_password: $scope.merchant.password
+				}, function(res) {
+					if (res.status == 1) {
+						$scope.merchant = {};
+						$scope.login_page = true;
+						$scope.register_page = false;
+					};
+					$scope.register_result = res.mess;
+				});
 			};
+			$scope.register_result = res.mess;
 		});
+
 	};
 
 	$scope.login = function(){
-		$resource("/merchant/login").save({
-			merchant: $scope.merchant
+		$resource("/merchant/profile/token").save({
+			email: $scope.merchant.email
 		}, function(res) {
-			console.info(res.location);
-			window.location = res.location;
+			var token1 = res.data.token1;
+			var token2 = res.data.token2;
+			console.log(token1);
+			console.log(token2);
+			$scope.merchant.password = $scope.createHash(2, $scope.merchant.password, token1, token2);
+			$resource("/merchant/login").save({
+				email: $scope.merchant.email,
+				password: $scope.merchant.password
+			}, function(res) {
+				console.log(res.location);
+				window.location = res.location;
+			});
 		});
 	};
 	

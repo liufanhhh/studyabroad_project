@@ -42,7 +42,9 @@ module.exports = function(app) {
 	app.post("/register",CreateUser.newuserCreate);
 	app.post("/login", Login.userLogin);
 	app.post("/user/information",UserInformation.getOneUser);
+	app.post("/merchant/profile/password", MerchantProfile.createNewPassword);
 	app.post("/merchant/profile/create", MerchantProfile.createNewMerchant);
+	app.post("/merchant/profile/token", MerchantProfile.returnToken);
 
 
 
