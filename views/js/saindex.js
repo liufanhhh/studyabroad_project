@@ -1,30 +1,29 @@
-var IndexAPP = angular.module('IndexAPP', ['ngResource', 'ngRoute']);
+var indexAPP = angular.module('indexAPP', ['ngResource', 'ngRoute']);
 
 /*
  * routes for saindex.html
  */
-console.log("here is fine");
-IndexAPP.config(function($routeProvider, $locationProvider) {
+indexAPP.config(function($routeProvider, $locationProvider) {
     $routeProvider.
     when('/', {
-        templateUrl: '/MainHtml/mainpage.html',
-        controller: 'MainController'
+        templateUrl: 'html/MainHtml/main.html',
+        controller: 'mainController'
     }).
     when('/activity', {
-        templateUrl: '/MainHtml/activity.html',
-        controller: 'ActivityController'
+        templateUrl: 'html/MainHtml/activity.html',
+        controller: 'activityController'
     }).
     when('/download', {
-        templateUrl: '/MainHtml/download.html',
-        controller: 'DownloadController'
+        templateUrl: 'html/MainHtml/download.html',
+        controller: 'downloadController'
     }).
     when('/groupon', {
-        templateUrl: '/MainHtml/groupon.html',
-        controller: 'GrouponController'
+        templateUrl: 'html/MainHtml/groupon.html',
+        controller: 'grouponController'
     }).
     when('/school', {
-        templateUrl: '/MainHtml/school.html',
-        controller: 'SchoolController'
+        templateUrl: 'html/MainHtml/school.html',
+        controller: 'schoolController'
     });
 
     // configure html5 to get links working on jsfiddle
@@ -32,41 +31,40 @@ IndexAPP.config(function($routeProvider, $locationProvider) {
     console.log("initialize route");
 });
 
-IndexAPP.controller('IndexController', function($scope, $resource, $routeParams, $location) {
+indexAPP.controller('indexController', function($scope, $resource, $routeParams, $location) {
 	$scope.register_show = false;
 	$scope.login_show = false;
 	$scope.otherfuction_show = false;
 	$scope.feedback_show = false;
 	$scope.agree = true;
-
-
 });
 
-IndexAPP.controller('MainController', function($scope, $resource, $routeParams, $location) {
-    $scope.getMerchantsLogo = function () {
-        $resource("/merchant/logos").get({}, function(res) {
-            console.info(res);
-            if (res.mess = "success") {
-                
+indexAPP.controller('mainController', function($scope, $resource, $routeParams, $location) {
+    function getMerchantsLogo () {
+        $resource("/merchant/logos").get({},function (res) {
+            if (res.status===1) {
+                console.info(res.data);
+                $scope.merchants = res.data;
             } else{
-                cosole.log(res.mess);
+                window.location = "/404";
             };
-        }); 
+        });
     }
+    getMerchantsLogo();
 });
 
-IndexAPP.controller('ActivityController', function($scope, $resource, $routeParams, $location) {
-
-});
-
-IndexAPP.controller('DownloadController', function($scope, $resource, $routeParams, $location) {
+indexAPP.controller('activityController', function($scope, $resource, $routeParams, $location) {
 
 });
 
-IndexAPP.controller('GrouponController', function($scope, $resource, $routeParams, $location) {
+indexAPP.controller('downloadController', function($scope, $resource, $routeParams, $location) {
 
 });
 
-IndexAPP.controller('SchoolController', function($scope, $resource, $routeParams, $location) {
+indexAPP.controller('grouponController', function($scope, $resource, $routeParams, $location) {
+
+});
+
+indexAPP.controller('schoolController', function($scope, $resource, $routeParams, $location) {
 
 });

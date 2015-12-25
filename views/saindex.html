@@ -1,31 +1,32 @@
 a<!DOCTYPE html>
-<html lang="cn" ng-app="IndexAPP">
+<html lang="cn" ng-app="indexAPP">
   <head>
-    <title>留学点评网</title>
+    <title>Paymentwall</title>
 
     <!-- The information of the website and the valid scale factor -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="description" content="留学机构点评团购网站" />
-    <meta name="keywords" content="留学点评网 团购留学" />
+    <meta name="description" content="Paymentwall" />
+    <meta name="keywords" content="Paymentwall" />
 
     <!-- The import of the css -->
-    <link rel="stylesheet" href="../css/font-awesome.min.css" />
-    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/css/index.css" />
    
     <!-- The import of the javascript -->
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/bower_components/angular/angular.min.js"></script>
     <script src="/bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="/bower_components/angular-route/angular-route.min.js"></script>
-    <script src="js/saindex.js"></script>
-    <style type="text/css">
-    </style>
+    <script src="/js/saindex.js"></script>
   </head>
 
-  <body>
-    <div class="wrapper">
+  <body ng-controller="indexController">
+  <div ng-view>
+    
+  </div>
+<!--     <div class="wrapper">
       <div class="site-nav">
         <div class="container">
           <div class="nav-left">
@@ -35,7 +36,6 @@ a<!DOCTYPE html>
           </div>
 
           <div class="nav-right">
-            <!-- icon-lock should act as bg, but now it is an img -->
             <img oncontextmenu="return false" ondragstart="return false" onselectstart="return false"
             onselect="document.selection.empty()" src="images/icon-lock.gif" id="icon-lock">
             <div id="log-reg">
@@ -45,25 +45,23 @@ a<!DOCTYPE html>
             <div id="contactus">
               <i class="icon-envelope-alt"></i><a href="#">联系我们</a>
             </div>
-            <!-- <img oncontextmenu="return false" ondragstart="return false" onselectstart="return false"
-            onselect="document.selection.empty()" src="images/contactus-bg.gif" id="contactus-bg" alt="contactus-bg"> -->
           </div>
 
-        </div> <!-- end of "container" -->
-      </div> <!-- end of "site-nav" -->
+        </div> 
+      </div> 
 
 
       <div class="page-header">
         <div class="container">
           <div id="logo">
-            <a href="#">聚留学</a>
+            <a href="#">Paymentwall</a>
           </div>
           <div id="search-box">
             <input type="text" id="text">
             <button id="button"><em>搜索</em></button>
           </div>
-        </div> <!-- end of "container" -->
-      </div> <!-- end of "page-header" -->
+        </div> 
+      </div> 
 
       <div class="shop-nav">
         <div class="container">
@@ -73,13 +71,13 @@ a<!DOCTYPE html>
           <div id="shop-nav-items">
             <ul id="nav-items">
               <li id="nav-abroad">
-                留学
+                aaa
               </li>
               <li id="nav-121">
-                一对一
+bbb
               </li>
               <li id="ielts">
-                雅思培训
+cccc              
               </li>
             </ul>
           </div>
@@ -91,7 +89,7 @@ a<!DOCTYPE html>
           <div id="selector">
             <div class="selectorLine">
               <div class="sl-parentkey">
-                机构所在地：
+                地点：
               </div>
               <div class="sl-subkey">
                 <ul>
@@ -108,8 +106,6 @@ a<!DOCTYPE html>
         </div>
       </div>
 
-      <div ng-view></div>
-
-    </div>
+    </div> -->
   </body>
 </html>

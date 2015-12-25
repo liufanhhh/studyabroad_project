@@ -1,12 +1,12 @@
-var merchantCooperateApp = angular.module('merchantCooperateApp', ['ngResource', 'ngRoute', 'angular-md5']);
+var merchantCooperateApp = angular.module('merchantCooperateApp', ['ngResource', 'ngRoute', 'angular-md5', 'liufanhh']);
 
-merchantCooperateApp.controller('merchantCooperateController',function($scope, $resource, $routeParams, $location, md5){
+merchantCooperateApp.controller('merchantCooperateController',function($scope, $resource, $routeParams, $location, md5, test){
 	$scope.merchant = {};
 	$scope.same_password = false;
 	$scope.login_page = true;
 	$scope.register_page = false;
 	$scope.register_result = "";
-
+	console.log(test.create());
 	$scope.$watch("merchant.password_confirmation", function(newVal,oldVal,scope){
 		if (newVal === oldVal){
 		}

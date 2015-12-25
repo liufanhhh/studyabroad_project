@@ -4,7 +4,7 @@ var path = require('path');
 
 var Enter = require('./controller/Enter.js');
 var CreateUser = require('./controller/CreateUser.js');
-var Login = require('./controller/Login.js');
+var CreateMerchant = require('./controller/CreateMerchant.js');
 var MerchantProfile = require('./controller/MerchantProfile.js');
 var UserInformation = require('./controller/UserInformation.js');
 var ResetWebsiteProfile = require('./controller/ResetWebsiteProfile.js');
@@ -15,35 +15,36 @@ var Test = require('./controller/Test.js');
 
 module.exports = function(app) {
 
-
-
 	app.all("/",Enter.indexpageEnter);
 	app.all("/admin", Enter.authenticateMerchant, Enter.adminpageEnter);
-	app.all("/user/signup/page",CreateUser.userSignUpEnter);
-    app.all("/user/login/page",Login.pageLogin);
 
-    app.get("/merchant/:merchantId", Enter.authenticateMerchant, Enter.merchantSessionLogin);
-    app.get("/merchant/login", Enter.authenticateMerchant, Enter.indexpageEnter);
 
-	app.get("/merchant/logos", MerchantProfile.getMerchantsLogo);	
+
+
+    //Admin Area
     app.get("/website/profile/create",ResetWebsiteProfile.createWebsiteInformation);
     app.get("/website/profile/usersAmountCount",ResetWebsiteProfile.countUsersAmount);
     app.get("/website/profile/usersAmountSet",ResetWebsiteProfile.setUsersAmount);
     app.get("/website/profile/merchantsAmountCount",ResetWebsiteProfile.countMerchantsAmount);
     app.get("/website/profile/merchantsAmountSet",ResetWebsiteProfile.setMerchantsAmount);
-	app.get("/login", Login.pageLogin);
-	app.get("/loginFailure",Login.failedLogin);
-	app.get("/loginSuccess", Login.isLoggedIn);
+
+    //Index Page
+	app.get("/merchant/logos", MerchantProfile.getMerchantsLogo);	
+
+	//User Area
+	app.all("/user/signup/page",CreateUser.userSignUpEnter);
 	app.get("/user/information",UserInformation.getOneUserNew);
-	app.get("/merchant/profile/find", MerchantProfile.findOneMerchant);
-
-
-	app.post("/merchant/login", MerchantProfile.merchantLogin);
 	app.post("/register",CreateUser.newuserCreate);
-	app.post("/login", Login.userLogin);
+	app.get("/merchant/profile/find", MerchantProfile.findOneMerchant);
 	app.post("/user/information",UserInformation.getOneUser);
+	
+
+	//Merchant Area
+	app.get("/merchant/login/:merchant_id", Enter.authenticateMerchant, Enter.merchantSessionLogin);
+	app.get("/merchant/login", Enter.authenticateMerchant, Enter.merchantSessionLogin);
+	app.post("/merchant/login", MerchantProfile.merchantLogin);
 	app.post("/merchant/profile/password", MerchantProfile.createNewPassword);
-	app.post("/merchant/profile/create", MerchantProfile.createNewMerchant);
+	app.post("/merchant/profile/create", CreateMerchant.createNewMerchant);
 	app.post("/merchant/profile/token", MerchantProfile.returnToken);
 
 
