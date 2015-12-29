@@ -13,7 +13,7 @@ var AdminProfileSchema = mongoose.Schema({
     email: String,
     password: String,
     mobile: String,
-    birthday: String，
+    birthday: String,
     status: String,
     create_time: Date
 });
@@ -200,4 +200,4 @@ AdminProfileSchema.method.findByEmailPassword = function(cb) {
 
 //-------------------export-------------------------//
 
-module.exports = mongoose.model("AdminProfileModel", AdminProfileSchema);
+module.exports = mongoose.model("AdminProfile", AdminProfileSchema);

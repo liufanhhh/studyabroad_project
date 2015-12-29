@@ -1,16 +1,16 @@
 var Q = require('q');
 var fs = require('fs');
-var adminProfile = require("../../model/adminProfileModel.js");
+var AdminProfile = require("../../model/AdminProfileModel.js");
 var WebsiteProfile = require("../../model/WebsiteProfileModel.js");
 
 exports.createNewAdmin = function(req,res){
-  var admin = req.body.admin;
-  var sameName = Q.nfbind(adminProfile.findadminByName.bind(adminProfile));
+  var admin_name = req.body.admin_name;
+  var sameName = Q.nfbind(AdminProfile.findAdminByName.bind(AdminProfile));
 
   var handleNameResult = function(exist){
     var deferred = Q.defer();
     if (exist) {
-      deferred.reject("商户名相同");
+      deferred.reject("用户名相同");
     }else{
       WebsiteProfile.getInformation(websit_name,function (err, website_profile) {
         var admin_amount = website_profile
