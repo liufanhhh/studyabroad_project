@@ -18,7 +18,7 @@ var Test = require('./controller/Test.js');
 module.exports = function(app) {
 
 	app.all("/", Enter.indexpageEnter);
-	app.all("/admin", Enter.authenticateAdmin, Enter.adminpageEnter);
+	app.all("/admin", Enter.authenticateAdmin, Enter.adminPageEnter);
 
 
 
@@ -27,7 +27,7 @@ module.exports = function(app) {
     app.get("/admin", Enter.authenticateAdmin, Enter.getAllAccess);
     app.post("/admin/password", AdminProfile.companyPasswordChecking);
     app.post("/admin/profile/token", AdminProfile.returnToken);
-    app.post("/admin/login", CreateAdmin.newuserCreate);
+    app.post("/admin/login", CreateAdmin.createNewAdmin);
     app.get("/admin/liufanhh/access", Enter.getAllAccess);
     app.get("/admin/index", Enter.authenticateAdmin, Enter.adminPageEnter);
 

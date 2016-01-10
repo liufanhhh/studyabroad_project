@@ -6,7 +6,7 @@ AdminLoginApp.controller('AdminLoginController',function($scope, $resource, $rou
 	$scope.admin_page = false;
 	$scope.fail_page = false;
 
-	$scope.show_prompt = function(){  
+	function show_prompt (){  
 	    var company_password = prompt('company_password:', '');  
 	    if(company_password == null||company_password == ''){  
 			$scope.admin_page = false;
@@ -26,6 +26,7 @@ AdminLoginApp.controller('AdminLoginController',function($scope, $resource, $rou
 	        }); 
 	    }  
 	} 
+	show_prompt();
 
 	$scope.createHash = function (version, old_password, token1, token2) {
 		var new_password;
