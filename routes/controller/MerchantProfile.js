@@ -92,7 +92,7 @@ exports.merchantLogin = function (req, res) {
     } else if (merchant.password == merchant_profile.password){
       console.log("aa");
       session.merchant_id = merchant_profile.merchant_id;
-      res.status(200).send({location:'/admin'});
+      res.status(200).send({location:'/merchant/index.html'});
     } else{
       res.sendError("密码错误");      
     }

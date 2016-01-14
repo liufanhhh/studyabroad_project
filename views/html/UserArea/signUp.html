@@ -1,13 +1,11 @@
 ﻿<!DOCTYPE html>
-<html ng-app="SignUpAPP">
+<html ng-app="SignUpApp">
 <head>
 
 	<!-- The information of the website and the valid scale factor -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="description" content="留学机构点评团购网站" />
-	<meta name="keywords" content="留学点评网 团购留学" />
 
 	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/signup-form.css">
@@ -20,24 +18,25 @@
 	<script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
 	<script type="text/javascript" src="/bower_components/angular-strap/dist/modules/modal.min.js"></script>
 	<script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	<script src="/js/signUp.js"></script>
+	<script src="/js/UserArea/signUp.js"></script>
 
 </head>	
 
 <body ng-controller="SignUpController">
 
-<div >
+<div class="container">
 
-  <div  class="login-form">
+  <div  class="login-form" ng-if="!step_status.first">
 	<h1>用户注册</h1>
-		<form name="loginForm" role="form" ng-submit="register()" novalidate>
+		<form name="loginForm" role="form" ng-submit="step1Control()" novalidate>
 			
 		<div class="form-group has-feedback" ng-class="{ 'has-error' : loginForm.name.$invalid && !loginForm.name.$pristine, 
 		'has-success' : loginForm.name.$valid }">
-			<label>用户姓名：</label>
-			<input name="name" class="form-control" type="text" ng-model="person.name" ng-minlength=5 required >
+			<label>昵称：</label>
+			<input name="name" class="form-control" type="text" ng-model="person.name" ng-maxlength=9 ng-minlength=2 required >
 			<p class="help-block" ng-show="loginForm.name.$error.required && !loginForm.name.$pristine">该项必填</p>
-			<p class="help-block" ng-show="loginForm.name.$error.minlength && !loginForm.name.$pristine">姓名最小长度为5</p>
+			<p class="help-block" ng-show="loginForm.name.$error.minlength && !loginForm.name.$pristine">昵称最少为两个字</p>
+			<p class="help-block" ng-show="loginForm.name.$error.maxlength && !loginForm.name.$pristine">昵称最多为九个字</p>
 			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm.name.$valid"></span>
 			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm.name.$invalid && !loginForm.name.$pristine"></span>
 		</div>
@@ -75,37 +74,51 @@
 			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm.password_confirmation.$invalid && !loginForm.password_confirmation.$pristine"></span>
 		</div>
 
-		<div class="form-group has-feedback" ng-class="{ 'has-success' : (loginForm.userid.$invalid && !loginForm.userid.$pristine)||(!{{useridValid}} && !loginForm.userid.$pristine), 
-		'has-success' : loginForm.userid.$valid&&{{useridValid}}}">
-			<label>身份证号：</label>
-			<input name="userid" class="form-control" type="text" ng-model="person.userid" required >
-			<p class="help-block" ng-show="loginForm.userid.$error.required && !loginForm.userid.$pristine">该项必填</p>
-			<p class="help-block" ng-show="{{useridValid}} && !loginForm.userid.$pristine">不符合身份证格式</p>
-			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm.userid.$valid"></span>
-			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm.userid.$invalid && !loginForm.userid.$pristine&&{{useridValid}}"></span>
-		</div>
-
 		<div>
 			<input name="personCheck" type="checkbox" ng-model="person.check" required>  是否同意用户守则
 		</div>
-		
-		<div>
-  			我是<input type="radio" ng-model="identification" value = "user">个人<input type="radio" ng-model="identification" value = "merchant">商户  
-  		</div>
   		<br>
-<!-- 			除了ng自带的表单验证外，加上密码验证，才可以注册 -->
-  		<button type="submit" class="btn btn-primary" ng-disabled="loginForm.$invalid || !same_password||{{useridValid}}" >注册</button>
- 
-		</form>
-
-		 
-
+<!-- 除了ng自带的表单验证外，加上密码验证，才可以注册 -->
+  		<button type="submit" class="btn btn-primary" ng-disabled="loginForm.$invalid || !same_password" >下一步</button>
+  		{{information.error}}
+	  	</form>   
    </div>
+
+   <div ng-if = "!step_status.second&&step_status.first">
+	   <button ng-click="returnStep1()" class="btn btn-primary">上一步</button>
+	   <h1>用户注册</h1>
+
+	   	<form name="loginForm2" role="form" ng-submit="step2Control()" novalidate>
+
+	   	<div class="form-group has-feedback" ng-class="{ 'has-error' : loginForm2.realname.$invalid && !loginForm2.realname.$pristine, 
+	   	'has-success' : loginForm2.realname.$valid }">
+	   		<label>真实姓名：</label>
+	   		<input name="realname" class="form-control" type="text" ng-model="person.realname" required >
+	   		<p class="help-block" ng-show="loginForm2.realname.$error.required && !loginForm2.realname.$pristine">该项必填</p>
+	   		<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm2.realname.$valid"></span>
+	   		<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm2.realname.$invalid && !loginForm2.realname.$pristine"></span>
+	   	</div>
+
+	   	<div class="form-group has-feedback" ng-class="{ 'has-error' : loginForm2.userid.$invalid && !loginForm2.userid.$pristine, 
+	   	'has-success' : loginForm2.userid.$valid }">
+	   		<label>身份证号：</label>
+	   		<input userid="userid" class="form-control" type="text" ng-model="person.userid" ng-length=18 required >
+	   		<p class="help-block" ng-show="loginForm2.userid.$error.required && !loginForm2.userid.$pristine">该项必填</p>
+	   		<p class="help-block" ng-show="loginForm2.userid.$error.length && !loginForm2.userid.$pristine">昵称最少为两个字</p>
+	   		<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm2.userid.$valid"></span>
+	   		<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm2.userid.$invalid && !loginForm2.userid.$pristine"></span>
+	   	</div>
+
+
+
+		<button type="submit" class="btn btn-primary" ng-disabled="loginForm2.$invalid" >下一步</button>
+	</div> 
+
   
 </div>
 
 
-
+  		<!-- <input type="text" ng-model="verify_code"> -->
 </body>
 </html>
 

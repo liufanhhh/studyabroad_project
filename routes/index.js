@@ -44,28 +44,26 @@ module.exports = function(app) {
 	app.get("/merchant/logos", MerchantProfile.getMerchantsLogo);	
 
 	//User Area
-	app.get("/user/information", UserInformation.getOneUserNew);
+	app.get("/user/signup/page", Enter.userSignup);
+	app.get("/user/login/page", Enter.userLogin);
+	app.get("/user/login", Enter.authenticateUser, Enter.indexpageEnter);
+	app.get("/user/login/profile", Enter.authenticateUser, Enter.userProfilePage);
 	app.post("/register", CreateUser.newuserCreate);
+	app.post("/user/name/checking", UserInformation.nameChecking);
+	app.post("/user/email/checking", UserInformation.emailChecking);
+	app.post("/user/information", Enter.authenticateUser, UserInformation.getOneUser);
 
-	app.post("/user/information", UserInformation.getOneUser);
-	
+
 
 	//Merchant Area
-	app.get("/merchant/login/:merchant_id", Enter.authenticateMerchant, Enter.merchantSessionLogin);
-	app.get("/merchant/login", Enter.authenticateMerchant, Enter.merchantSessionLogin);
+	app.get("/merchant/login", Enter.authenticateMerchant, Enter.merchantProfilePage);
 	app.post("/merchant/login", MerchantProfile.merchantLogin);
 	app.post("/merchant/profile/password", MerchantProfile.createNewPassword);
 	app.post("/merchant/profile/create", CreateMerchant.createNewMerchant);
 	app.post("/merchant/profile/token", MerchantProfile.returnToken);
 	app.get("/merchant/profile/find", MerchantProfile.findOneMerchant);
-
-
-
-	app.post("/merchant/profile/logo", MerchantProfile.profileUpload);
-	app.post("/merchant/profile/business_license", MerchantProfile.profileUpload);
-	app.post("/merchant/profile/tax_registration", MerchantProfile.profileUpload);
-	app.post("/merchant/profile/organization_order", MerchantProfile.profileUpload);
-
-
-
+	app.post("/merchant/profile/logo", Enter.authenticateMerchant, MerchantProfile.profileUpload);
+	app.post("/merchant/profile/business_license", Enter.authenticateMerchant, MerchantProfile.profileUpload);
+	app.post("/merchant/profile/tax_registration", Enter.authenticateMerchant, MerchantProfile.profileUpload);
+	app.post("/merchant/profile/organization_order", Enter.authenticateMerchant, MerchantProfile.profileUpload);
 }
