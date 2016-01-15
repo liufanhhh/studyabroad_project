@@ -8,7 +8,8 @@ var bcrypt = require('bcrypt-nodejs');
 //-----------------schema for user-----------------//
 
 var UserProfileSchema = mongoose.Schema({
-    time: Date,
+    user_id: String,
+    login_times: Number,
     nickname: String,
     realname: String,
     email: String,
@@ -21,32 +22,42 @@ var UserProfileSchema = mongoose.Schema({
     target_area: Array,
     language_level: String,
     identitynumber:String,
-    secrekey: mongoose.Schema.ObjectId,
     config: {
         ntf: {
             email: Boolean,
-            never: Boolean,
-            desktop: Boolean
+            mobile: Boolean,
+            wechat: Boolean
         },
-        content: {
-            involve: Boolean,
-            follow: Boolean,
-            all: Boolean
-        }
+        show_personal_file: {
+            all: Boolean,
+            follower: Boolean,
+            never: Boolean
+        },
+
     },
-    confirm: Boolean,
-    status: String,
+    follower: Array,
+    read_history: {
+        merchant: Array,
+        teacher: Array,
+        user: Array,
+        activity: Array
+    },
+    favourate: {
+        merchant: Array,
+        teacher: Array,
+        user: Array,
+        activity: Array
+    },
+    purchased:{
+        merchant: String,
+        lession: String
+    },
+    group: Array,
+    email_confirm: Boolean,
+    id_verification: Boolean,
+    special_identification: Array,
     create_time: Date
 });
-
-//---------Shuai's method for hashing the password------------
-UserProfileSchema.methods.generateHash = function(password) {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-}
-
-UserProfileSchema.methods.isValidPassword = function(password) {
-  return bcrypt.compareSync(password, this.password); 
-}
 
 //----------------static method--------------------//
 UserProfileSchema.statics.findUserById = function(id, cb) {
@@ -120,28 +131,29 @@ UserProfileSchema.statics.updateUserById = function(id, email, cb) {
     }, {$set:{email:email}}, cb);
 }
 
-UserProfileSchema.statics.createSimpleUser = function(nickname, realname, email, password, userid, status, cb) {
+UserProfileSchema.statics.createSimpleUser = function(user_id, user, cb) {
     this.create({
-        nickname: nickname,
-        realname: realname,
-        password: password,
-        identitynumber: userid,
-        email: email,
+        user_id: user_id,
+        login_times: 0,
+        nickname: user.name,
+        email: user.email,
+        password: user.password,
         config: {
             ntf: {
                 email: true,
-                never: false,
-                desktop: true
+                mobile: false,
+                wechat: false
             },
-            content: {
-                involve: true,
-                follow: true,
-                all: false
-            }
+            show.personal_file: {
+                all: false,
+                follower: true,
+                never: false
+            },
+
         },
-        confirm: false,
-        status: status,
-        create_time: new Date()
+        email_confirm: false,
+        id_verification: false,
+        create_time: user.create_time
     }, cb);
 }
 

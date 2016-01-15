@@ -1,9 +1,4 @@
-function A()  {
-	a = 1,
-	b = 2
-}
-A.prototype.a = 1;
-var bb = new A();
-bb.a = 2;
+// var md5 = require('./md5.min.js');
+// console.log(md5("123"));
 
-console.log(bb.a);
+console.log(Math.random());

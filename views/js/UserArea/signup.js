@@ -1,6 +1,6 @@
-var SignUpApp = angular.module('SignUpApp', ['ngResource', 'ngRoute']);
+var SignUpApp = angular.module('SignUpApp', ['ngResource', 'ngRoute','angular-md5']);
 
-SignUpApp.controller('SignUpController',function($scope, $resource, $routeParams, $location){
+SignUpApp.controller('SignUpController',function($scope, $resource, $routeParams, $location, md5){
 	$scope.person = {};
 	$scope.same_password = false;
 	$scope.step_status = {
@@ -8,6 +8,7 @@ SignUpApp.controller('SignUpController',function($scope, $resource, $routeParams
 		second: false,
 		third: false
 	};
+	$scope.show_regulation = false;
 	$scope.id_verification = false;
 	/*监视密码2的输入，如果输入和密码1的相同，则可以注册。
 	若不同，或者两个密码都为空，则不可注册。*/
@@ -51,53 +52,46 @@ SignUpApp.controller('SignUpController',function($scope, $resource, $routeParams
 			$scope.useridValid=true;
 		}
 	});
+
+	//密码加密
+	$scope.signature = function (salt, value) {
+		return md5.createHash(salt+"liufanhh"+md5.createHash(value));
+	}
+
+
 	//用户注册
 	$scope.register = function(){
-		$resource("/register").save({
-			nickname: $scope.person.name,
-			realname: $scope.person.realname,
-			email:    $scope.person.email,
-			password: $scope.person.password,
-			userid:   $scope.person.userid,
-			user_status: $scope.identification
+		$scope.person.create_time = new Date();
+		$scope.person.password = signature($scope.person.create_time, $scope.person.password);
+		$resource("/user/register").save({
+			user: $scope.person
 		}, function(res) {
-			console.log(res.mess);
-		});
-	};
-	$scope.step1Control = function(){
-		$resource("/user/name/checking").save({
-			nickname: $scope.person.name,
-		}, function(res) {
-			if (res.status==0) {
-				$scope.person.name = null;
-				$scope.information.error = res.mess;
-			} else{
-				$resource("/user/email/checking").save({
-					email: $scope.person.email
-				}, function(res) {
-					if (res.status==0) {
-						$scope.person.email = null;
-						$scope.information.error = res.mess;
-					} else{
-						$scope.step_status.first = true;				
-					};
-				});				
+			if (res.status == 1) {
+				window.location = res.location;
 			};
+			$scope.register_result = res.mess;
 		});
+
 	};
-	$scope.returnStep1 = function () {
-		$scope.step_status.first = false;
-	}
-	$scope.step2Control = function(){
-		$resource("http://qq.ip138.com/baidu-id/index.asp").save({
-			userid:123456789012345678
+
+	$scope.login = function(){
+		$resource("/user/profile/token").save({
+			email: $scope.person.email
 		}, function(res) {
-			console.log(res);
-			$scope.step_status.second = true;
+			var token = res.data;
+			$scope.person.password = signature(token, $scope.person.password);
+			var salt = $scope.person.salt = new Date();
+			$scope.person.signature = signature(salt, $scope.person.password);
+			$resource("/user/login").save({
+				user: person
+			}, function(res) {
+				if (res.status==1) {
+					window.location = res.location;
+				} else{
+					$scope.login_result = res.mess;
+				};
+			});
 		});
 	};
-	// $scope.step1Control = function(){
-	// 	$scope.step_status.first = true;
-	// };
 
 });

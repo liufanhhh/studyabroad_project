@@ -1,5 +1,6 @@
 var Q = require('q');
 var fs = require('fs');
+var md5 = require("../md5.min.js");
 
 var UserProfileModel = require("../../model/UserProfileModel.js");
 
@@ -7,6 +8,25 @@ var UserProfileModel = require("../../model/UserProfileModel.js");
 exports.getOneUser = function(req, res) {
 	UserProfileModel.findUserByEmail(req.body.email,function(err,user){
 		res.sendData(user,"success");
+	});	
+}
+
+exports.userLogin = function (req, res) {
+	var user = req.body.user;
+	UserProfileModel.findUserByEmail(user.email,function(err,user_profile){
+		if (user_profile) {
+			var signature = md5(user.salt+"liufanhh"+md5(password));
+			if (user.password == user_profile.password&&user.signature==signature) {
+				req.session.user_id = user_profile.user_id;
+				res.status(200).send({location:'/user/login'});
+			} else{
+				res.sendError("密码错误");
+			};
+		} else if(user==null){
+			res.sendError("用户不存在");
+		} else if(err){
+			res.sendError(err);
+		};
 	});	
 }
 
@@ -34,6 +54,18 @@ exports.emailChecking = function(req, res) {
 			res.sendError("邮箱重复");
 		} else{
 			res.sendSuccess("success");
+		}
+	});	
+}
+
+exports.getToken = function  (req, res) {
+	UserProfileModel.findUserByEmail(req.body.email,function(err,user){
+		if (error) {
+			res.sendError(err);
+		} else if(user){
+			res.sendData(user.create_time, "success");
+		} else{
+			res.sendError("没有此用户");
 		}
 	});	
 }

@@ -48,10 +48,12 @@ module.exports = function(app) {
 	app.get("/user/login/page", Enter.userLogin);
 	app.get("/user/login", Enter.authenticateUser, Enter.indexpageEnter);
 	app.get("/user/login/profile", Enter.authenticateUser, Enter.userProfilePage);
-	app.post("/register", CreateUser.newuserCreate);
+	app.post("/user/register", CreateUser.newuserCreate);
+	app.post("/user/profile/token", UserInformation.getToken);
 	app.post("/user/name/checking", UserInformation.nameChecking);
 	app.post("/user/email/checking", UserInformation.emailChecking);
 	app.post("/user/information", Enter.authenticateUser, UserInformation.getOneUser);
+	app.post("/user/login", UserInformation.userLogin);
 
 
 

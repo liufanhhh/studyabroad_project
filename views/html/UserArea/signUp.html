@@ -26,9 +26,9 @@
 
 <div class="container">
 
-  <div  class="login-form" ng-if="!step_status.first">
+  <div  class="login-form" ng-if="!$parent.step_status.first">
 	<h1>用户注册</h1>
-		<form name="loginForm" role="form" ng-submit="step1Control()" novalidate>
+		<form name="loginForm" role="form" ng-submit="register()" novalidate>
 			
 		<div class="form-group has-feedback" ng-class="{ 'has-error' : loginForm.name.$invalid && !loginForm.name.$pristine, 
 		'has-success' : loginForm.name.$valid }">
@@ -75,44 +75,21 @@
 		</div>
 
 		<div>
-			<input name="personCheck" type="checkbox" ng-model="person.check" required>  是否同意用户守则
+			<input name="personCheck" type="checkbox" required>  是否同意用户守则
+			<button ng-click="$parent.show_regulation=true">用户守则</button>
 		</div>
   		<br>
 <!-- 除了ng自带的表单验证外，加上密码验证，才可以注册 -->
-  		<button type="submit" class="btn btn-primary" ng-disabled="loginForm.$invalid || !same_password" >下一步</button>
+  		<button type="submit" class="btn btn-primary" ng-disabled="loginForm.$invalid || !same_password" >注册</button>
   		{{information.error}}
-	  	</form>   
+	  	</form>
+
+
    </div>
-
-   <div ng-if = "!step_status.second&&step_status.first">
-	   <button ng-click="returnStep1()" class="btn btn-primary">上一步</button>
-	   <h1>用户注册</h1>
-
-	   	<form name="loginForm2" role="form" ng-submit="step2Control()" novalidate>
-
-	   	<div class="form-group has-feedback" ng-class="{ 'has-error' : loginForm2.realname.$invalid && !loginForm2.realname.$pristine, 
-	   	'has-success' : loginForm2.realname.$valid }">
-	   		<label>真实姓名：</label>
-	   		<input name="realname" class="form-control" type="text" ng-model="person.realname" required >
-	   		<p class="help-block" ng-show="loginForm2.realname.$error.required && !loginForm2.realname.$pristine">该项必填</p>
-	   		<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm2.realname.$valid"></span>
-	   		<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm2.realname.$invalid && !loginForm2.realname.$pristine"></span>
-	   	</div>
-
-	   	<div class="form-group has-feedback" ng-class="{ 'has-error' : loginForm2.userid.$invalid && !loginForm2.userid.$pristine, 
-	   	'has-success' : loginForm2.userid.$valid }">
-	   		<label>身份证号：</label>
-	   		<input userid="userid" class="form-control" type="text" ng-model="person.userid" ng-length=18 required >
-	   		<p class="help-block" ng-show="loginForm2.userid.$error.required && !loginForm2.userid.$pristine">该项必填</p>
-	   		<p class="help-block" ng-show="loginForm2.userid.$error.length && !loginForm2.userid.$pristine">昵称最少为两个字</p>
-	   		<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm2.userid.$valid"></span>
-	   		<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm2.userid.$invalid && !loginForm2.userid.$pristine"></span>
-	   	</div>
-
-
-
-		<button type="submit" class="btn btn-primary" ng-disabled="loginForm2.$invalid" >下一步</button>
-	</div> 
+   <div ng-show="show_regulation">
+   	<button ng-click="show_regulation=false">关闭</button>
+   	用户守则   	
+   </div>
 
   
 </div>
