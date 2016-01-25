@@ -5,11 +5,15 @@ exports.indexpageEnter = function(req, res) {
 }
 
 exports.userLogin = function (req, res) {
-	if (req.session.user_id) {
-		res.sendfile("/user/login");
+	if (req.session.user_verify) {
+		res.redirect("/user/login");
 	} else{
-		res.sendfile("./views/html/UserArea/login.html");
+		res.status(401).sendfile("./views/html/UserArea/login.html");
 	};
+}
+
+exports.emailSent = function(req, res){
+	res.sendfile("./views/html/UserArea/verification.html");
 }
 
 exports.userSignup = function (req, res) {
@@ -45,7 +49,7 @@ exports.getAllAccess = function (req, res) {
 exports.authenticateMerchant = function (req, res, next) {
 	var session = req.session;
 	if (session.merchant_id) {
-		next();
+		 next();
 	} else {
 		res.sendfile("./views/html/MerchantArea/login.html");
 	};
@@ -53,7 +57,7 @@ exports.authenticateMerchant = function (req, res, next) {
 
 exports.authenticateUser = function (req, res, next) {
 	var session = req.session;
-	if (session.user_id) {
+	if (session.user_verify) {
 		next();
 	} else {
 		res.redirect("/user/login/page");

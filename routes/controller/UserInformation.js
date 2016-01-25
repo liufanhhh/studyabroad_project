@@ -82,8 +82,9 @@ exports.getOneUserNew = function(req, res) {
 
 exports.emailVerify = function (req, res) {
 	if (req.session.sign == req.query.sign) {
-		req.session.user_id = req.session.user._id;
+		req.session.user_verify = true;
+        res.status(301).redirect('/user/login');
 	} else {
-		
+		res.status(401).send("<p>IP 已变更或验证码已经失效</p>");
 	};
 }

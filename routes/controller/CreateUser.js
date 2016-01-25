@@ -76,9 +76,10 @@ exports.newuserCreate = function(req, res) {
     var createConfirmEmail = function (new_user) {
       var deferred = Q.defer();
       if (new_user) {
+        console.log(new_user._id);
         var sign = md5(new_user._id);
         req.session.sign = sign;
-        req.session.user._id = new_user._id;
+        req.session.userid = new_user._id;
         var transport = nodemailer.createTransport("SMTP", {
             host: "smtp.126.com",
             secureConnection: true, // use SSL
@@ -88,12 +89,13 @@ exports.newuserCreate = function(req, res) {
                 pass: "liufanHH0406"
             }
         });
+        console.log("something wrong");
         transport.sendMail({
             from: "liuxuedianping@126.com",
             to: new_user.email,
             subject: "【Hello】 邮箱验证",
             //  generateTextFromHTML : true,
-            html: "<b>欢迎使用</b><br/>请点击链接进行验证:" + "localhost:3000/verification?sign"+sign
+            html: "<b>欢迎使用</b><br/>请点击链接进行验证:" + "<br/>http://localhost:3000/verification?sign="+sign
         }, function(error, response) {
           console.log(new_user);
             if (error) {
@@ -119,7 +121,7 @@ exports.newuserCreate = function(req, res) {
       function(data){
         console.log(data);
         fs.mkdir("./views/storage/user/"+data.user_id);
-        res.status(200).send({location:'/user/login'});
+        res.status(200).send({location:'/user/email/sent'});
       },function(error){
           console.log(error);
           res.sendError("创建失败");
