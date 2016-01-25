@@ -70,7 +70,7 @@ exports.getToken = function  (req, res) {
 	});	
 }
 
-exports.getOneUserNew = function(req,res) {
+exports.getOneUserNew = function(req, res) {
 	UserProfileModel.findUserByNickname(req.query.name,function(err,user){
 		if (err) {
 			res.sendError(err);
@@ -78,4 +78,12 @@ exports.getOneUserNew = function(req,res) {
 			res.sendData(user,"success");
 		}
 	});	
+}
+
+exports.emailVerify = function (req, res) {
+	if (req.session.sign == req.query.sign) {
+		req.session.user_id = req.session.user._id;
+	} else {
+		
+	};
 }

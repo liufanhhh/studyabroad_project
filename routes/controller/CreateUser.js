@@ -1,8 +1,10 @@
 var Q = require('q');
+var fs = require('fs');
 
 var UserProfileModel = require("../../model/UserProfileModel.js");
-var UserProfileModel =  require("../../model/UserProfileModel.js");
+var WebsiteProfile =  require("../../model/WebsiteProfileModel.js");
 var md5 = require("../md5.min.js");
+var nodemailer = require("nodemailer");
 
 exports.newuserCreate = function(req, res) {
     var user = req.body.user;
@@ -30,7 +32,7 @@ exports.newuserCreate = function(req, res) {
       if (exist!=1) {
         deferred.reject("服务器错误");
       }else{
-        WebsiteProfile.getInformation(websit_name,function (err, website_profile) {
+        WebsiteProfile.getInformation(websit_name, function (err, website_profile) {
           var user_amount = website_profile.user_amount+1;
           deferred.resolve(user_amount);
           return deferred.promise;
@@ -71,16 +73,55 @@ exports.newuserCreate = function(req, res) {
       return deferred.promise;
     }
 
+    var createConfirmEmail = function (new_user) {
+      var deferred = Q.defer();
+      if (new_user) {
+        var sign = md5(new_user._id);
+        req.session.sign = sign;
+        req.session.user._id = new_user._id;
+        var transport = nodemailer.createTransport("SMTP", {
+            host: "smtp.126.com",
+            secureConnection: true, // use SSL
+            port: 465, // port for secure SMTP
+            auth: {
+                user: "liuxuedianping@126.com",
+                pass: "liufanHH0406"
+            }
+        });
+        transport.sendMail({
+            from: "liuxuedianping@126.com",
+            to: new_user.email,
+            subject: "【Hello】 邮箱验证",
+            //  generateTextFromHTML : true,
+            html: "<b>欢迎使用</b><br/>请点击链接进行验证:" + "localhost:3000/verification?sign"+sign
+        }, function(error, response) {
+          console.log(new_user);
+            if (error) {
+                deferred.reject("发送失败");
+            } else {
+                console.log("Message sent: " + response.message);
+                deferred.resolve(new_user);
+            }
+            transport.close();
+            return deferred.promise;
+        });
+      };
+      return deferred.promise; 
+    }
+
     findUserByEmail(user.email)
     .then(handleEmailResult)
     .then(handleNameResult)
     .then(changeWebsiteProfile)
-    .then(createuser)
+    .then(createUser)
+    .then(createConfirmEmail)
     .done(
       function(data){
-        fs.mkdir("./views/storage/User/"+data.user_id);
-        res.sendData(data,"创建成功");
+        console.log(data);
+        fs.mkdir("./views/storage/user/"+data.user_id);
+        res.status(200).send({location:'/user/login'});
       },function(error){
+          console.log(error);
           res.sendError("创建失败");
       });
 }

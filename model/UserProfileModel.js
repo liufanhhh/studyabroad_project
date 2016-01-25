@@ -3,12 +3,11 @@
  */
 
 var mongoose = require("mongoose");
-var bcrypt = require('bcrypt-nodejs');
 
 //-----------------schema for user-----------------//
 
 var UserProfileSchema = mongoose.Schema({
-    user_id: String,
+    user_id: Number,
     login_times: Number,
     nickname: String,
     realname: String,
@@ -131,7 +130,7 @@ UserProfileSchema.statics.updateUserById = function(id, email, cb) {
     }, {$set:{email:email}}, cb);
 }
 
-UserProfileSchema.statics.createSimpleUser = function(user_id, user, cb) {
+UserProfileSchema.statics.createNewUser = function(user_id, user, cb) {
     this.create({
         user_id: user_id,
         login_times: 0,
@@ -144,7 +143,7 @@ UserProfileSchema.statics.createSimpleUser = function(user_id, user, cb) {
                 mobile: false,
                 wechat: false
             },
-            show.personal_file: {
+            show_personal_file: {
                 all: false,
                 follower: true,
                 never: false

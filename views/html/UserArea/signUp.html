@@ -10,15 +10,16 @@
 	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/signup-form.css">
 	
-	<script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
-	<script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
-	<script type="text/javascript" src="/bower_components/angular-resource/angular-resource.min.js"></script>
-	<script type="text/javascript" src="/bower_components/angular-route/angular-route.min.js"></script>
-	<script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-	<script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
-	<script type="text/javascript" src="/bower_components/angular-strap/dist/modules/modal.min.js"></script>
-	<script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	<script src="/js/UserArea/signUp.js"></script>
+	<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="/bower_components/angular/angular.min.js"></script>
+	<script src="/bower_components/angular-resource/angular-resource.min.js"></script>
+	<script src="/bower_components/angular-route/angular-route.min.js"></script>
+	<script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+	<script src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+	<script src="/bower_components/angular-strap/dist/modules/modal.min.js"></script>
+	<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="/bower_components/angular-md5/angular-md5.js"></script>
+	<script src="/js/UserArea/signup.js"></script>
 
 </head>	
 
@@ -75,7 +76,7 @@
 		</div>
 
 		<div>
-			<input name="personCheck" type="checkbox" required>  是否同意用户守则
+			<input name="personCheck" type="checkbox" ng-model="person.regulation" value="true" required>  是否同意用户守则
 			<button ng-click="$parent.show_regulation=true">用户守则</button>
 		</div>
   		<br>

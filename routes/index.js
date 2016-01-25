@@ -54,6 +54,7 @@ module.exports = function(app) {
 	app.post("/user/email/checking", UserInformation.emailChecking);
 	app.post("/user/information", Enter.authenticateUser, UserInformation.getOneUser);
 	app.post("/user/login", UserInformation.userLogin);
+	app.get("/verification", UserInformation.emailVerify);
 
 
 

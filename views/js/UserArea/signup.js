@@ -62,11 +62,12 @@ SignUpApp.controller('SignUpController',function($scope, $resource, $routeParams
 	//用户注册
 	$scope.register = function(){
 		$scope.person.create_time = new Date();
-		$scope.person.password = signature($scope.person.create_time, $scope.person.password);
+		$scope.person.password = $scope.signature($scope.person.create_time, $scope.person.password);
 		$resource("/user/register").save({
 			user: $scope.person
 		}, function(res) {
-			if (res.status == 1) {
+			if (res.status != 0) {
+				console.log(res.location);
 				window.location = res.location;
 			};
 			$scope.register_result = res.mess;
@@ -83,7 +84,7 @@ SignUpApp.controller('SignUpController',function($scope, $resource, $routeParams
 			var salt = $scope.person.salt = new Date();
 			$scope.person.signature = signature(salt, $scope.person.password);
 			$resource("/user/login").save({
-				user: person
+				user: $scope.person
 			}, function(res) {
 				if (res.status==1) {
 					window.location = res.location;

@@ -3,7 +3,6 @@
  */
 
 var mongoose = require("mongoose");
-var bcrypt = require('bcrypt-nodejs');
 
 //-----------------schema for Admin-----------------//
 
@@ -17,16 +16,6 @@ var AdminProfileSchema = mongoose.Schema({
     status: String,
     create_time: Date
 });
-
-//---------Shuai's method for hashing the password------------
-AdminProfileSchema.methods.generateHash = function(password) {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-}
-
-AdminProfileSchema.methods.isValidPassword = function(password) {
-  return bcrypt.compareSync(password, this.password); 
-}
-
 //----------------static method--------------------//
 AdminProfileSchema.statics.findAdminById = function(id, cb) {
     this.findOne({
