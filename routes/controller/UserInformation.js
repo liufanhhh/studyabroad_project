@@ -13,6 +13,13 @@ exports.getOneUser = function(req, res) {
 
 exports.userLogin = function (req, res) {
 	var user = req.body.user;
+	var signature = 
+
+	$scope.person.password = signature(token, $scope.person.password);
+	var salt = $scope.person.salt = new Date();
+	$scope.person.signature = signature(salt, $scope.person.password);
+
+
 	UserProfileModel.findUserByEmail(user.email,function(err,user_profile){
 		if (user_profile) {
 			var signature = md5(user.salt+"liufanhh"+md5(password));
@@ -83,7 +90,7 @@ exports.getOneUserNew = function(req, res) {
 exports.emailVerify = function (req, res) {
 	if (req.session.sign == req.query.sign) {
 		req.session.user_verify = true;
-        res.status(301).redirect('/user/login');
+        res.status(301).redirect('/');
 	} else {
 		res.status(401).send("<p>IP 已变更或验证码已经失效</p>");
 	};

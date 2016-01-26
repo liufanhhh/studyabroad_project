@@ -62,7 +62,7 @@ SignUpApp.controller('SignUpController',function($scope, $resource, $routeParams
 	//用户注册
 	$scope.register = function(){
 		$scope.person.create_time = new Date();
-		$scope.person.password = $scope.signature($scope.person.create_time, $scope.person.password);
+		$scope.person.password_sign = $scope.signature($scope.person.create_time, $scope.person.password);
 		$resource("/user/register").save({
 			user: $scope.person
 		}, function(res) {
@@ -74,25 +74,4 @@ SignUpApp.controller('SignUpController',function($scope, $resource, $routeParams
 		});
 
 	};
-
-	$scope.login = function(){
-		$resource("/user/profile/token").save({
-			email: $scope.person.email
-		}, function(res) {
-			var token = res.data;
-			$scope.person.password = signature(token, $scope.person.password);
-			var salt = $scope.person.salt = new Date();
-			$scope.person.signature = signature(salt, $scope.person.password);
-			$resource("/user/login").save({
-				user: $scope.person
-			}, function(res) {
-				if (res.status==1) {
-					window.location = res.location;
-				} else{
-					$scope.login_result = res.mess;
-				};
-			});
-		});
-	};
-
 });

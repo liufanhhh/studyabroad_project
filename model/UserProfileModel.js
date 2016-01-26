@@ -136,7 +136,7 @@ UserProfileSchema.statics.createNewUser = function(user_id, user, cb) {
         login_times: 0,
         nickname: user.name,
         email: user.email,
-        password: user.password,
+        password: user.password_sign,
         config: {
             ntf: {
                 email: true,

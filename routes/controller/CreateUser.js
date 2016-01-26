@@ -79,6 +79,7 @@ exports.newuserCreate = function(req, res) {
         console.log(new_user._id);
         var sign = md5(new_user._id);
         req.session.sign = sign;
+        req.session.expire_time = new Date().getTime()+20*60*60;
         req.session.userid = new_user._id;
         var transport = nodemailer.createTransport("SMTP", {
             host: "smtp.126.com",

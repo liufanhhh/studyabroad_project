@@ -6,7 +6,9 @@ exports.indexpageEnter = function(req, res) {
 
 exports.userLogin = function (req, res) {
 	if (req.session.user_verify) {
-		res.redirect("/user/login");
+		console.log(req.session);
+		console.log("hit session");
+		res.redirect("/");
 	} else{
 		res.status(401).sendfile("./views/html/UserArea/login.html");
 	};

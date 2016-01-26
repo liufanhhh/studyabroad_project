@@ -68,7 +68,7 @@ app.use(session({
         // db:"SessionStore",
         // host:"localhost",
         url: 'mongodb://localhost/test-app',
-        ttl: 14 * 24 * 60 * 60 // = 14 days. Default
+        ttl: 24 * 60 * 60  // = 1 days. Default
     })
 }));
 

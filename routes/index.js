@@ -46,7 +46,7 @@ module.exports = function(app) {
 	//User Area
 	app.get("/user/signup/page", Enter.userSignup);
 	app.get("/user/login/page", Enter.userLogin);
-	app.get("/user/login", Enter.authenticateUser, Enter.indexpageEnter);
+	// app.get("/user/login", Enter.authenticateUser, Enter.indexpageEnter);
 	app.get("/user/login/profile", Enter.authenticateUser, Enter.userProfilePage);
 	app.post("/user/register", CreateUser.newuserCreate);
 	app.post("/user/profile/token", UserInformation.getToken);
