@@ -76,7 +76,6 @@ exports.newuserCreate = function(req, res) {
     var createConfirmEmail = function (new_user) {
       var deferred = Q.defer();
       if (new_user) {
-        console.log(new_user._id);
         var sign = md5(new_user._id);
         req.session.sign = sign;
         req.session.expire_time = new Date().getTime()+20*60*60;
@@ -124,7 +123,6 @@ exports.newuserCreate = function(req, res) {
         fs.mkdir("./views/storage/user/"+data.user_id);
         res.status(200).send({location:'/user/email/sent'});
       },function(error){
-          console.log(error);
-          res.sendError("创建失败");
+          res.sendError(error);
       });
 }

@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html>
-<head ng-app="LoginApp">
+<html ng-app="LoginApp">
+<head>
 
     <!-- The information of the website and the valid scale factor -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="description" content="留学机构点评团购网站" />
-    <meta name="keywords" content="留学点评网 团购留学" />
+
 
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/login-form.css">
@@ -28,36 +27,38 @@
 
 <div>
 
-	<div ng-controller="loginController" class="login-form">
+	<div class="login-form">
 		<h1>用户登陆</h1>
 		<form name="loginForm" role="form" ng-submit="login()" novalidate>
 
-		<div class="form-group has-feedback" ng-class="{ 'has-error' : loginForm.name.$invalid && !loginForm.name.$pristine, 
-		'has-success' : loginForm.name.$valid }">
-			<label>用户姓名：</label>
-			<input name="name" class="form-control" type="text" ng-model="person.name" ng-minlength=5 required >
-			<p class="help-block" ng-show="loginForm.name.$error.required && !loginForm.name.$pristine">该项必填</p>
-			<p class="help-block" ng-show="loginForm.name.$error.minlength && !loginForm.name.$pristine">姓名最小长度为5</p>
-			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm.name.$valid"></span>
-			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm.name.$invalid && !loginForm.name.$pristine"></span>
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : loginForm.name_email.$invalid && !loginForm.name_email.$pristine, 
+		'has-success' : loginForm.name_email.$valid }">
+			<label>昵称或邮箱：</label>
+			<input name="name_email" class="form-control" type="text" ng-model="person.name_email" ng-maxlength=9 ng-minlength=2 required >
+			<p class="help-block" ng-show="loginForm.name_email.$error.required && !loginForm.name_email.$pristine">该项必填</p>
+			<p class="help-block" ng-show="loginForm.name_email.$error.minlength && !loginForm.name_email.$pristine">昵称最少为两个字</p>
+			<p class="help-block" ng-show="loginForm.name_email.$error.maxlength && !loginForm.name_email.$pristine">昵称最多为九个字</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm.name_email.$valid"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm.name_email.$invalid && !loginForm.name_email.$pristine"></span>
 		</div>
 
-		<div class="form-group has-feedback" ng-class="{ 'has-error' : loginForm.password.$invalid && !loginForm.password.$pristine, 
-		'has-success' : loginForm.password.$valid }">
-			<label>密码：</label>
-			<input name="password" class="form-control" type="text" ng-model="person.password" ng-minlength=5 required >
-			<p class="help-block" ng-show="loginForm.password.$error.required && !loginForm.password.$pristine">该项必填</p>
-			<p class="help-block" ng-show="loginForm.password.$error.minlength && !loginForm.password.$pristine">密码最小长度为5</p>
-			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm.password.$valid"></span>
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : loginForm.password.$invalid && !loginForm.password.$pristine,
+		'has-success' : loginForm.password.$valid  }">
+			<label>设置密码：</label>
+			<input class="form-control" name="password" type="password" ng-model="person.password" ng-minlength=6 required>
+			<p class="help-block" ng-show="loginForm.password.$error.required && !loginForm.password.$pristine">该项必填</p>		
+			<p class="help-block" ng-show="loginForm.password.$error.minlength && !loginForm.password.$pristine">密码最小长度为6</p>		
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm.password.$valid && same_password"></span>
 			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm.password.$invalid && !loginForm.password.$pristine"></span>
 		</div>
 
 			<div>
-	  			<input name="hasCookie" type="checkbox" ng-model="person.cookie"> 保持登陆状态
+	  			<input type="checkbox" ng-model="person.keep_cookie" value="true" ng-checked="true"> 保持登陆状态
 	  		</div>
 	  		<br>
 	<!-- 			除了ng自带的表单验证外，加上密码验证，才可以注册 -->
 	  		<button type="submit" class="btn btn-primary" ng-disabled="loginForm.$invalid" >登陆</button>
+	  		{{login_result}}
  
 		</form>
 

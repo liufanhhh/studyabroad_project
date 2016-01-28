@@ -55,7 +55,7 @@ var UserProfileSchema = mongoose.Schema({
     email_confirm: Boolean,
     id_verification: Boolean,
     special_identification: Array,
-    create_time: Date
+    create_time: String
 });
 
 //----------------static method--------------------//
@@ -128,6 +128,12 @@ UserProfileSchema.statics.updateUserById = function(id, email, cb) {
     this.findOneAndUpdate({
         _id: id
     }, {$set:{email:email}}, cb);
+}
+
+UserProfileSchema.statics.emailVerify = function (id) {
+    this.findOneAndUpdate({
+        _id: id
+    }, {$set:{email_confirm:true}}, cb);
 }
 
 UserProfileSchema.statics.createNewUser = function(user_id, user, cb) {

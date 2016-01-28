@@ -3,11 +3,6 @@ var SignUpApp = angular.module('SignUpApp', ['ngResource', 'ngRoute','angular-md
 SignUpApp.controller('SignUpController',function($scope, $resource, $routeParams, $location, md5){
 	$scope.person = {};
 	$scope.same_password = false;
-	$scope.step_status = {
-		first: false,
-		second: false,
-		third: false
-	};
 	$scope.show_regulation = false;
 	$scope.id_verification = false;
 	/*监视密码2的输入，如果输入和密码1的相同，则可以注册。
@@ -61,8 +56,10 @@ SignUpApp.controller('SignUpController',function($scope, $resource, $routeParams
 
 	//用户注册
 	$scope.register = function(){
-		$scope.person.create_time = new Date();
+		$scope.person.create_time = new Date().getTime();
+		console.log($scope.person.create_time);
 		$scope.person.password_sign = $scope.signature($scope.person.create_time, $scope.person.password);
+		$scope.person.password = $scope.person.password_confirmation = null;
 		$resource("/user/register").save({
 			user: $scope.person
 		}, function(res) {

@@ -27,7 +27,7 @@
 
 <div class="container">
 
-  <div  class="login-form" ng-if="!$parent.step_status.first">
+  <div  class="login-form" >
 	<h1>用户注册</h1>
 		<form name="loginForm" role="form" ng-submit="register()" novalidate>
 			
@@ -77,12 +77,12 @@
 
 		<div>
 			<input name="personCheck" type="checkbox" ng-model="person.regulation" value="true" required>  是否同意用户守则
-			<button ng-click="$parent.show_regulation=true">用户守则</button>
+			<button ng-click="$parent.show_regulation=true" >用户守则</button>
 		</div>
   		<br>
 <!-- 除了ng自带的表单验证外，加上密码验证，才可以注册 -->
   		<button type="submit" class="btn btn-primary" ng-disabled="loginForm.$invalid || !same_password" >注册</button>
-  		{{information.error}}
+  		{{register_result}}
 	  	</form>
 
 
