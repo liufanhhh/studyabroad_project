@@ -1,13 +1,13 @@
 var Q = require('q');
 var fs = require('fs');
-var crypto = require('crypto');
+var md5 = require("../md5.min.js");
 var AdminProfile = require("../../model/AdminProfileModel.js");
 var WebsiteProfile = require("../../model/WebsiteProfileModel.js");
 
 
 exports.companyPasswordChecking = function(req, res) {
   var company_password = req.body.company_password;
-  if(company_password == "90cef6b51f5ef41e8a09eae77a225ec4"){
+  if(company_password == md5("123QIbuZOU")){
     res.sendSuccess("success login");
   } else{
     res.sendError("wrong password");

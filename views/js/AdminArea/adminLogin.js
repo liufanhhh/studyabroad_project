@@ -1,18 +1,19 @@
-var AdminLoginApp = angular.module('AdminLoginApp', ['ngResource', 'ngRoute']);
+var AdminLoginApp = angular.module('AdminLoginApp', ['ngResource', 'ngRoute', 'angular-md5']);
 
-AdminLoginApp.controller('AdminLoginController',function($scope, $resource, $routeParams, $location){
+AdminLoginApp.controller('AdminLoginController',function($scope, $resource, $routeParams, $location, md5){
 	$scope.admin = {};
 	$scope.password_new = null;
 	$scope.admin_page = false;
 	$scope.fail_page = false;
 
 	function show_prompt (){  
-	    var company_password = prompt('company_password:', '');  
+	    var company_password = prompt('company_password:', '');
+	    console.log(company_password);  
 	    if(company_password == null||company_password == ''){  
 			$scope.admin_page = false;
 			$scope.fail_page = true; 
 	    }else{  
-	    	company_password = $scope.createHash(2, company_password, company_password, company_password);
+	    	company_password = md5.createHash(company_password);
 	        $resource("/admin/password").save({
 	        	company_password: company_password
 	        }, function(res) {
@@ -25,22 +26,12 @@ AdminLoginApp.controller('AdminLoginController',function($scope, $resource, $rou
 				};
 	        }); 
 	    }  
-	} 
+	}; 
 	show_prompt();
-
-	$scope.createHash = function (version, old_password, token1, token2) {
-		var new_password;
-		if (version == 1) {
-			new_password = md5.createHash(md5.createHash(old_password+token1)+token2);
-		} else if (version == 2){
-			new_password = md5.createHash(md5.createHash(md5.createHash(old_password)+token1)+token2);
-		};
-		return new_password;
-	}
 
 	$scope.login = function(){
 		$resource("/admin/profile/token").save({
-			admin_name: $scope.admin.name,
+			admin_name: $scope.admin.name
 		}, function(res) {
 			var token1 = res.data.token1;
 			var token2 = res.data.token2;

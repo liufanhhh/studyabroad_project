@@ -82,7 +82,7 @@ MerchantProfileAdminApp.controller('MerchantProfileController', function($scope,
 		$scope.change++;
 	};
 
-	$scope.showAddArea = function(){
+	$scope.showAddMerchantArea = function(){
 		$scope.new_merchant = true;
 		$scope.find_merchant = false;
 	}
