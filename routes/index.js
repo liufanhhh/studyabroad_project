@@ -30,6 +30,8 @@ module.exports = function(app) {
     app.post("/admin/login", CreateAdmin.createNewAdmin);
     app.get("/admin/liufanhh/access", Enter.getAllAccess);
     app.get("/admin/index", Enter.authenticateAdmin, Enter.adminPageEnter);
+    app.get("/admin/members/list", Enter.authenticateAdmin, Enter.adminPageEnter);
+    app.get("/admin/members/management", Enter.authenticateAdmin, Enter.adminPageEnter);
 
 
     app.get("/website/profile/create", ResetWebsiteProfile.createWebsiteInformation);
@@ -60,6 +62,7 @@ module.exports = function(app) {
 
 
 	//Merchant Area
+	app.get("/merchant/cooperate", MerchantProfile.merchantLogin);
 	app.get("/merchant/login", Enter.authenticateMerchant, Enter.merchantProfilePage);
 	app.post("/merchant/login", MerchantProfile.merchantLogin);
 	app.post("/merchant/profile/password", MerchantProfile.createNewPassword);

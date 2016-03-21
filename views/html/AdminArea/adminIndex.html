@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
+	<meta charset="utf-8" ng-app="adminIndexApp">
 
 	<!-- The import of the javascript -->
-	<script src="/bower_components/jquery/dist/jquery.min.js"></script>
 	<script src="/bower_components/angular/angular.min.js"></script>
 	<script src="/bower_components/angular-resource/angular-resource.min.js"></script>
 	<script src="/bower_components/angular-route/angular-route.min.js"></script>
 	<script src="/bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
-	<script src="/js/AdminArea/merchantProfileController.js"></script>
+	<script src="/js/AdminArea/adminIndex.js"></script>
    
     <link rel="stylesheet" href="../css/AdminArea/index.css">
     <link rel="stylesheet" href="../css/gh-buttons.css">
@@ -17,9 +16,9 @@
 
 
 
-<body ng-app="MerchantProfileAdminApp">
+<body>
 
-	<div  ng-controller="MerchantProfileController" class="merchant-form">
+	<div  ng-controller="adminIndexController" class="merchant-form">
 		<nav >
 			
 			<img ng-src="/storage/public/logo.jpg">
@@ -71,7 +70,7 @@
 				</li>
 			</ul>
 
-			<img ng-src="/storage/Admin/{{admin_name}}/avatar.jpeg" style="position:fixed; width:100px;height:100px;border-radius:100px;     padding-right: 0px; right:30px">
+
 		</nav>
 
 		<button class="button" ng-click="showAddAdminArea()">添加管理员</button>

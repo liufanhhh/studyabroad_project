@@ -2,11 +2,13 @@ var MerchantProfileAdminApp = angular.module('MerchantProfileAdminApp', ['ngReso
 
 MerchantProfileAdminApp.controller('MerchantProfileController', function($scope, $resource, $routeParams, $location, FileUploader) {
 
+	$scope.admin_name = "liufan";
+
 	$scope.finded_merchant = {
 		merchant_name: "",
 		email: ""
 	};
-
+	$scope.nav_child = {};
 	$scope.create_status;
 	$scope.logos;
 	$scope.change = 0;
@@ -51,6 +53,19 @@ MerchantProfileAdminApp.controller('MerchantProfileController', function($scope,
 			}
 		}
 	};
+
+	$scope.navChildOptionsShow = function () {
+		switch(arguments[0]){
+			case "members": $scope.nav_child.members = true; break;
+			case "merchants": $scope.nav_child.merchants = true; break;
+			case "users": $scope.nav_child.users = true; break;
+			case "transactions": $scope.nav_child.transactions = true; break;
+		}
+	}
+
+	$scope.navChildOptionsHide = function () {
+		$scope.nav_child = {};
+	}
 
 	$scope.addedNewWebsite = function(){
 		$resource("/website/profile/create").get({
