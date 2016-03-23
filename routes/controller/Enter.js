@@ -27,7 +27,7 @@ exports.userSignup = function (req, res) {
 }
 
 exports.adminPageEnter = function(req, res) {
-	res.sendfile("./views/html/AdminArea/merchantProfileAdmin.html");
+	res.sendfile("./views/html/AdminArea/adminIndex.html");
 }
 
 exports.merchantProfilePage = function (req, res) {

@@ -9,37 +9,37 @@ var mongoose = require("mongoose");
 var MerchantProfileSchema = mongoose.Schema({
     //merchant information
     merchant_id: Number,
-    create_time: Date,
+    merchant_create_time: Date,
     merchant_name: String,
-    contact_person_name: String,
-    owner_name: String,
-    email: String,
-    password: String,
-    mobile: String,
-    website: String,
-    location: String,
-    support_area: Array,
-    identity_number: String,
-    logo: String,
-    business_license: String,
-    tax_registration_certification: String,
-    organization_order_certificaion: String,
-    star_teacher: Array,
-    special_area: Array,
-    notify: {
+    merchant_contact_person_name: String,
+    merchant_owner_name: String,
+    merchant_email: String,
+    merchant_password: String,
+    merchant_mobile: String,
+    merchant_website: String,
+    merchant_location: String,
+    merchant_support_area: Array,
+    merchant_identity_number: String,
+    merchant_logo: String,
+    merchant_business_license: String,
+    merchant_tax_registration_certification: String,
+    merchant_organization_order_certificaion: String,
+    merchant_star_teacher: Array,
+    merchant_special_area: Array,
+    merchant_notify: {
         mobile: Boolean,
         email: Boolean,
         monthly_email: Boolean 
     },
     
     // website judgement
-    verification: Boolean,
-    score:{ 
+    merchant_verification: Boolean,
+    merchant_score:{ 
         pass_rate: Number,
         article_score: Number,
         total_score: Number
     },
-    followup_people: [
+    merchant_followup_people: [
     /*{
         name: String,
         reason: String
@@ -47,11 +47,11 @@ var MerchantProfileSchema = mongoose.Schema({
     ],
 
     //status
-    live: Boolean,
-    follower: Array,
-    buyer: Array,
-    reputation: Boolean,
-    hierarchy: String
+    merchant_live: Boolean,
+    merchant_follower: Array,
+    merchant_buyer: Array,
+    merchant_reputation: Boolean,
+    merchant_hierarchy: String
 });
 
 //----------------static method--------------------//

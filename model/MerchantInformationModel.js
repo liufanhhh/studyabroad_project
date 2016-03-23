@@ -7,18 +7,21 @@ var mongoose = require("mongoose");
 //-----------------schema for user-----------------//
 
 var MerchantInformationSchema = mongoose.Schema({
-    //merchant information
+    //direct generate by programme 
     merchantid: Number,
     create_time: Date,
+
+    //required area when creating by admin
     merchant_name: String,
-    owner_name: String,
-    email: String,
     password: String,
     mobile: String,
     website: String,
+
+    //required area when merchant register
+    email: String,
+    owner_name: String,
     location: String,
     support_area: Array,
-    identity_number: String,
     logo: String,
     business_license: String,
     tax_registration_certification: String,
@@ -38,7 +41,7 @@ var MerchantInformationSchema = mongoose.Schema({
         article_score: Number,
         total_score: Number
     },
-    followup_people: [{
+    follow_up_people: [{
         name: String,
         reason: String
     }],

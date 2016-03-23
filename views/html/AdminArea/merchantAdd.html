@@ -1,0 +1,19 @@
+<div class="admin-index-child">
+
+	<input type="text" ng-model = "merchant.name" />商户名称 <br>
+	<input type="text" ng-model = "merchant.email" />商户邮箱 <br>
+	<input type="text" ng-model = "merchant.contact_person" />联系人姓名 <br>
+	<input type="text" ng-model = "merchant.website" />商户官网 <br>
+	<input type="text" ng-model = "merchant.location" />商户公司地址 <br>
+	<input type="text" ng-model = "merchant.score.pass_rate" />申请通过率 <br>
+	<input type="text" ng-model = "merchant.score.article_score" />文书评分 <br>
+	<input type="text" ng-model = "merchant.score.total_score" />综合评分 <br>
+	<br>
+	
+	<button ng-click = "addedNewArea()">增加一个地区</button>
+	<div ng-repeat = "area in merchant.support_area">
+		<input type="text" ng-model = "merchant.support_area[$index]" />
+	</div><br>
+	
+	<button ng-click="addNewMerchant()">确定添加商户</button><br>
+</div>
