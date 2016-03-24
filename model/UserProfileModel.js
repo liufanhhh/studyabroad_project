@@ -8,20 +8,20 @@ var mongoose = require("mongoose");
 
 var UserProfileSchema = mongoose.Schema({
     user_id: Number,
-    login_times: Number,
-    nickname: String,
-    realname: String,
-    email: String,
-    password: String,
-    mobile: String,
-    current_school: String,
-    current_major: String,
-    target_school: String,
-    target_major: String,
-    target_area: Array,
-    language_level: String,
-    identitynumber:String,
-    config: {
+    user_login_times: Number,
+    user_nickname: String,
+    user_realname: String,
+    user_email: String,
+    user_password: String,
+    user_mobile: String,
+    user_current_school: String,
+    user_current_major: String,
+    user_target_school: String,
+    user_target_major: String,
+    user_target_area: Array,
+    user_language_level: String,
+    user_identitynumber:String,
+    user_config: {
         ntf: {
             email: Boolean,
             mobile: Boolean,
@@ -31,31 +31,31 @@ var UserProfileSchema = mongoose.Schema({
             all: Boolean,
             follower: Boolean,
             never: Boolean
-        },
-
+        }
     },
-    follower: Array,
-    read_history: {
+    user_follower: Array,
+    user_read_history: {
         merchant: Array,
+        goods: Array,
         teacher: Array,
         user: Array,
         activity: Array
     },
-    favourate: {
+    user_favourate: {
         merchant: Array,
         teacher: Array,
+        goods: Array,
         user: Array,
         activity: Array
     },
-    purchased:{
-        merchant: String,
-        lession: String
+    user_purchased:{
+        goods: Array
     },
-    group: Array,
-    email_confirm: Boolean,
-    id_verification: Boolean,
-    special_identification: Array,
-    create_time: String
+    user_group: Array,
+    user_email_confirm: Boolean,
+    user_id_verification: Boolean,
+    user_special_identification: Array,
+    user_create_time: Date
 });
 
 //----------------static method--------------------//

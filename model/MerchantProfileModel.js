@@ -18,7 +18,7 @@ var MerchantProfileSchema = mongoose.Schema({
     merchant_mobile: String,
     merchant_website: String,
     merchant_location: String,
-    merchant_support_area: Array,
+    merchant_support_area: Array,  //支持地区 String
     merchant_identity_number: String,
     merchant_logo: String,
     merchant_business_license: String,
@@ -26,6 +26,8 @@ var MerchantProfileSchema = mongoose.Schema({
     merchant_organization_order_certificaion: String,
     merchant_star_teacher: Array,
     merchant_special_area: Array,
+    merchant_other_contact_method: Array,
+    merchant_goods: Array,
     merchant_notify: {
         mobile: Boolean,
         email: Boolean,
@@ -39,7 +41,7 @@ var MerchantProfileSchema = mongoose.Schema({
         article_score: Number,
         total_score: Number
     },
-    merchant_followup_people: [
+    merchant_follow_up_people: [
     /*{
         name: String,
         reason: String
@@ -52,6 +54,7 @@ var MerchantProfileSchema = mongoose.Schema({
     merchant_buyer: Array,
     merchant_reputation: Boolean,
     merchant_hierarchy: String
+
 });
 
 //----------------static method--------------------//
