@@ -10,8 +10,8 @@ adminIndexApp.config(function($routeProvider, $locationProvider) {
         templateUrl: '../html/AdminArea/merchantAdd.html',
         controller: 'merchantAddController'
     }).
-    when('/download', {
-        templateUrl: 'html/MainHtml/download.html',
+    when('/merchant/list', {
+        templateUrl: 'html/AdminArea/merchantAdd.html',
         controller: 'downloadController'
     }).
     when('/groupon', {

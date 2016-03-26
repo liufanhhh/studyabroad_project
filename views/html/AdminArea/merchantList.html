@@ -1,0 +1,36 @@
+<div class="admin-index-child">
+
+	<input type="text"  ng-model = "finded_merchant.id" />商户ID<br>
+	<input type="text" ng-model = "finded_merchant.name" />商户名称<br>
+	<input type="text" ng-model = "finded_merchant.email" />商户邮箱<br>
+	<input type="text" ng-model = "merchant.contact_person" />联系人姓名 <br>
+	<input type="text" ng-model = "merchant.website" />商户官网 <br>
+	<input type="text" ng-model = "merchant.location" />商户所在地 <br>
+	<button ng-click = "findMerchant()">搜索</button>
+
+	<table ng-if = "all_merchant_appear" class="">
+	    <tr>
+           <th>商户ID</th>
+           <th>商户名称</th>
+           <th>商户邮箱</th>
+           <th>联系电话</th>
+           <th>商户官网</th>
+           <th>商户城市</th>
+           <th>商户所在地</th>
+        </tr>
+
+        <tr ng-repeat = "merchant in merchants">
+            <td ng-bind="merchant.id"></td>
+            <td ng-bind="merchant.name"></td>
+            <td ng-bind="merchant.email"></td>
+            <td ng-bind="merchant.contact_person"></td>
+            <td ng-bind="merchant.website"></td>
+            <td ng-bind="merchant.location"></td>
+        </tr>
+	</table>
+
+
+
+	<button ng-click="addNewMerchant()">确定添加商户</button><br>
+
+</div>
