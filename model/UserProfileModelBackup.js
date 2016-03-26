@@ -7,35 +7,38 @@ var mongoose = require("mongoose");
 //-----------------schema for user-----------------//
 
 var UserSchema = mongoose.Schema({
-    // _id: mongoose.Schema.ObjectId,
-    time: Date,
-    nickname: String,
-    realname: String,
-    email: String,
-    password: String,
-    mobile: String,
-    school: String,
-    major: String,
-    skill: String,
-    job: String,
-    location: String,
-    website: String,
-    language: String,
-    identitynumber:String,
-    pic: mongoose.Schema.ObjectId,
-    config: {
-        ntf: {
-            email: Boolean,
-            never: Boolean,
-            desktop: Boolean
+    user: {
+        // _id: mongoose.Schema.ObjectId,
+        time: Date,
+        nickname: String,
+        realname: String,
+        email: String,
+        password: String,
+        mobile: String,
+        school: String,
+        major: String,
+        skill: String,
+        job: String,
+        location: String,
+        website: String,
+        language: String,
+        identitynumber:String,
+        pic: mongoose.Schema.ObjectId,
+        hello: Array,
+        config: {
+            ntf: {
+                email: Boolean,
+                never: Boolean,
+                desktop: Boolean
+            },
+            content: {
+                involve: Boolean,
+                follow: Boolean,
+                all: Boolean
+            }
         },
-        content: {
-            involve: Boolean,
-            follow: Boolean,
-            all: Boolean
-        }
-    },
-    confirm: Boolean,
+        confirm: Boolean,
+    }
 });
 
 
@@ -99,25 +102,10 @@ UserSchema.statics.updateUserById = function(id, new_user_doc, cb) {
     }, new_user_doc, cb);
 }
 
-UserSchema.statics.createSimpleUser = function(nickname, email, password, cb) {
+UserSchema.statics.createSimpleUser = function(user, cb) {
     this.create({
-        nickname: nickname,
-        password: password,
-        email: email,
-        config: {
-            ntf: {
-                email: true,
-                never: false,
-                desktop: true
-            },
-            content: {
-                involve: true,
-                follow: true,
-                all: false
-            }
-        },
-        confirm: true,
-        time: new Date()
+        user: user,
+        user: [1,2,3]
     }, cb);
 }
 
@@ -191,4 +179,4 @@ UserSchema.method.findByEmailPassword = function(cb) {
 
 //-------------------export-------------------------//
 
-module.exports = mongoose.model("UserModel", UserSchema);
+module.exports = mongoose.model("UserProfileModelBackup", UserSchema);

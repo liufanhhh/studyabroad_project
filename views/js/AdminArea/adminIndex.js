@@ -190,7 +190,10 @@ adminIndexApp.controller('mainController', function($scope, $resource, $routePar
 });
 
 adminIndexApp.controller('merchantAddController', function($scope, $resource, $routeParams, $location) {
-
+	$scope.admins = [
+		"liufan",
+		"fanliu"
+	]
 	$scope.merchant = {
 		id: "",
 		name: "",

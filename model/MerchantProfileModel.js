@@ -7,54 +7,56 @@ var mongoose = require("mongoose");
 //-----------------schema for user-----------------//
 
 var MerchantProfileSchema = mongoose.Schema({
-    //merchant information
-    merchant_id: Number,
-    merchant_create_time: Date,
-    merchant_name: String,
-    merchant_contact_person_name: String,
-    merchant_owner_name: String,
-    merchant_email: String,
-    merchant_password: String,
-    merchant_mobile: String,
-    merchant_website: String,
-    merchant_location: String,
-    merchant_support_area: Array,  //支持地区 String
-    merchant_identity_number: String,
-    merchant_logo: String,
-    merchant_business_license: String,
-    merchant_tax_registration_certification: String,
-    merchant_organization_order_certificaion: String,
-    merchant_star_teacher: Array,
-    merchant_special_area: Array,
-    merchant_other_contact_method: Array,
-    merchant_goods: Array,
-    merchant_notify: {
-        mobile: Boolean,
-        email: Boolean,
-        monthly_email: Boolean 
-    },
-    
-    // website judgement
-    merchant_verification: Boolean,
-    merchant_score:{ 
-        pass_rate: Number,
-        article_score: Number,
-        total_score: Number
-    },
-    merchant_follow_up_people: [
-    /*{
+    merchant: {
+        //merchant information
+        id: Number,
+        create_time: Date,
         name: String,
-        reason: String
-    }*/
-    ],
+        contact_person_name: String,
+        owner_name: String,
+        email: String,
+        password: String,
+        mobile: String,
+        website: String,
+        location_city: String,
+        location_details: String,
+        support_area: Array,  //支持地区 String
+        identity_number: String,
+        logo: String,
+        business_license: String,
+        tax_registration_certification: String,
+        organization_order_certificaion: String,
+        star_teacher: Array,
+        special_area: Array,
+        other_contact_method: Array,
+        goods: Array,
+        notify: {
+            mobile: Boolean,
+            email: Boolean,
+            monthly_email: Boolean 
+        },
+        
+        // website judgement
+        verification: Boolean,
+        score:{ 
+            pass_rate: Number,
+            article_score: Number,
+            total_score: Number
+        },
+        follow_up_people: [
+        /*{
+            name: String,
+            reason: String
+        }*/
+        ],
 
-    //status
-    merchant_live: Boolean,
-    merchant_follower: Array,
-    merchant_buyer: Array,
-    merchant_reputation: Boolean,
-    merchant_hierarchy: String
-
+        //status
+        live: Boolean,
+        follower: Array,
+        buyer: Array,
+        willing_to_cooperate: Boolean,
+        hierarchy: String
+    }
 });
 
 //----------------static method--------------------//

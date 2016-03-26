@@ -2,18 +2,23 @@
 
 	<input type="text" ng-model = "merchant.name" />商户名称 <br>
 	<input type="text" ng-model = "merchant.email" />商户邮箱 <br>
+	<input type="text" ng-model = "merchant.password" />商户登陆密码 <br>
 	<input type="text" ng-model = "merchant.contact_person" />联系人姓名 <br>
+	<input type="text" ng-model = "merchant.mobile" />联系人电话 <br>
 	<input type="text" ng-model = "merchant.website" />商户官网 <br>
-	<input type="text" ng-model = "merchant.location" />商户公司地址 <br>
-	<input type="text" ng-model = "merchant.score.pass_rate" />申请通过率 <br>
-	<input type="text" ng-model = "merchant.score.article_score" />文书评分 <br>
-	<input type="text" ng-model = "merchant.score.total_score" />综合评分 <br>
+	<select ng-change = "reputationSelect(merchant.willing_to_cooperate)" ng-model = "merchant.willing_to_cooperate" ng-init = "merchant.willing_to_cooperate=null">
+		<option value = "true">可以合作</option>
+		<option value = "false">不想合作</option>
+	</select>
+<!-- 	此商户是否可以合作 <br>
+	<select  ng-model = "merchant.follow_up_people">
+		<option ng-repeat = "admin in admins">{{admin}}</option>
+	</select> -->
+	<input type="text" ng-model = "merchant.hierarchy" />商户重要性 <br>
+
 	<br>
 	
-	<button ng-click = "addedNewArea()">增加一个地区</button>
-	<div ng-repeat = "area in merchant.support_area">
-		<input type="text" ng-model = "merchant.support_area[$index]" />
-	</div><br>
-	
+	<button ng-click="addMerchantDetails()">添加商户详细信息</button><br>
 	<button ng-click="addNewMerchant()">确定添加商户</button><br>
+
 </div>

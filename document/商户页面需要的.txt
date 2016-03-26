@@ -1,6 +1,6 @@
 商户页面需要的
 
-logo展示
+logo 展示
 star teacher 明星教师 链接
 goods 可选择的套餐
 scores 得到的评分

@@ -1,4 +1,4 @@
-var UserProfileModel = require('./UserProfileModel');
+var UserProfileModel = require('./UserProfileModelBackup');
 var mongoose = require("mongoose");
 
 mongoose.connect("mongodb://"+"localhost"+"/"+"studyabroad"+"");
@@ -12,19 +12,20 @@ db.on('error', function() {
 db.once('open', function() {
 	console.log("succeeded to open mongodb://" +"localhost"+"/"+"studyabroad");
 });
-var realname ="aa";
-var email = "1043099804";
+var user = {
+    time: new Date(),
+    nickname: "fan",
+    realname: "String",
+    email: "String",
+    password: "String",
+    mobile: "String",
+    school: "String",
+    major: "String",
+    skill: "String",
+    job: "String"
+};
 
-// UserProfileModel.updatePasswordByEmail(email, "123", function(error){
-// if (error) {
-// 	console.log(error);
-// } else{
-// 	console.log("success");
-// };
-// });
-
-var realname ="aa";
-UserProfileModel.updateEmailByRealname( realname,"acccd",function(error,userprofile){
+UserProfileModel.createSimpleUser( user,function(error,userprofile){
 	if (error) {
 		console.log(error);
 	} else {
