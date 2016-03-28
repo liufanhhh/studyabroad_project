@@ -28,10 +28,10 @@ module.exports = function(app) {
     app.post("/admin/password", AdminProfile.companyPasswordChecking);
     app.post("/admin/profile/token", AdminProfile.returnToken);
     app.post("/admin/login", CreateAdmin.createNewAdmin);
+    app.post("/admin/create", CreateAdmin.createNewAdmin);
     app.get("/admin/liufanhh/access", Enter.getAllAccess);
     app.get("/admin/index", Enter.authenticateAdmin, Enter.adminPageEnter);
-    app.get("/admin/members/list", Enter.authenticateAdmin, Enter.adminPageEnter);
-    app.get("/admin/members/management", Enter.authenticateAdmin, Enter.adminPageEnter);
+
 
 
     app.get("/website/profile/create", ResetWebsiteProfile.createWebsiteInformation);

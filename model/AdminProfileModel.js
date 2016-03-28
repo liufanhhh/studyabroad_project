@@ -7,14 +7,16 @@ var mongoose = require("mongoose");
 //-----------------schema for Admin-----------------//
 
 var AdminProfileSchema = mongoose.Schema({
-    name: String,
-    company: Array,
-    email: String,
-    password: String,
-    mobile: String,
-    birthday: String,
-    status: String,
-    create_time: Date
+    admin:{
+        name: String,
+        response_company: Array,
+        email: String,
+        password: String,
+        mobile: String,
+        birthday: String,
+        status: String,
+        create_time: Date
+    }
 });
 //----------------static method--------------------//
 AdminProfileSchema.statics.findAdminById = function(id, cb) {

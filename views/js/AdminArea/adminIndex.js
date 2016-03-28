@@ -3,8 +3,16 @@ var adminIndexApp = angular.module('adminIndexApp', ['ngResource', 'ngRoute','an
 adminIndexApp.config(function($routeProvider, $locationProvider) {
     $routeProvider.
     when('/', {
-        templateUrl: '..html/AdminArea/main.html',
+        templateUrl: '../html/AdminArea/main.html',
         controller: 'mainController'
+    }).
+    when('/admin/members/management', {
+        templateUrl: '../html/AdminArea/adminManagement.html',
+        controller: 'adminManagementController'
+    }).
+    when('/admin/members/list', {
+        templateUrl: 'html/AdminArea/adminManagement.html',
+        controller: 'grouponController'
     }).
     when('/merchant/add', {
         templateUrl: '../html/AdminArea/merchantAdd.html',
@@ -14,11 +22,11 @@ adminIndexApp.config(function($routeProvider, $locationProvider) {
         templateUrl: 'html/AdminArea/merchantAdd.html',
         controller: 'downloadController'
     }).
-    when('/groupon', {
+    when('/admin/m', {
         templateUrl: 'html/MainHtml/groupon.html',
         controller: 'grouponController'
     }).
-    when('/school', {
+    when('/admin', {
         templateUrl: 'html/MainHtml/school.html',
         controller: 'schoolController'
     });
@@ -30,9 +38,14 @@ adminIndexApp.config(function($routeProvider, $locationProvider) {
 
 adminIndexApp.controller('adminIndexController', function($scope, $resource, $routeParams, $location, FileUploader) {
 
-	$scope.current_admin = $scope.admin_name = "liufan";
+	$scope.current_admin = "liufan";
 	$scope.nav_child = {};
 
+
+	if ($scope.current_admin == "liufan") {
+		$scope.show_admin_control = true;
+		console.log($scope.show_admin_control);
+	};
 
 	$scope.navChildOptionsShow = function () {
 		switch(arguments[0]){
@@ -189,7 +202,7 @@ adminIndexApp.controller('merchantAddController', function($scope, $resource, $r
 		id: "",
 		name: "",
 		email: "",
-		contact_person: "",
+		contact_admin: "",
 		mobile: "",
 		website: "",
 		location: "",
@@ -226,5 +239,47 @@ adminIndexApp.controller('merchantAddController', function($scope, $resource, $r
 });
 
 adminIndexApp.controller('activityController', function($scope, $resource, $routeParams, $location) {
+
+});
+
+adminIndexApp.controller('adminManagementController', function($scope, $resource, $routeParams, $location) {
+	$scope.admin = {};
+	/*监视密码2的输入，如果输入和密码1的相同，则可以注册。
+	若不同，或者两个密码都为空，则不可注册。*/
+	$scope.$watch("admin.password_confirmation", function(newVal,oldVal,scope){
+		if (newVal === oldVal){
+		}
+		else if(!$scope.admin.password_confirmation){
+			$scope.same_password=false;
+		}
+		else if($scope.admin.password !== $scope.admin.password_confirmation){
+			$scope.same_password=false;
+		}
+		else if($scope.admin.password === $scope.admin.password_confirmation){
+			$scope.same_password=true;
+		}
+	});
+	/*按监视密码2的方法监视密码1*/
+	$scope.$watch("admin.password", function(newVal,oldVal,scope){
+		if (newVal === oldVal){
+		}
+		else if(!$scope.admin.password){
+			$scope.same_password=false;
+		}
+		else if($scope.admin.password !== $scope.admin.password_confirmation){
+			$scope.same_password=false;
+		}
+		else if($scope.admin.password === $scope.admin.password_confirmation){
+			$scope.same_password=true;
+		}
+	});
+
+	$scope.addNewAdmin = function () {
+		$resource("/admin/create").save({
+			admin: $scope.admin
+		},function(res){
+			
+		})
+	}
 
 });

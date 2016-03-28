@@ -1,0 +1,62 @@
+<div>
+	<button ng-click = "addNewAdminShow()">添加管理员</button>	
+
+</div>
+
+<div>
+
+	<form name="addAdminForm" role="form" ng-submit="addNewAdmin()" novalidate>
+		
+		<div>
+			<label>姓名：</label>
+			<input name="name" class="form-control" type="text" ng-model="admin.name" ng-maxlength=9 ng-minlength=2 required >
+			<p class="help-block" ng-show="addAdminForm.name.$error.required && !addAdminForm.name.$pristine">该项必填</p>
+			<p class="help-block" ng-show="addAdminForm.name.$error.minlength && !addAdminForm.name.$pristine">昵称最少为两个字</p>
+			<p class="help-block" ng-show="addAdminForm.name.$error.maxlength && !addAdminForm.name.$pristine">昵称最多为九个字</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="addAdminForm.name.$valid"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="addAdminForm.name.$invalid && !addAdminForm.name.$pristine"></span>
+		</div>
+
+
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : addAdminForm.email.$invalid && !addAdminForm.email.$pristine,
+		'has-success' : addAdminForm.email.$valid }">
+			<label>邮箱地址：</label>
+			<input name="email" class="form-control" type="email" ng-model="admin.email" required>
+			<p class="help-block" ng-show="addAdminForm.email.$error.required && !addAdminForm.email.$pristine">该项必填</p>
+			<p class="help-block" ng-show="addAdminForm.email.$error.email && !addAdminForm.email.$pristine">不符合email格式</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="addAdminForm.email.$valid"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="addAdminForm.email.$invalid && !addAdminForm.email.$pristine"></span>
+		</div>
+
+
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : addAdminForm.password.$invalid && !addAdminForm.password.$pristine,
+		'has-success' : same_password }">
+			<label>设置密码：</label>
+			<input class="form-control" name="password" type="password" ng-model="admin.password" ng-minlength=6 required>
+			<p class="help-block" ng-show="addAdminForm.password.$error.required && !addAdminForm.password.$pristine">该项必填</p>		
+			<p class="help-block" ng-show="addAdminForm.password.$error.minlength && !addAdminForm.password.$pristine">密码最小长度为6</p>		
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="addAdminForm.password.$valid && same_password"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="addAdminForm.password.$invalid && !addAdminForm.password.$pristine"></span>
+		</div>
+
+		<div class="form-group has-feedback" ng-class="{ 'has-error' : (addAdminForm.password_confirmation.$invalid || !same_password) && !addAdminForm.password_confirmation.$pristine,
+		'has-success' : same_password }">
+			<label>再次输入密码：</label>
+			<input class="form-control" name="password_confirmation" type="password" ng-model="admin.password_confirmation" ng-minlength=6 required>
+			<p class="help-block" ng-show="addAdminForm.password_confirmation.$error.required && !addAdminForm.password_confirmation.$pristine">该项必填</p>		
+			<p class="help-block" ng-show="addAdminForm.password_confirmation.$error.minlength && !addAdminForm.password_confirmation.$pristine">密码最小长度为6</p>		
+			<p class="help-block" ng-show="!same_password && !addAdminForm.password_confirmation.$pristine">两次填写密码不一致</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="addAdminForm.password_confirmation.$valid && same_password"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="addAdminForm.password_confirmation.$invalid && !addAdminForm.password_confirmation.$pristine"></span>
+		</div>
+
+		<div>
+			<input name="adminCheck" type="checkbox" ng-model="admin.regulation" value="true" required>  是否同意用户守则
+			<button ng-click="$parent.show_regulation=true" >用户守则</button>
+		</div>
+  		<br>
+<!-- 除了ng自带的表单验证外，加上密码验证，才可以注册 -->
+  		<button type="submit" class="btn btn-primary" ng-disabled="addAdminForm.$invalid || !same_password" >注册</button>
+  		{{register_result}}
+  	</form>
+</div>

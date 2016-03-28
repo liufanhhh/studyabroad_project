@@ -34,7 +34,7 @@
 		<div class="form-group has-feedback" ng-class="{ 'has-error' : loginForm.name.$invalid && !loginForm.name.$pristine, 
 		'has-success' : loginForm.name.$valid }">
 			<label>昵称：</label>
-			<input name="name" class="form-control" type="text" ng-model="person.name" ng-maxlength=9 ng-minlength=2 required >
+			<input name="name" class="form-control" type="text" ng-model="admin.name" ng-maxlength=9 ng-minlength=2 required >
 			<p class="help-block" ng-show="loginForm.name.$error.required && !loginForm.name.$pristine">该项必填</p>
 			<p class="help-block" ng-show="loginForm.name.$error.minlength && !loginForm.name.$pristine">昵称最少为两个字</p>
 			<p class="help-block" ng-show="loginForm.name.$error.maxlength && !loginForm.name.$pristine">昵称最多为九个字</p>
@@ -46,7 +46,7 @@
 		<div class="form-group has-feedback" ng-class="{ 'has-error' : loginForm.email.$invalid && !loginForm.email.$pristine,
 		'has-success' : loginForm.email.$valid }">
 			<label>邮箱地址：</label>
-			<input name="email" class="form-control" type="email" ng-model="person.email" required>
+			<input name="email" class="form-control" type="email" ng-model="admin.email" required>
 			<p class="help-block" ng-show="loginForm.email.$error.required && !loginForm.email.$pristine">该项必填</p>
 			<p class="help-block" ng-show="loginForm.email.$error.email && !loginForm.email.$pristine">不符合email格式</p>
 			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm.email.$valid"></span>
@@ -57,7 +57,7 @@
 		<div class="form-group has-feedback" ng-class="{ 'has-error' : loginForm.password.$invalid && !loginForm.password.$pristine,
 		'has-success' : same_password }">
 			<label>设置密码：</label>
-			<input class="form-control" name="password" type="password" ng-model="person.password" ng-minlength=6 required>
+			<input class="form-control" name="password" type="password" ng-model="admin.password" ng-minlength=6 required>
 			<p class="help-block" ng-show="loginForm.password.$error.required && !loginForm.password.$pristine">该项必填</p>		
 			<p class="help-block" ng-show="loginForm.password.$error.minlength && !loginForm.password.$pristine">密码最小长度为6</p>		
 			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm.password.$valid && same_password"></span>
@@ -67,7 +67,7 @@
 		<div class="form-group has-feedback" ng-class="{ 'has-error' : (loginForm.password_confirmation.$invalid || !same_password) && !loginForm.password_confirmation.$pristine,
 		'has-success' : same_password }">
 			<label>再次输入密码：</label>
-			<input class="form-control" name="password_confirmation" type="password" ng-model="person.password_confirmation" ng-minlength=6 required>
+			<input class="form-control" name="password_confirmation" type="password" ng-model="admin.password_confirmation" ng-minlength=6 required>
 			<p class="help-block" ng-show="loginForm.password_confirmation.$error.required && !loginForm.password_confirmation.$pristine">该项必填</p>		
 			<p class="help-block" ng-show="loginForm.password_confirmation.$error.minlength && !loginForm.password_confirmation.$pristine">密码最小长度为6</p>		
 			<p class="help-block" ng-show="!same_password && !loginForm.password_confirmation.$pristine">两次填写密码不一致</p>
@@ -76,7 +76,7 @@
 		</div>
 
 		<div>
-			<input name="personCheck" type="checkbox" ng-model="person.regulation" value="true" required>  是否同意用户守则
+			<input name="adminCheck" type="checkbox" ng-model="admin.regulation" value="true" required>  是否同意用户守则
 			<button ng-click="$parent.show_regulation=true" >用户守则</button>
 		</div>
   		<br>
