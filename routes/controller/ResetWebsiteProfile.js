@@ -37,6 +37,18 @@ exports.setUsersAmount = function(req,res){
 	})
 }
 
+exports.setAdminAmount = function(req,res){
+	var website_name = "留学点评网";
+	var amount = req.query.amount;
+	WebsiteProfile.setAdminAmount(website_name, amount, function(error, website_profile){
+		if (website_profile) {
+			res.sendSuccess("管理员总数已重新设定");
+		} else{
+			res.sendError("数据库错误");
+		};
+	})
+}
+
 exports.countUsersAmount = function(req,res){
 	var conditions = req.query.conditions||null;
 	UserProfile.countUsersAmount(conditions, function(error, amount){
@@ -52,7 +64,6 @@ exports.createWebsiteInformation = function (req,res) {
 	var website_name = req.query.website_name;
 	var user_amount = req.query.user_amount||0;
 	var merchant_amount = req.query.merchant_amount||0;
-	console.log(website_name);
 	WebsiteProfile.getInformation(website_name, function(error, website_profile){
 		console.log(website_profile);
 		if (website_profile == null) {
@@ -64,7 +75,7 @@ exports.createWebsiteInformation = function (req,res) {
 				}
 			});
 		} else{
-			res.sendError("设定失败");
+			res.sendError("设定失败，网站信息已存在");
 		};
 	});
 }

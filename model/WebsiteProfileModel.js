@@ -9,6 +9,7 @@ var mongoose = require("mongoose");
 var WebsiteProfileSchema = mongoose.Schema({
     name: String,
     user_amount: Number,
+    admin_amount: Number,
     merchant_amount: Number
 });
 
@@ -23,10 +24,19 @@ WebsiteProfileSchema.statics.createWebsiteInformation = function(name, user_amou
     this.create({
         name: name,
         user_amount: user_amount,
+        admin_amount: 0,
         merchant_amount: merchant_amount
     }, cb);
 }
 
+
+WebsiteProfileSchema.statics.setMerchantsAmount = function(name, amount, cb){
+    this.findOneAndUpdate({
+        name: name
+    }, {
+        merchant_amount: amount
+    }, cb);
+}
 
 WebsiteProfileSchema.statics.setMerchantsAmount = function(name, amount, cb){
     this.findOneAndUpdate({

@@ -61,6 +61,15 @@ adminIndexApp.controller('adminIndexController', function($scope, $resource, $ro
 		$scope.nav_child = {};
 	}
 
+	$scope.websiteProfileReset = function () {
+		$resource("/website/profile/create").get({
+			website_name: "留学点评网",
+			user_amount: 0,
+			merchant_amount: 0
+		},function (res) {
+			console.log(res.mess);
+		})
+	}
 
 
 	$scope.create_status;
@@ -278,7 +287,7 @@ adminIndexApp.controller('adminManagementController', function($scope, $resource
 		$resource("/admin/create").save({
 			admin: $scope.admin
 		},function(res){
-			
+			$scope.register_result = res.mess;
 		})
 	}
 

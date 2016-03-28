@@ -9,10 +9,8 @@
 		
 		<div>
 			<label>姓名：</label>
-			<input name="name" class="form-control" type="text" ng-model="admin.name" ng-maxlength=9 ng-minlength=2 required >
+			<input name="name" class="form-control" type="text" ng-model="admin.name" required >
 			<p class="help-block" ng-show="addAdminForm.name.$error.required && !addAdminForm.name.$pristine">该项必填</p>
-			<p class="help-block" ng-show="addAdminForm.name.$error.minlength && !addAdminForm.name.$pristine">昵称最少为两个字</p>
-			<p class="help-block" ng-show="addAdminForm.name.$error.maxlength && !addAdminForm.name.$pristine">昵称最多为九个字</p>
 			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="addAdminForm.name.$valid"></span>
 			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="addAdminForm.name.$invalid && !addAdminForm.name.$pristine"></span>
 		</div>
@@ -56,7 +54,7 @@
 		</div>
   		<br>
 <!-- 除了ng自带的表单验证外，加上密码验证，才可以注册 -->
-  		<button type="submit" class="btn btn-primary" ng-disabled="addAdminForm.$invalid || !same_password" >注册</button>
+  		<button type="submit" class="btn btn-primary" ng-disabled="addAdminForm.$invalid || !same_password" >添加</button>
   		{{register_result}}
   	</form>
 </div>

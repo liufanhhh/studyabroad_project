@@ -40,7 +40,7 @@ AdminProfileSchema.statics.findAdminByNickname = function(nickname, cb) {
 
 AdminProfileSchema.statics.findAdminByName = function(name, cb) {
     this.findOne({
-        name: name
+        "admin.name": name
     }, cb);
 }
 
@@ -96,28 +96,10 @@ AdminProfileSchema.statics.updateAdminById = function(id, email, cb) {
     }, {$set:{email:email}}, cb);
 }
 
-AdminProfileSchema.statics.createSimpleAdmin = function(nickname, realname, email, password, Adminid, status, cb) {
+AdminProfileSchema.statics.createNewAdmin = function(admin, cb) {
+    admin.create_time = new Date();
     this.create({
-        nickname: nickname,
-        realname: realname,
-        password: password,
-        identitynumber: Adminid,
-        email: email,
-        config: {
-            ntf: {
-                email: true,
-                never: false,
-                desktop: true
-            },
-            content: {
-                involve: true,
-                follow: true,
-                all: false
-            }
-        },
-        confirm: false,
-        status: status,
-        create_time: new Date()
+    admin: admin
     }, cb);
 }
 

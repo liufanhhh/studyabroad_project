@@ -24,13 +24,16 @@
 
 			<ul>
 				<li ng-mouseover="navChildOptionsShow('members')" ng-mouseleave="navChildOptionsHide()">
-				成员管理
+				抵岸功能
 					<ul class="drop-down-list-ul" ng-if="nav_child.members">
 						<li class="drop-down-list-li">
 							<a class="button big" href="#/admin/members/list">成员名单</a>
 						</li>
 						<li class="drop-down-list-li" ng-if = "show_admin_control">
 							<a class="button big" href="#/admin/members/management">成员管理</a>
+						</li>
+						<li class="drop-down-list-li" ng-if = "show_admin_control">
+							<a class="button big" ng-click = "websiteProfileReset()">网站初始化</a>
 						</li>
 					</ul>
 				</li>
