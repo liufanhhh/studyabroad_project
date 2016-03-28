@@ -1,21 +1,13 @@
-var IndexApp = angular.module('IndexApp', ['ngResource', 'ngRoute']);
+var indexApp = angular.module('IndexApp', ['ngResource', 'ngRoute']);
 
 /*
  * routes for saindex.html
  */
-IndexApp.config(function($routeProvider, $locationProvider) {
+indexApp.config(function($routeProvider, $locationProvider) {
     $routeProvider.
     when('/', {
         templateUrl: 'html/MainHtml/main.html',
         controller: 'mainController'
-    }).
-    when('/activity', {
-        templateUrl: 'html/MainHtml/activity.html',
-        controller: 'activityController'
-    }).
-    when('/download', {
-        templateUrl: 'html/MainHtml/download.html',
-        controller: 'downloadController'
     }).
     when('/groupon', {
         templateUrl: 'html/MainHtml/groupon.html',
@@ -24,6 +16,14 @@ IndexApp.config(function($routeProvider, $locationProvider) {
     when('/school', {
         templateUrl: 'html/MainHtml/school.html',
         controller: 'schoolController'
+    }).
+    when('/lesson', {
+        templateUrl: 'html/MainHtml/lesson.html',
+        controller: 'lessonController'
+    }).
+    when('/paperwork', {
+        templateUrl: 'html/MainHtml/paperwork.html',
+        controller: 'paperworkController'
     });
 
     // configure html5 to get links working on jsfiddle
@@ -31,7 +31,7 @@ IndexApp.config(function($routeProvider, $locationProvider) {
     console.log("initialize route");
 });
 
-IndexApp.controller('indexController', function($scope, $resource, $routeParams, $location) {
+indexApp.controller('indexController', function($scope, $resource, $routeParams, $location) {
 
 	$scope.feedback_show = false;
     $scope.user = {};
@@ -136,7 +136,7 @@ IndexApp.controller('indexController', function($scope, $resource, $routeParams,
     };
 });
 
-IndexApp.controller('mainController', function($scope, $resource, $routeParams, $location) {
+indexApp.controller('mainController', function($scope, $resource, $routeParams, $location) {
     function getMerchantsLogo () {
         $resource("/merchant/logos").get({},function (res) {
             if (res.status===1) {
@@ -150,18 +150,18 @@ IndexApp.controller('mainController', function($scope, $resource, $routeParams, 
     getMerchantsLogo();
 });
 
-IndexApp.controller('activityController', function($scope, $resource, $routeParams, $location) {
+indexApp.controller('lessonController', function($scope, $resource, $routeParams, $location) {
 
 });
 
-IndexApp.controller('downloadController', function($scope, $resource, $routeParams, $location) {
+indexApp.controller('paperworkController', function($scope, $resource, $routeParams, $location) {
 
 });
 
-IndexApp.controller('grouponController', function($scope, $resource, $routeParams, $location) {
+indexApp.controller('grouponController', function($scope, $resource, $routeParams, $location) {
 
 });
 
-IndexApp.controller('schoolController', function($scope, $resource, $routeParams, $location) {
+indexApp.controller('schoolController', function($scope, $resource, $routeParams, $location) {
 
 });

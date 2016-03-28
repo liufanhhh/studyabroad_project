@@ -1,6 +1,319 @@
-<div>
-	<div ng-repeat = "merchant in merchants">
-		{{merchant.merchant_name}}
-		<img ng-src = "{{merchant.logo}}"/>
-	</div>
+<div class="match-box">
+  <div class="container">
+    <div id="selector">
+      <div class="selectorLine">
+        <div class="sl-parentkey">
+          机构所在地：
+        </div>
+        <div class="sl-subkey">
+          <ul>
+            <!-- 用户点击某一li标签元素后，如“北京”，用DOM把'不限'的class拿下来交给北京，北京即可变成蓝底白字-->
+            <li class="selected">不限</li>
+            <li>北京</li>
+            <li>上海</li>
+            <li>天津</li>
+            <li>广州</li>
+            <li>深圳</li>
+          </ul>
+        </div>
+        <div class="sl-addkey">
+          <ul>
+            <li>多选<i class="icon-plus-sign-alt"></i></li>
+            <li>更多<i class="icon-angle-down"></i></li>
+          </ul>
+        </div>
+      </div>
+      <div class="selectorLine">
+        <div class="sl-parentkey">
+          擅长申请地区：
+        </div>
+        <div class="sl-subkey">
+          <ul>
+            <li>不限</li>
+            <li class="selected">美国</li>
+            <li>英国</li>
+            <li>法国</li>
+            <li>德国</li>
+            <li>日本</li>
+            <li>澳大利亚</li>
+          </ul>
+        </div>
+        <div class="sl-addkey">
+          <ul>
+            <li>多选<i class="icon-plus-sign-alt"></i></li>
+            <li>更多<i class="icon-angle-down"></i></li>
+          </ul>
+        </div>
+      </div>
+      <div class="half-selectorLine">
+        <div class="sl-parentkey">
+          是否参加团购：
+        </div>
+        <div class="sl-subkey">
+          <ul>
+            <li class="selected">不限</li>
+            <li>是</li>
+          </ul>
+        </div>
+      </div>
+      <div class="half-selectorLine">
+        <div class="sl-parentkey">
+          是否代办签证：
+        </div>
+        <div class="sl-subkey">
+          <ul>
+            <li class="selected">不限</li>
+            <li>是</li>
+          </ul>
+        </div>
+      </div>
+      <div class="half-selectorLine">
+        <div class="sl-parentkey">
+          提供培训服务：
+        </div>
+        <div class="sl-subkey">
+          <ul>
+            <li class="selected">不限</li>
+            <li>是</li>
+          </ul>
+        </div>
+      </div>
+      <div class="half-selectorLine">
+        <div class="sl-parentkey">
+          提供出国后续服务：
+        </div>
+        <div class="sl-subkey">
+          <ul>
+            <li class="selected">不限</li>
+            <li>是</li>
+          </ul>
+        </div>
+      </div>
+      <div class="half-selectorLine">
+        <div class="sl-parentkey">
+          教育部资格认证：
+        </div>
+        <div class="sl-subkey">
+          <ul>
+            <li class="selected">不限</li>
+            <li>是</li>
+          </ul>
+        </div>
+      </div>
+      <div class="half-selectorLine">
+        <div class="sl-parentkey">
+          提供申请邮箱密码：
+        </div>
+        <div class="sl-subkey">
+          <ul>
+            <li class="selected">不限</li>
+            <li>是</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="shop-head">
+  <div class="container">
+    <div class="shop-head-left">
+      商家介绍
+    </div>
+    <div class="shop-head-right">
+      更多>
+    </div>
+  </div>
+</div>
+<div class="shop-intro">
+  <div class="container">
+    <div class="item">
+      <div class="item-title">
+        <div class="item-title-num">
+          ①
+        </div>
+        <div class="item-title-word">
+          金吉利留学教育服务
+        </div>
+      </div>
+      <div class="img">
+        <img src="images/1.jpg">
+      </div>
+      <div class="item-body">
+        <div class="item-parentkey">
+          商家名称：
+        </div>
+        <div class="item-subkey">
+          金吉利出国留学咨询服务有限公司
+        </div>
+      </div>
+      <div class="item-body">
+        <div class="item-parentkey">
+          重要项目：
+        </div>
+        <div class="item-subkey">
+          出国前免费咨询，量身设计留学方案，协助学生申请助学及办理签证。可以为留学生提供最
+          需要的帮助。学生申请助学及办理证件的需要。
+        </div>
+      </div>
+      <div class="item-body">
+        <div class="item-parentkey">
+          信用评级：
+        </div>
+        <div class="item-subkey-2">
+          ★ ★ ★ ★ ★
+        </div>
+      </div>
+      <div class="item-body">
+        <div class="item-parentkey">
+          用户评价：
+        </div>
+        <div class="item-subkey">
+          共516条评价
+        </div>
+      </div>
+      <div class="item-foot">
+        <div class="item-foot-left">
+          查看详情
+        </div>
+        <div class="item-foot-right">
+          团购优惠
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-title">
+        <div class="item-title-num">
+          ②
+        </div>
+        <div class="item-title-word">
+          新东方教育公司
+        </div>
+      </div>
+      <div class="img">
+        <img src="images/2.jpg">
+      </div>
+      <div class="item-body">
+        <div class="item-parentkey">
+          商家名称：
+        </div>
+        <div class="item-subkey">
+          金吉利出国留学咨询服务有限公司
+        </div>
+      </div>
+      <div class="item-body">
+        <div class="item-parentkey">
+          重要项目：
+        </div>
+        <div class="item-subkey">
+          出国前免费咨询，量身设计留学方案，协助学生申请助学及办理签证。可以为留学生提供最
+          需要的帮助。学生申请助学及办理证件的需要。
+        </div>
+      </div>
+      <div class="item-body">
+        <div class="item-parentkey">
+          信用评级：
+        </div>
+        <div class="item-subkey-2">
+          ★ ★ ★ ★ ★
+        </div>
+      </div>
+      <div class="item-body">
+        <div class="item-parentkey">
+          用户评价：
+        </div>
+        <div class="item-subkey">
+          共516条评价
+        </div>
+      </div>
+      <div class="item-foot">
+        <div class="item-foot-left">
+          查看详情
+        </div>
+        <div class="item-foot-right">
+          团购优惠
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-title">
+        <div class="item-title-num">
+          ③
+        </div>
+        <div class="item-title-word">
+          新航道留学教育服务
+        </div>
+      </div>
+      <div class="img">
+        <img src="images/3.jpg">
+      </div>
+      <div class="item-body">
+        <div class="item-parentkey">
+          商家名称：
+        </div>
+        <div class="item-subkey">
+          金吉利出国留学咨询服务有限公司
+        </div>
+      </div>
+      <div class="item-body">
+        <div class="item-parentkey">
+          重要项目：
+        </div>
+        <div class="item-subkey">
+          出国前免费咨询，量身设计留学方案，协助学生申请助学及办理签证。可以为留学生提供最
+          需要的帮助。学生申请助学及办理证件的需要。
+        </div>
+      </div>
+      <div class="item-body">
+        <div class="item-parentkey">
+          信用评级：
+        </div>
+        <div class="item-subkey-2">
+          ★ ★ ★ ★ ★
+        </div>
+      </div>
+      <div class="item-body">
+        <div class="item-parentkey">
+          用户评价：
+        </div>
+        <div class="item-subkey">
+          共516条评价
+        </div>
+      </div>
+      <div class="item-foot">
+        <div class="item-foot-left">
+          查看详情
+        </div>
+        <div class="item-foot-right">
+          团购优惠
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="shop-head">
+  <div class="container">
+    <div class="shop-head-left">
+      明星推荐
+    </div>
+    <div class="shop-head-right">
+      更多>
+    </div>
+  </div>
+</div>
+<div class="shop-patch">
+  <div class="container">
+    <div class="patch-img">
+      <img src="images/4.jpg">
+    </div>
+    <div class="patch-img">
+      <img src="images/5.jpg">
+    </div>
+    <div class="patch-img">
+      <img src="images/6.jpg">
+    </div>
+    <div class="patch-img">
+      <img src="images/7.jpg">
+    </div>
+  </div>
 </div>

@@ -1,21 +1,40 @@
+.match-box {
+	background: #e9eeec;
+}
 #selector {
 	float: left;
 	border-width: 1px;
 	border-color: #ddd;
 	border-style: solid;
+	border-radius: 8px;
 	padding: 20px 20px 20px 20px;
-	margin: 10px 0 0 20px;
-	font-family: Arial,宋体;
-	width: 90%;
+	margin: 15px 0 15px 15px;
+	font-family: "Microsoft YaHei";
+	width: 99%;
+	background: #ffffff;
 }
 #selector .selectorLine {
-	
+	float: left;
+	width: 100%;
+	margin: 0 0 10px 0;
+}
+.half-selectorLine {
+	width: 50%;
+	float: left;
+	margin-bottom: 12px;
 }
 #selector .selectorLine .sl-parentkey {
-	color: #888;
+	color: #444444;
 	font-size: 14px;
 	float: left;
 	width: 10%;
+}
+.half-selectorLine .sl-parentkey {
+	color: #444444;
+	font-size: 14px;
+	float: left;
+	width: 24%;
+	padding-top: 4px;
 }
 @media (max-width: 1200px) {
 	#selector .selectorLine .sl-parentkey {
@@ -29,5 +48,30 @@
 }
 #selector .selectorLine .sl-subkey ul li {
 	margin: 0 0 0 40px;
+	float: left;
+}
+.sl-subkey {
+	color: #444;
+	font-size: 14px;
+	float: left;
+}
+.sl-subkey ul li {
+	margin: 0 0 0 18px;
+	float: left;
+	padding: 4px 6px;
+}
+.sl-subkey ul .selected {
+	background-color: #46a7ba;
+	border-radius: 2px;
+	color: #fff;
+}
+.sl-addkey {
+	color: #46a7ba;
+	font-size: 14px;
+	float: right;
+}
+.sl-addkey ul li {
+	margin: 0 0 0 40px;
+	font-family: "Microsoft YaHei";
 	float: left;
 }

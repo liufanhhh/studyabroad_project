@@ -1,0 +1,67 @@
+
+.footer {
+	font-family: "Microsoft YaHei";
+	line-height: 22px;
+	font-size: 12px;
+	color: #bbb;
+	width: 100%;
+}
+/* footer-top */
+.footer-top {
+	width: 100%;
+	padding: 60px 0 40px 0;
+	background: #2a2b35;
+	font-weight: 200;
+	float: left;
+}
+.intro {
+	margin-left: 50px;
+	width: 30%;
+	float: left;
+}
+.intro-topic {
+	color: #999;
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+.intro-topic i {
+	padding-right: 5px;
+}
+.info-list {
+	float: left;
+	line-height: 22px;
+	margin-left: 100px;
+}
+.info-list div:hover {
+	border-top-color: #15959d;
+}
+.info-list h2 {
+	margin-bottom: 10px;
+	margin-top: 15px;
+}
+.info-list-1, .info-list-2, .info-list-3 {
+	float: left;
+	border-top: 2px solid #666;
+	margin-left: 80px;
+	width: 120px;
+}
+
+/* footer-bottom */
+.footer-bottom {
+	background: #000;
+	float: left;
+	height: 60px;
+	width: 100%;
+}
+.footer-bottom span {
+	margin-top: 20px;
+}
+.company {
+	margin-left: 50px;
+}
+.footer-span1 {
+	margin: 30px;
+}
+.footer-bottom-col {
+	margin-top: 20px;
+}

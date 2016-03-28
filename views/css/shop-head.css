@@ -1,0 +1,23 @@
+.shop-head {
+	height: 40px;
+	background: #257f65;
+}
+.shop-head-left {
+	margin: 0px 0 0 40px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	float: left;
+	color: #ffffff;
+	font-family: "Microsoft YaHei";
+	font-size: 20px;
+}
+.shop-head-right {
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	float: right;
+	color: #ffffff;
+	font-family: "Microsoft YaHei";
+	font-size: 18px;
+}

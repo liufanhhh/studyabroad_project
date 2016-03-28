@@ -1,19 +1,16 @@
-#logo {
-	float: left;
-	margin:  0 100px 0 0;
+.page-header {
+	background: url(../images/search-bg.jpg) no-repeat center top;
+	filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  
+	-moz-background-size:100% auto;  
+    background-size:100% auto; 
+
 }
-#logo a {
-	display: block;
-	margin: 20px 0 0 0px;
-	background: url(../images/logo.gif) no-repeat;
-	text-indent: -3000px;
-	width: 168px;
-	height: 90px;
-}
+
 #search-box {
 	float: left;
-	width: 60%;
+	width: 50%;
 	margin: 50px 0 0 0;
+
 }
 #search-box #button {
 	float: left;
@@ -24,27 +21,27 @@
 }
 @media (min-width: 768px) {
 	#search-box{
-		width: 60%;
+		width: 50%;
 		margin: 50px 0 0 0;
 	}
 }
 @media (min-width: 992px) {
 	#search-box{
-		width: 60%;
+		width: 50%;
 		margin: 50px 0 0 30px;
 	}
 }
 @media (min-width: 1200px) {
 	#search-box{
-		width: 70%;
-		margin: 50px 0 0 50px;
+		width: 50%;
+		margin: 70px 0 82px 400px;
 	}
 	#search-box #button {
 	float: left;
 	width: 100px;
 	height: 34px;
 	border: none;
-	background: #46a7ba;
+	background: #3d8c75;
 	}
 }
 #search-box #text {
@@ -52,7 +49,7 @@
 	border-width: 2px 0 2px 2px;
 	border-style: solid;
 	border-color: #46a7ba;
-	width: 80%;
+	width: 70%;
 	height: 34px;
 	padding: 4px;
 	font-size: 15px;

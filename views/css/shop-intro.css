@@ -1,0 +1,79 @@
+.shop-intro {
+	background: #e9eeec;
+}
+.item {
+	width: 32%;
+	height: 440px;
+	background: #ffffff;
+	border-width: 1px;
+	border-color: #ddd;
+	border-style: solid;
+	border-radius: 8px;
+	margin: 15px 0 18px 15px;
+	float: left;
+}
+.item-title {
+	float: left;
+	margin: 15px 0 15px 25px;
+}
+.item-title-num {
+	float: left;
+	color: #ee7048;
+	font-size: 24px;
+	font-family: "Microsoft YaHei";
+}
+.item-title-word {
+	margin: 0 0 0 10px;
+	float: left;
+	color: #000000;
+	line-height: 35px;
+	font-size: 18px;
+	font-family: "Microsoft YaHei";
+}
+.img {
+	margin: 0 0 5px 28px;
+}
+.item-body {
+	float: left;
+	margin: 10px 0 0 25px;
+	width: 100%;
+}
+.item-parentkey {
+	width: 25%;
+	float: left;
+	font-size: 14px;
+	color: #222222;
+	font-family: "Microsoft YaHei";
+}
+.item-subkey {
+	width: 63%;
+	float: left;
+	font-size: 12px;
+	color: #666666;
+	font-family: "Microsoft YaHei";
+}
+.item-subkey-2 {
+	width: 63%;
+	float: left;
+	line-height: 18px;
+	font-size: 18px;
+	color: #f8b551;
+	font-family: "Microsoft YaHei";
+}
+.item-foot {
+	float: left;
+	width: 88%;
+	margin: 20px 0 0 25px;
+}
+.item-foot-left {
+	float: left;
+	color: #41aa8c;
+	font-size: 14px;
+	font-family: "Microsoft YaHei";
+}
+.item-foot-right {
+	float: right;
+	color: #ff9900;
+	font-size: 16px;
+	font-family: "Microsoft YaHei";
+}

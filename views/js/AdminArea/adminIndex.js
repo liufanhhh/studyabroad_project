@@ -30,7 +30,7 @@ adminIndexApp.config(function($routeProvider, $locationProvider) {
 
 adminIndexApp.controller('adminIndexController', function($scope, $resource, $routeParams, $location, FileUploader) {
 
-	$scope.admin_name = "liufan";
+	$scope.current_admin = $scope.admin_name = "liufan";
 	$scope.nav_child = {};
 
 
@@ -105,27 +105,7 @@ adminIndexApp.controller('adminIndexController', function($scope, $resource, $ro
 		$scope.find_merchant = true;
 	}
 
-	$scope.addNewMerchant = function(){
-		$resource("/merchant/profile/create").save({
-			merchant: {
-				name: 	$scope.merchant.name,
-				email: 	$scope.merchant.email,
-				contact_person: 	$scope.merchant.contact_person,
-				mobile: 	$scope.merchant.mobile,
-				website: 	$scope.merchant.website,
-				location: 	$scope.merchant.location,
-				support_area: 	$scope.merchant.support_area,
-				pass_rate: 	$scope.merchant.score.pass_rate,
-				article_score: 	$scope.merchant.score.article_score,
-				total_score: $scope.merchant.score.total_score
-			}
-		}, function(res) {
-			console.log(res.mess);
-			$scope.create_status = "创建成功";
-			$scope.new_merchant = false;
-			$scope.find_merchant = true;
-		});
-	};		
+	
 
 	$scope.findMerchant = function(){
 		$resource("/merchant/profile/find").get({
@@ -190,6 +170,17 @@ adminIndexApp.controller('mainController', function($scope, $resource, $routePar
 });
 
 adminIndexApp.controller('merchantAddController', function($scope, $resource, $routeParams, $location) {
+	$scope.addNewMerchant = function(){
+		$resource("/merchant/profile/create").save({
+			merchant: $scope.merchant
+		}, function(res) {
+			console.log(res.mess);
+			$scope.create_status = "创建成功";
+			$scope.new_merchant = false;
+			$scope.find_merchant = true;
+		});
+	};	
+
 	$scope.admins = [
 		"liufan",
 		"fanliu"

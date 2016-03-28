@@ -6,19 +6,36 @@
 	<input type="text" ng-model = "merchant.contact_person" />联系人姓名 <br>
 	<input type="text" ng-model = "merchant.mobile" />联系人电话 <br>
 	<input type="text" ng-model = "merchant.website" />商户官网 <br>
-	<select ng-change = "reputationSelect(merchant.willing_to_cooperate)" ng-model = "merchant.willing_to_cooperate" ng-init = "merchant.willing_to_cooperate=null">
+	<select ng-change = "reputationSelect(merchant.willing_to_cooperate)" ng-model = "merchant.willing_to_cooperate" ng-init = "merchant.willing_to_cooperate=true">
 		<option value = "true">可以合作</option>
 		<option value = "false">不想合作</option>
 	</select>
-<!-- 	此商户是否可以合作 <br>
-	<select  ng-model = "merchant.follow_up_people">
-		<option ng-repeat = "admin in admins">{{admin}}</option>
-	</select> -->
-	<input type="text" ng-model = "merchant.hierarchy" />商户重要性 <br>
+	此商户是否可以合作 <br>
+	<select  ng-model = "merchant.follow_up_people" ng-init = "merchant.follow_up_people={{current_admin}}">
+		<option value = "{{admin}}" ng-repeat = "admin in admins">{{admin}}</option>
+	</select>
+	由谁负责跟进 <br>
+	<select  ng-model = "merchant.hierarchy" ng-init = "merchant.hierarchy=2">
+		<option value = 1>VIP商户</option>
+		<option value = 2>普通</option>
+		<option value = 3>不重要</option>
+	</select>商户重要性 <br>
 
 	<br>
 	
-	<button ng-click="addMerchantDetails()">添加商户详细信息</button><br>
-	<button ng-click="addNewMerchant()">确定添加商户</button><br>
+	<button ng-click="addMerchantDetails()">添加商户详细信息</button>	<button ng-click="addNewMerchant()">确定添加商户</button><br>
+
+	<div>
+		<input type="text" ng-model = "merchant.owner_name" />商户CEO或主要负责人姓名 <br>
+		<button ng-click = "addedNewArea()">增加一个地区</button>
+		<div ng-repeat = "area in merchant.support_area">
+			<input type="text" ng-model = "merchant.support_area[$index]" />
+		</div><br>
+	</div>
+
+	owner_name	 String
+	other_contact_method	 Array
+		 String
+
 
 </div>
