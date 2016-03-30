@@ -57,7 +57,6 @@ SignUpApp.controller('SignUpController',function($scope, $resource, $routeParams
 	//用户注册
 	$scope.register = function(){
 		$scope.person.create_time = new Date().getTime();
-		console.log($scope.person.create_time);
 		$scope.person.password_sign = $scope.signature($scope.person.create_time, $scope.person.password);
 		$scope.person.password = $scope.person.password_confirmation = null;
 		$resource("/user/register").save({

@@ -1,4 +1,4 @@
-var adminLoginApp = angular.module('AdminLoginApp', ['ngResource', 'ngRoute', 'angular-md5']);
+var adminLoginApp = angular.module('adminLoginApp', ['ngResource', 'ngRoute', 'angular-md5']);
 
 adminLoginApp.controller('adminLoginController',function($scope, $resource, $routeParams, $location, md5){
 	$scope.admin = {};

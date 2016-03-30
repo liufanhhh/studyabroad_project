@@ -161,6 +161,13 @@ AdminProfileSchema.statics.saveAdmin = function(Admin, cb) {
         language: Admin.language,
     }, cb);
 }
+
+AdminProfileSchema.statics.getAllAdmins = function(cb) {
+    this.find().exec(cb);
+}
+
+
+
 //---------------non-static method------------------//
 
 AdminProfileSchema.method.findByEmailPassword = function(cb) {

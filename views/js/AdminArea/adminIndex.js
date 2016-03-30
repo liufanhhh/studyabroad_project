@@ -1,4 +1,4 @@
-var adminIndexApp = angular.module('adminIndexApp', ['ngResource', 'ngRoute','angularFileUpload']);
+var adminIndexApp = angular.module('adminIndexApp', ['ngResource', 'ngRoute','angularFileUpload','angular-md5']);
 
 adminIndexApp.config(function($routeProvider, $locationProvider) {
     $routeProvider.
@@ -11,7 +11,7 @@ adminIndexApp.config(function($routeProvider, $locationProvider) {
         controller: 'adminManagementController'
     }).
     when('/admin/members/list', {
-        templateUrl: 'html/AdminArea/adminManagement.html',
+        templateUrl: '../html/AdminArea/adminManagement.html',
         controller: 'grouponController'
     }).
     when('/merchant/add', {
@@ -19,15 +19,15 @@ adminIndexApp.config(function($routeProvider, $locationProvider) {
         controller: 'merchantAddController'
     }).
     when('/merchant/list', {
-        templateUrl: 'html/AdminArea/merchantAdd.html',
+        templateUrl: '../html/AdminArea/merchantList.html',
         controller: 'downloadController'
     }).
     when('/admin/m', {
-        templateUrl: 'html/MainHtml/groupon.html',
+        templateUrl: '../html/MainHtml/groupon.html',
         controller: 'grouponController'
     }).
     when('/admin', {
-        templateUrl: 'html/MainHtml/school.html',
+        templateUrl: '../html/MainHtml/school.html',
         controller: 'schoolController'
     });
 
@@ -36,7 +36,7 @@ adminIndexApp.config(function($routeProvider, $locationProvider) {
     console.log("initialize route");
 });
 
-adminIndexApp.controller('adminIndexController', function($scope, $resource, $routeParams, $location, FileUploader) {
+adminIndexApp.controller('adminIndexController', function($scope, $resource, $routeParams, $location, FileUploader, md5) {
 
 	$scope.current_admin = "liufan";
 	$scope.nav_child = {};
@@ -251,7 +251,9 @@ adminIndexApp.controller('activityController', function($scope, $resource, $rout
 
 });
 
-adminIndexApp.controller('adminManagementController', function($scope, $resource, $routeParams, $location) {
+adminIndexApp.controller('adminManagementController', function($scope, $resource, $routeParams, $location, md5) {
+	$scope.all_admins = {};
+
 	$scope.admin = {};
 	/*监视密码2的输入，如果输入和密码1的相同，则可以注册。
 	若不同，或者两个密码都为空，则不可注册。*/
@@ -283,12 +285,34 @@ adminIndexApp.controller('adminManagementController', function($scope, $resource
 		}
 	});
 
+	//密码加密
+	$scope.signature = function (salt, value) {
+		return md5.createHash(salt+"liufanhh"+md5.createHash(value));
+	}
+
 	$scope.addNewAdmin = function () {
+		$scope.admin.create_time = new Date().getTime();
+		$scope.admin.password_sign = $scope.signature($scope.admin.create_time, $scope.admin.password);
+		$scope.admin.password = $scope.admin.password_confirmation = null;
 		$resource("/admin/create").save({
 			admin: $scope.admin
 		},function(res){
 			$scope.register_result = res.mess;
 		})
+	}
+
+	$scope.getAllAdmins = function  (argument) {
+		$resource("/admin/get/all").get({
+
+		},function(res){
+			$scope.all_admins = res.data;
+			console.log($scope.all_admins);
+		})
+	}
+	$scope.getAllAdmins();
+
+	$scope.responseMerchantShow = function(){
+		console.log(arguments[0]);
 	}
 
 });

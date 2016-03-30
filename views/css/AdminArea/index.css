@@ -82,8 +82,8 @@ body {
 	overflow:visible;
 	position: absolute;
 	width:100px;
-	right: 30px;
-	top: 40px;
+	right: 10px;
+	top: 0px;
 	z-index: 20;
 }
 
@@ -98,8 +98,8 @@ body {
 	overflow:visible;
 	position: absolute;
 	width:100px;
-	right: 30px;
-	top: 93px;
+	right: 10px;
+	top: 53px;
 	z-index: 20;
 }
 
