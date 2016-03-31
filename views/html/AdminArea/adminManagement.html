@@ -4,8 +4,6 @@
 
 
 		<button ng-click = "add_admin_show=true">添加管理员</button>
-		<!-- <button ng-click = "add_admin_show=true">添加管理员</button> -->
-
 		<table>   
 		    <tr>
 	           <th>管理员姓名</th>
@@ -18,9 +16,9 @@
 	            <td ng-bind="one.admin.name"></td>
 	            <td ng-bind="one.admin.email"></td>
 	            <td ng-bind="one.admin.mobile"></td>、
-	            <td><button class="button" ng-click="checkAdminMerchantList(one.name)">查看</button></td>
-	            <td><button class="button" ng-click="changeAdminProfile(one.name)">修改</button></td>
-	            <td><button class="button" ng-click="deleteAdminProfile(one.name)">删除</button></td>
+	            <td><button class="button" ng-click="checkAdminMerchantList(one.admin.name)">查看</button></td>
+	            <td><button class="button" ng-click="changeAdminProfile(one.admin.name)">修改</button></td>
+	            <td><button class="button" ng-click="deleteAdminProfile(one.admin.name)">删除</button></td>
 	        </tr>
         </table>
 	</div>

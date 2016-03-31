@@ -11,8 +11,8 @@ adminIndexApp.config(function($routeProvider, $locationProvider) {
         controller: 'adminManagementController'
     }).
     when('/admin/members/list', {
-        templateUrl: '../html/AdminArea/adminManagement.html',
-        controller: 'grouponController'
+        templateUrl: '../html/AdminArea/adminList.html',
+        controller: 'adminListController'
     }).
     when('/merchant/add', {
         templateUrl: '../html/AdminArea/merchantAdd.html',
@@ -20,7 +20,7 @@ adminIndexApp.config(function($routeProvider, $locationProvider) {
     }).
     when('/merchant/list', {
         templateUrl: '../html/AdminArea/merchantList.html',
-        controller: 'downloadController'
+        controller: 'merchantListController'
     }).
     when('/admin/m', {
         templateUrl: '../html/MainHtml/groupon.html',
@@ -71,31 +71,16 @@ adminIndexApp.controller('adminIndexController', function($scope, $resource, $ro
 		})
 	}
 
+	$scope.getAllAdmins = function  (argument) {
+		$resource("/admin/get/all").get({
 
-	$scope.create_status;
-	$scope.logos;
-	$scope.change = 0;
-	$scope.added_success = false;
-	$scope.showProfile = false;
-	$scope.new_merchant = false;
-	$scope.find_merchant = false;
-	$scope.finded_merchant = {
-		merchant_name: "",
-		email: ""
-	};
-
-
-
-
-	$scope.addedNewWebsite = function(){
-		$resource("/website/profile/create").get({
-			website_name: "留学点评网",
-			user_amount: 0,
-			merchant_amount: 0
-		},function (res) {
-			console.log(res.mess);
+		},function(res){
+			$scope.all_admins = res.data;
+			console.log($scope.all_admins);
 		})
 	}
+
+	$scope.getAllAdmins();
 
 	function getMerchantsLogo () {
 		$resource("/merchant/logos").get({},function (res) {
@@ -202,59 +187,33 @@ adminIndexApp.controller('merchantAddController', function($scope, $resource, $r
 			$scope.find_merchant = true;
 		});
 	};	
-
-	$scope.admins = [
-		"liufan",
-		"fanliu"
-	]
-	$scope.merchant = {
-		id: "",
-		name: "",
-		email: "",
-		contact_admin: "",
-		mobile: "",
-		website: "",
-		location: "",
-		support_area: [],
-		score:{ 
-		    pass_rate: '',
-		    article_score: '',
-		    total_score: ''
-		},
-		identification: {
-			logo: {
-				name: "商户展示图片",
-				completed: false,
-				url: "/merchant/profile/logo"
-			},
-			business_license: {
-				name: "营业执照",
-				completed: false,
-				url: "/merchant/profile/business_license"
-			},
-			tax_registration: {
-				name: "公司税号",
-				completed: false,
-				url: "/merchant/profile/tax_registration"
-			},
-			organization_order: {
-				name: "组织机构代码证",
-				completed: false,
-				url: "/merchant/profile/organization_order"
-			}
-		}
-	};
-
 });
 
 adminIndexApp.controller('activityController', function($scope, $resource, $routeParams, $location) {
 
 });
 
-adminIndexApp.controller('adminManagementController', function($scope, $resource, $routeParams, $location, md5) {
-	$scope.all_admins = {};
+adminIndexApp.controller('adminListController', function($scope, $resource, $routeParams, $location) {
 
-	$scope.admin = {};
+});
+
+adminIndexApp.controller('merchantListController', function($scope, $resource, $routeParams, $location) {
+	$scope.$watch("merchant.name", function(newVal,oldVal,scope){
+		if (newVal !== oldVal && newVal!=null){
+			$resource("/merchant/name/complete").get({
+				name: newVal
+			},function(res){
+				console.log(res.mess);
+				console.log(res.data);
+			})
+		}
+	});
+	
+});
+
+
+
+adminIndexApp.controller('adminManagementController', function($scope, $resource, $routeParams, $location, md5) {
 	/*监视密码2的输入，如果输入和密码1的相同，则可以注册。
 	若不同，或者两个密码都为空，则不可注册。*/
 	$scope.$watch("admin.password_confirmation", function(newVal,oldVal,scope){
@@ -301,15 +260,7 @@ adminIndexApp.controller('adminManagementController', function($scope, $resource
 		})
 	}
 
-	$scope.getAllAdmins = function  (argument) {
-		$resource("/admin/get/all").get({
 
-		},function(res){
-			$scope.all_admins = res.data;
-			console.log($scope.all_admins);
-		})
-	}
-	$scope.getAllAdmins();
 
 	$scope.responseMerchantShow = function(){
 		console.log(arguments[0]);

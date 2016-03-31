@@ -128,3 +128,14 @@ exports.returnToken = function (req, res) {
   })
 }
 
+exports.merchantNameComplete = function  (req, res) {
+  var unfinished_name = req.query.name;
+  MerchantProfile.nameComplete( unfinished_name, function (err, completed_name) {
+    if (err) {
+      res.sendError(err);
+    } else{
+      res.sendData(completed_name,"获取成功");
+    };
+  })
+
+}

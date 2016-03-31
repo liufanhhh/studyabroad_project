@@ -94,34 +94,6 @@
 
 <div ng-view></div>
 
-<!-- 	<button class="button" ng-click="showAddAdminArea()">添加管理员</button>
-	<button ng-click="showAddMerchantArea()">添加商户</button>
-	<button ng-click="showFindArea()">查找商户</button>
-	<button ng-click="addedNewWebsite()">添加网站</button> -->
-
-
-
-	
-	<button ng-click = "addedNewArea()">增加一个地区</button>
-	<div ng-repeat = "area in merchant.support_area">
-		<input type="text" ng-model = "merchant.support_area[$index]" />
-	</div><br>
-
-	<div ng-if = "find_merchant">
-
-	</div>
-	<div ng-if = "showProfile">
-		<div ng-repeat = "file in merchant.identification" >
-			<label ng-bind = "file.name">: </label>
-
-			<div nv-file-drop="" uploader="uploader" options="{ url: '{{file.url}}'}">
-			    拖动上传文件到这里
-			</div>
-
-			<input type="file" nv-file-select="" uploader="uploader" options="{ url: '{{file.url}}'}">	
-			
-		</div>
-	</div>
 
 </body>
 </html>

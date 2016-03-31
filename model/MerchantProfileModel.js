@@ -37,7 +37,8 @@ var MerchantProfileSchema = mongoose.Schema({
         },
         
         // website judgement
-        verification: Boolean,
+        government_verification: Boolean,
+        website_verification: Boolean,
         score:{ 
             pass_rate: Number,
             article_score: Number,
@@ -60,53 +61,9 @@ var MerchantProfileSchema = mongoose.Schema({
 });
 
 //----------------static method--------------------//
-MerchantProfileSchema.statics.createNewMerchant = function(merchant_id, merchant, cb) {
-    var merchant_id = merchant_id;
-    console.log(merchant_id);
-    var create_time = new Date();
-    var merchant_name = merchant.name;
-    var contact_person_name = merchant.contact_person;
-    var owner_name = merchant.owner_name||null;
-    var email = merchant.email||null;
-    var password = merchant.password||"lxdp123";
-    var mobile = merchant.mobile||null;
-    var website = merchant.website||null;
-    var location = merchant.location||null;
-    var support_area = merchant.support_area||null;
-    var pass_rate = merchant.pass_rate||6;
-    var article_score = merchant.article_score||6;
-    var total_score = merchant.total_score||6;
+MerchantProfileSchema.statics.createNewMerchant = function(merchant, cb) {
     this.create({
-        //merchant information
-        merchant_id: merchant_id,
-        create_time: create_time,
-        merchant_name: merchant_name,
-        contact_person_name: contact_person_name,
-        owner_name: owner_name,
-        email: email,
-        password: password,
-        mobile: mobile,
-        website: website,
-        location: location,
-        support_area: support_area,
-        notify: {
-            mobile: false,
-            email: false,
-            monthly_email: false 
-        },
-        
-        // website judgement
-        verification: false,
-        score:{ 
-            pass_rate: pass_rate,
-            article_score: article_score,
-            total_score: total_score
-        },
-
-        //status
-        live: false,
-        reputation: true,
-        hierarchy: "normal"
+        merchant: merchant
     }, cb);
 }
 
@@ -159,6 +116,14 @@ MerchantProfileSchema.statics.countMerchantsAmount = function(conditions, cb) {
     this.count({}, cb);
 }
 
+MerchantProfileSchema.statics.nameComplete= function(unfinished_name, cb) {
+    var name = new RegExp(unfinished_name, "gi");
+    this.find({
+        "merchant.name": {
+            $regex: name
+        }
+    }).select('merchant.name').exec(cb);
+}
 
 
 //-------------------export-------------------------//

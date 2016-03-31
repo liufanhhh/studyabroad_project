@@ -46,7 +46,8 @@ exports.createNewMerchant = function(req,res){
     if (!amount) {
       deferred.reject("设置失败");
     }else{
-      MerchantProfile.createNewMerchant(amount, merchant, function(err, new_merchant){
+      merchant.id = amount;
+      MerchantProfile.createNewMerchant(merchant, function(err, new_merchant){
         deferred.resolve(new_merchant);
         return deferred.promise;
       });
@@ -60,9 +61,13 @@ exports.createNewMerchant = function(req,res){
   .then(createMerchant)
   .done(
     function(data){
-      fs.mkdir("./views/storage/Merchant/"+data.merchant_id);
+      fs.mkdir("./views/storage/Merchant/"+data.merchant.id);
       res.sendData(data,"创建成功");
     },function(error){
-        res.sendError("创建失败");
+        res.sendError(error);
     });
 }
+
+
+
+

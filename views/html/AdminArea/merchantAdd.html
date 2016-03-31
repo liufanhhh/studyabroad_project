@@ -1,5 +1,7 @@
 <div class="admin-index-child">
 
+
+
 	<input type="text" ng-model = "merchant.name" />商户名称 <br>
 	<input type="text" ng-model = "merchant.email" />商户邮箱 <br>
 	<input type="text" ng-model = "merchant.password" />商户登陆密码 <br>
@@ -11,8 +13,9 @@
 		<option value = "false">不想合作</option>
 	</select>
 	此商户是否可以合作 <br>
-	<select  ng-model = "merchant.follow_up_people" ng-init = "merchant.follow_up_people={{current_admin}}">
-		<option value = "{{admin}}" ng-repeat = "admin in admins">{{admin}}</option>
+	<select  ng-model = "merchant.follow_up_people"  ng-init = "Nobody">
+		<option value = "Nobody">无人跟进</option>
+		<option value = "{{admin.admin.name}}" ng-repeat = "admin in all_admins">{{admin.admin.name}}</option>
 	</select>
 	由谁负责跟进 <br>
 	<select  ng-model = "merchant.hierarchy" ng-init = "merchant.hierarchy=2">
@@ -27,15 +30,11 @@
 
 	<div>
 		<input type="text" ng-model = "merchant.owner_name" />商户CEO或主要负责人姓名 <br>
-		<button ng-click = "addedNewArea()">增加一个地区</button>
+		<button ng-click = "addedNewContactMethod()">增加一个联系方式</button>
 		<div ng-repeat = "area in merchant.support_area">
 			<input type="text" ng-model = "merchant.support_area[$index]" />
 		</div><br>
 	</div>
-
-	owner_name	 String
-	other_contact_method	 Array
-		 String
 
 
 </div>
