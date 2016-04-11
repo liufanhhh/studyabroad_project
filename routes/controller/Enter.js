@@ -53,7 +53,7 @@ exports.authenticateMerchant = function (req, res, next) {
 	if (session.merchant_id) {
 		 next();
 	} else {
-		res.sendfile("./views/html/MerchantArea/login.html");
+		res.sendfile("./views/html/MerchantArea/merchantLogin.html");
 	};
 }
 

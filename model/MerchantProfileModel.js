@@ -85,9 +85,9 @@ MerchantProfileSchema.statics.getMerchantsLogo = function(cb) {
     this.find().skip(0).limit(6).sort({merchant_name: 'desc'}).exec(cb);
 }
 
-MerchantProfileSchema.statics.findMerchantByName = function(merchant_name, cb) {
+MerchantProfileSchema.statics.findMerchantByName = function(merchant, cb) {
     this.findOne({
-        merchant_name: merchant_name
+        "merchant.name": merchant.name
     }, cb);
 }
 

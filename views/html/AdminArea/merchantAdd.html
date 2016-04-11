@@ -1,40 +1,102 @@
 <div class="admin-index-child">
 
 
+	<h1>添加商户</h1>
+		<form name="registerForm" role="form"  novalidate>
+		<div>
+			<label>公司名称：</label>
+			<input name="name" class="form-control" type="text" ng-model="merchant.name" required >
+			<p class="help-block" ng-show="registerForm.name.$error.required && !registerForm.name.$pristine">该项必填</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="registerForm.name.$valid"> 对</span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="registerForm.name.$invalid && !registerForm.name.$pristine">x</span>
+		</div>
 
-	<input type="text" ng-model = "merchant.name" />商户名称 <br>
-	<input type="text" ng-model = "merchant.email" />商户邮箱 <br>
-	<input type="text" ng-model = "merchant.password" />商户登陆密码 <br>
-	<input type="text" ng-model = "merchant.contact_person" />联系人姓名 <br>
-	<input type="text" ng-model = "merchant.mobile" />联系人电话 <br>
-	<input type="text" ng-model = "merchant.website" />商户官网 <br>
-	<select ng-change = "reputationSelect(merchant.willing_to_cooperate)" ng-model = "merchant.willing_to_cooperate" ng-init = "merchant.willing_to_cooperate=true">
-		<option value = "true">可以合作</option>
-		<option value = "false">不想合作</option>
-	</select>
-	此商户是否可以合作 <br>
-	<select  ng-model = "merchant.follow_up_people"  ng-init = "Nobody">
-		<option value = "Nobody">无人跟进</option>
-		<option value = "{{admin.admin.name}}" ng-repeat = "admin in all_admins">{{admin.admin.name}}</option>
-	</select>
-	由谁负责跟进 <br>
-	<select  ng-model = "merchant.hierarchy" ng-init = "merchant.hierarchy=2">
-		<option value = 1>VIP商户</option>
-		<option value = 2>普通</option>
-		<option value = 3>不重要</option>
-	</select>商户重要性 <br>
+		<div>
+			<label>公司所在城市：</label>
+			<select name="location_city" ng-init = "merchant.location_city=Beijing" required>
+				<option value = "Beijing">北京</option>
+				<option value = "Shanghai">上海</option>
+				<option value = "Tianjin">天津</option>
+			</select>
+		</div>
 
-	<br>
-	
-	<button ng-click="addMerchantDetails()">添加商户详细信息</button>	<button ng-click="addNewMerchant()">确定添加商户</button><br>
+		<div>
+			<label>设置密码：</label>
+			<input class="form-control" name="password" type="password" ng-model="merchant.password" ng-minlength=6 required>
+			<p class="help-block" ng-show="registerForm.password.$error.required && !registerForm.password.$pristine">该项必填</p>		
+			<p class="help-block" ng-show="registerForm.password.$error.minlength && !registerForm.password.$pristine">密码最小长度为6</p>		
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="registerForm.password.$valid && same_password"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="registerForm.password.$invalid && !registerForm.password.$pristine"></span>
+		</div>
 
-	<div>
-		<input type="text" ng-model = "merchant.owner_name" />商户CEO或主要负责人姓名 <br>
-		<button ng-click = "addedNewContactMethod()">增加一个联系方式</button>
-		<div ng-repeat = "area in merchant.support_area">
-			<input type="text" ng-model = "merchant.support_area[$index]" />
-		</div><br>
-	</div>
+		<div>
+			<label>再次输入密码：</label>
+			<input class="form-control" name="password_confirmation" type="password" ng-model="merchant.password_confirmation" ng-minlength=6 required>
+			<p class="help-block" ng-show="registerForm.password_confirmation.$error.required && !registerForm.password_confirmation.$pristine">该项必填</p>		
+			<p class="help-block" ng-show="registerForm.password_confirmation.$error.minlength && !registerForm.password_confirmation.$pristine">密码最小长度为6</p>		
+			<p class="help-block" ng-show="!same_password && !registerForm.password_confirmation.$pristine">两次填写密码不一致</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="registerForm.password_confirmation.$valid && same_password"></span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="registerForm.password_confirmation.$invalid && !registerForm.password_confirmation.$pristine"></span>
+		</div>
 
+		<div>
+			<label>联系人姓名：</label>
+			<input name="contact_person_name" class="form-control" type="text" ng-model="merchant.contact_person_name" required >
+			<p class="help-block" ng-show="registerForm.contact_person_name.$error.required && !registerForm.contact_person_name.$pristine">该项必填</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="registerForm.contact_person_name.$valid"> 对</span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="registerForm.contact_person_name.$invalid && !registerForm.contact_person_name.$pristine">x</span>
+		</div>
+
+		<div>
+			<label>联系人邮件：</label>
+			<input name="email" class="form-control" type="email" ng-model="merchant.email" required>
+			<p class="help-block" ng-show="registerForm.email.$error.required && !registerForm.email.$pristine">该项必填</p>
+			<p class="help-block" ng-show="registerForm.email.$error.email && !registerForm.email.$pristine">不符合email格式</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="registerForm.email.$valid">对</span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="registerForm.email.$invalid && !registerForm.email.$pristine">x</span>
+		</div>
+
+		<div>
+			<label>联系人手机号：</label>
+			<input name="mobile" class="form-control" type="text" ng-model="merchant.mobile" required >
+			<p class="help-block" ng-show="registerForm.mobile.$error.required && !registerForm.mobile.$pristine">该项必填</p>
+			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="registerForm.mobile.$valid"> 对</span>
+			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="registerForm.mobile.$invalid && !registerForm.mobile.$pristine">x</span>
+		</div>
+  		<br>
+
+
+		<select ng-change = "reputationSelect(merchant.willing_to_cooperate)" ng-model = "merchant.willing_to_cooperate" ng-init = "merchant.willing_to_cooperate=true">
+			<option value = "true">可以合作</option>
+			<option value = "false">不想合作</option>
+		</select>
+		此商户是否可以合作 <br>
+		<select  ng-model = "merchant.follow_up_people"  ng-init = "false">
+			<option value = "false">无人跟进</option>
+			<option value = "{{admin.admin.name}}" ng-repeat = "admin in all_admins">{{admin.admin.name}}</option>
+		</select>
+		由谁负责跟进 <br>
+		<select  ng-model = "merchant.hierarchy" ng-init = "merchant.hierarchy=2">
+			<option value = 1>VIP商户</option>
+			<option value = 2>普通</option>
+			<option value = 3>不重要</option>
+		</select>商户重要性 <br>
+
+		<br>
+
+		<button ng-click="addMerchantDetails()">添加商户详细信息</button>	<button ng-click="merchantRegister()">确定添加商户</button><br>
+
+		<div>
+			<input type="text" ng-model = "merchant.owner_name" />商户CEO或主要负责人姓名 <br>
+			<button ng-click = "addedNewContactMethod()">增加一个联系方式</button>
+			<div ng-repeat = "area in merchant.support_area">
+				<input type="text" ng-model = "merchant.support_area[$index]" />
+			</div><br>
+		</div>
+
+		<!-- 除了ng自带的表单验证外，加上密码验证，才可以注册 -->
+		<button ng-click ="merchantRegister()" class="btn btn-primary" ng-disabled="registerForm.$invalid || !same_password" >注册</button>
+		  		{{register_result}}
+		</form>
 
 </div>

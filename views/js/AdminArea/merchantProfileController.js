@@ -109,18 +109,7 @@ MerchantProfileAdminApp.controller('MerchantProfileController', function($scope,
 
 	$scope.addNewMerchant = function(){
 		$resource("/merchant/profile/create").save({
-			merchant: {
-				name: 	$scope.merchant.name,
-				email: 	$scope.merchant.email,
-				contact_person: 	$scope.merchant.contact_person,
-				mobile: 	$scope.merchant.mobile,
-				website: 	$scope.merchant.website,
-				location: 	$scope.merchant.location,
-				support_area: 	$scope.merchant.support_area,
-				pass_rate: 	$scope.merchant.score.pass_rate,
-				article_score: 	$scope.merchant.score.article_score,
-				total_score: $scope.merchant.score.total_score
-			}
+			merchant: merchant
 		}, function(res) {
 			console.log(res.mess);
 			$scope.create_status = "创建成功";

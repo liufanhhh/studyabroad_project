@@ -5,6 +5,8 @@ var WebsiteProfile = require("../../model/WebsiteProfileModel.js");
 
 exports.createNewMerchant = function(req,res){
   var merchant = req.body.merchant;
+  console.log(merchant);
+  merchant.password = merchant.password_sign;
   var websit_name = "留学点评网";
   var sameName = Q.nfbind(MerchantProfile.findMerchantByName.bind(MerchantProfile));
 

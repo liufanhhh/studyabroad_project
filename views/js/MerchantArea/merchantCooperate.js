@@ -1,12 +1,12 @@
 var merchantCooperateApp = angular.module('merchantCooperateApp', ['ngResource', 'ngRoute', 'angular-md5', 'liufanhh']);
 
-merchantCooperateApp.controller('merchantCooperateController',function($scope, $resource, $routeParams, $location, md5, test){
+merchantCooperateApp.controller('merchantCooperateController',function($scope, $resource, $routeParams, $location, md5){
 	$scope.merchant = {};
+	$scope.register_step=1;
 	$scope.same_password = false;
 	$scope.login_page = true;
 	$scope.register_page = false;
-	$scope.register_result = "";
-	console.log(test.create());
+	
 	$scope.$watch("merchant.password_confirmation", function(newVal,oldVal,scope){
 		if (newVal === oldVal){
 		}
@@ -45,51 +45,26 @@ merchantCooperateApp.controller('merchantCooperateController',function($scope, $
 		$scope.register_page = false;
 	};
 
-	$scope.createHash = function (version, old_password, token1, token2) {
-		var new_password;
-		if (version == 1) {
-			new_password = md5.createHash(md5.createHash(old_password+token1)+token2);
-		} else if (version == 2){
-			new_password = md5.createHash(md5.createHash(md5.createHash(old_password)+token1)+token2);
-		};
-		return new_password;
+	//密码加密
+	$scope.signature = function (salt, value) {
+		return md5.createHash(salt+"liufanhh"+md5.createHash(value));
 	}
 
-	//用户注册
-	$scope.register = function(){
-		$scope.merchant.password = md5.createHash($scope.merchant.password);
+	$scope.merchantRegister = function () {
+		$scope.merchant.create_time = new Date().getTime();
+		$scope.merchant.password_sign = $scope.signature($scope.merchant.create_time, $scope.merchant.password);
+		$scope.merchant.password = $scope.merchant.password_confirmation = null;
 		$resource("/merchant/profile/create").save({
 			merchant: $scope.merchant
-		}, function(res) {
-			if (res.status == 1) {
-				$scope.merchant = res.data;
-				$scope.merchant.password = $scope.createHash(1, $scope.merchant.password, $scope.merchant._id, $scope.merchant.create_time);
-				$scope.merchant.password_confirmation = null;
-				$resource("/merchant/profile/password").save({
-					merchant_id: $scope.merchant.merchant_id,
-					new_password: $scope.merchant.password
-				}, function(res) {
-					if (res.status == 1) {
-						$scope.merchant = {};
-						$scope.login_page = true;
-						$scope.register_page = false;
-					};
-					$scope.register_result = res.mess;
-				});
-			};
+		},function(res){
 			$scope.register_result = res.mess;
-		});
-
-	};
+		})
+	}
 
 	$scope.login = function(){
 		$resource("/merchant/profile/token").save({
 			email: $scope.merchant.email
 		}, function(res) {
-			var token1 = res.data.token1;
-			var token2 = res.data.token2;
-			console.log(token1);
-			console.log(token2);
 			$scope.merchant.password = $scope.createHash(2, $scope.merchant.password, token1, token2);
 			$resource("/merchant/login").save({
 				email: $scope.merchant.email,

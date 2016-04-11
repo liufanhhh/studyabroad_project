@@ -176,17 +176,51 @@ adminIndexApp.controller('mainController', function($scope, $resource, $routePar
     getMerchantsLogo();
 });
 
-adminIndexApp.controller('merchantAddController', function($scope, $resource, $routeParams, $location) {
-	$scope.addNewMerchant = function(){
+adminIndexApp.controller('merchantAddController', function($scope, $resource, $routeParams, $location, md5) {
+
+	$scope.$watch("merchant.password_confirmation", function(newVal,oldVal,scope){
+		if (newVal === oldVal){
+		}
+		else if(!$scope.merchant.password_confirmation){
+			$scope.same_password = false;
+		}
+		else if($scope.merchant.password !== $scope.merchant.password_confirmation){
+			$scope.same_password = false;
+		}
+		else if($scope.merchant.password === $scope.merchant.password_confirmation){
+			$scope.same_password = true;
+		}
+	});
+	/*按监视密码2的方法监视密码1*/
+	$scope.$watch("merchant.password", function(newVal,oldVal,scope){
+		if (newVal === oldVal){
+		}
+		else if(!$scope.merchant.password){
+			$scope.same_password=false;
+		}
+		else if($scope.merchant.password !== $scope.merchant.password_confirmation){
+			$scope.same_password=false;
+		}
+		else if($scope.merchant.password === $scope.merchant.password_confirmation){
+			$scope.same_password=true;
+		}
+	});
+
+	//密码加密
+	$scope.signature = function (salt, value) {
+		return md5.createHash(salt+"liufanhh"+md5.createHash(value));
+	}
+
+	$scope.merchantRegister = function () {
+		$scope.merchant.create_time = new Date().getTime();
+		$scope.merchant.password_sign = $scope.signature($scope.merchant.create_time, $scope.merchant.password);
+		$scope.merchant.password = $scope.merchant.password_confirmation = null;
 		$resource("/merchant/profile/create").save({
 			merchant: $scope.merchant
-		}, function(res) {
-			console.log(res.mess);
-			$scope.create_status = "创建成功";
-			$scope.new_merchant = false;
-			$scope.find_merchant = true;
-		});
-	};	
+		},function(res){
+			$scope.register_result = res.mess;
+		})
+	}
 });
 
 adminIndexApp.controller('activityController', function($scope, $resource, $routeParams, $location) {
