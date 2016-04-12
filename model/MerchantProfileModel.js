@@ -53,6 +53,7 @@ var MerchantProfileSchema = mongoose.Schema({
 
         //status
         live: Boolean,
+        banned: Boolean,
         follower: Array,
         buyer: Array,
         willing_to_cooperate: Boolean,

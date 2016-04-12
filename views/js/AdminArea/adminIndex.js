@@ -215,6 +215,7 @@ adminIndexApp.controller('merchantAddController', function($scope, $resource, $r
 		$scope.merchant.create_time = new Date().getTime();
 		$scope.merchant.password_sign = $scope.signature($scope.merchant.create_time, $scope.merchant.password);
 		$scope.merchant.password = $scope.merchant.password_confirmation = null;
+		$scope.merchant.banned = false;
 		$resource("/merchant/profile/create").save({
 			merchant: $scope.merchant
 		},function(res){
