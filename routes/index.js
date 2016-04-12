@@ -27,12 +27,15 @@ module.exports = function(app) {
     app.get("/admin", Enter.authenticateAdmin, Enter.getAllAccess);
     app.post("/admin/password", AdminProfile.companyPasswordChecking);
     app.post("/admin/profile/token", AdminProfile.returnToken);
-    app.post("/admin/login", CreateAdmin.createNewAdmin);
+    app.post("/admin/login", AdminProfile.adminLogin);
     app.post("/admin/create", CreateAdmin.createNewAdmin);
     app.get("/admin/liufanhh/access", Enter.getAllAccess);
     app.get("/admin/login", Enter.authenticateAdmin, Enter.adminPageEnter);
     app.get("/admin/index", Enter.authenticateAdmin, Enter.adminPageEnter);
     app.get("/admin/get/all", Enter.authenticateAdmin, AdminProfile.getAllAdmins);
+    app.get("/admin/current/name", function(req, res) {
+    	res.sendData(req.session.admin_name,"获取成功");
+    });
 
 
 

@@ -97,7 +97,6 @@ AdminProfileSchema.statics.updateAdminById = function(id, email, cb) {
 }
 
 AdminProfileSchema.statics.createNewAdmin = function(admin, cb) {
-    admin.create_time = new Date();
     this.create({
     admin: admin
     }, cb);

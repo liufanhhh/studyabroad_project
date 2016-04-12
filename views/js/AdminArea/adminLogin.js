@@ -29,22 +29,38 @@ adminLoginApp.controller('adminLoginController',function($scope, $resource, $rou
 	}; 
 	show_prompt();
 
+	//密码加密
+	$scope.signature = function (salt, value) {
+		return md5.createHash(salt+"liufanhh"+md5.createHash(value));
+	}
+
 	$scope.login = function(){
-		$resource("/admin/profile/token").save({
-			admin_name: $scope.admin.name
-		}, function(res) {
-			var token1 = res.data.token1;
-			var token2 = res.data.token2;
-			console.log(token1);
-			console.log(token2);
-			$scope.admin.password = $scope.createHash(2, $scope.admin.password, token1, token2);
-			$resource("/admin/login").save({
-				admin_name: $scope.admin.name,
-				admin_password: $scope.admin.password
+		if ($scope.admin.name==null||$scope.admin.password==null) {
+			$scope.admin.message = "邮箱或密码不能为空";
+		} else{
+			$scope.admin.message = null;
+			$resource("/admin/profile/token").save({
+				name: $scope.admin.name
 			}, function(res) {
-				console.log(res.location);
-				window.location = res.location;
+				if (res.status==0) {
+					$scope.admin.message = res.mess;
+				}
+				else{
+					$scope.admin.password_sign = $scope.signature(new Date(res.data).getTime(), $scope.admin.password);
+					$scope.admin.password = null;
+					$resource("/admin/login").save({
+						name: $scope.admin.name,
+						password: $scope.admin.password_sign
+					}, function(res) {
+						if (res.status==0) {
+							$scope.admin.message = res.mess;
+						} else{
+							console.log(res.location);
+							window.location = res.location;
+						};
+					});
+				}
 			});
-		});
-	};
+		};
+	}
 });
