@@ -91,9 +91,9 @@ MerchantProfileSchema.statics.findMerchantByName = function(merchant, cb) {
     }, cb);
 }
 
-MerchantProfileSchema.statics.findMerchantByEmail = function(merchant_email, cb) {
+MerchantProfileSchema.statics.findMerchantByEmail = function(merchant, cb) {
     this.findOne({
-        email: merchant_email
+        'merchant.email': merchant.email
     }, cb);
 }
 
@@ -113,7 +113,7 @@ MerchantProfileSchema.statics.updatePassword = function(merchant_id, new_passwor
 
 MerchantProfileSchema.statics.countMerchantsAmount = function(conditions, cb) {
     var conditions = conditions||null;
-    this.count({}, cb);
+    this.count(conditions, cb);
 }
 
 MerchantProfileSchema.statics.nameComplete= function(unfinished_name, cb) {

@@ -84,15 +84,13 @@ exports.merchantLogin = function (req, res) {
     email: req.body.email,
     password: req.body.password
   };
-  console.log(merchant);
-  console.log("aa");
-  MerchantProfile.findMerchantByEmail( merchant.email, function (err, merchant_profile) {
-    if (err) {
+  MerchantProfile.findMerchantByEmail( merchant, function (err, merchant_profile) {
+    if (err||merchant_profile.merchant==null) {
       res.sendError(err);
-    } else if (merchant.password == merchant_profile.password){
+    } else if (merchant.password == merchant_profile.merchant.password){
       console.log("aa");
-      session.merchant_id = merchant_profile.merchant_id;
-      res.status(200).send({location:'/merchant/index.html'});
+      session.merchant_id = merchant_profile.merchant.id;
+      res.status(200).send({location:'/merchant/login'});
     } else{
       res.sendError("密码错误");      
     }
@@ -104,7 +102,7 @@ exports.createNewPassword = function (req, res) {
   var new_password = req.body.new_password;
   MerchantProfile.updatePassword( merchant_id, new_password, function (err, merchant) {
     if (err) {
-      res.sendError("密码错误");
+      res.sendError("邮箱错误");
     } else{
       res.sendSuccess("注册成功");
     };
@@ -112,17 +110,16 @@ exports.createNewPassword = function (req, res) {
 }
 
 exports.returnToken = function (req, res) {
-  var email = req.body.email;
-  MerchantProfile.findMerchantByEmail( email, function (err, merchant) {
-    if (err) {
-      res.sendError("密码错误");
+  var merchant = {
+    email: req.body.email
+  };
+  MerchantProfile.findMerchantByEmail(merchant, function (err, profile) {
+    console.log(profile);
+    if (err||profile==null) {
+      res.sendError("邮箱错误");
     } else{
-      console.log(merchant);
-      token = {
-        token1: merchant._id,
-        token2: merchant.create_time
-      }
-      console.log(token);
+      console.log(profile);
+      token = profile.merchant.create_time;
       res.sendData(token,"获取成功");
     };
   })

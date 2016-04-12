@@ -77,4 +77,5 @@ module.exports = function(app) {
 	app.post("/merchant/profile/tax_registration", Enter.authenticateMerchant, MerchantProfile.profileUpload);
 	app.post("/merchant/profile/organization_order", Enter.authenticateMerchant, MerchantProfile.profileUpload);
 	app.get("/merchant/name/complete", MerchantProfile.merchantNameComplete);
+
 }

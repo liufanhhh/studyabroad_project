@@ -13,32 +13,34 @@ exports.createNewMerchant = function(req,res){
   var handleNameResult = function(exist){
     var deferred = Q.defer();
     if (exist) {
-      deferred.reject("商户名相同");
+      deferred.reject("商户名重复");
     }else{
-      WebsiteProfile.getInformation(websit_name,function (err, website_profile) {
-        var merchant_amount = website_profile.merchant_amount+1;
-        deferred.resolve(merchant_amount);
+      MerchantProfile.countMerchantsAmount(function (err, amount) {
+        if (err||amount==null) {
+          deferred.reject("网站记录出现问题");
+        } else{
+          var merchant_amount = amount+1;
+          deferred.resolve(merchant_amount);
+        };
         return deferred.promise;
       });
     }
     return deferred.promise;
   }
 
-  var changeWebsiteProfile = function (amount) {
-    var amount = amount;
+  var checkEmail = function(amount){
     var deferred = Q.defer();
     if (!amount) {
       deferred.reject("设置失败");
     }else{
-      WebsiteProfile.setMerchantsAmount(websit_name, amount, function (error, result) {
-        if(result){
-          result.merchant_amount++;
-          deferred.resolve(result.merchant_amount);
+      MerchantProfile.findMerchantByEmail(merchant, function (err, profile) {
+        if (err||profile!==null) {
+          deferred.reject("邮箱重复");
         } else{
-          deferred.reject("设置失败");
+          deferred.resolve(amount);
         };
         return deferred.promise;
-      });
+      })
     }
     return deferred.promise;
   }
@@ -57,13 +59,13 @@ exports.createNewMerchant = function(req,res){
     return deferred.promise;
   }
 
-  sameName(merchant.name)
+  sameName(merchant)
   .then(handleNameResult)
-  .then(changeWebsiteProfile)
+  .then(checkEmail)
   .then(createMerchant)
   .done(
     function(data){
-      fs.mkdir("./views/storage/Merchant/"+data.merchant.id);
+      fs.mkdir("./views/storage/merchant/"+data.merchant.id);
       res.sendData(data,"创建成功");
     },function(error){
         res.sendError(error);

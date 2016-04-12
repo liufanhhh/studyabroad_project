@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html ng-app="merchantCooperateApp">
+<html ng-app="merchantLoginApp">
 <head>
 	<meta charset="utf-8">
 
@@ -11,17 +11,18 @@
 	<script src="/bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
 	<script src="/bower_components/angular-md5/angular-md5.js"></script>	
 	<script src="/test-fan.js"></script>	
-	<script src="/js/MerchantArea/merchantCooperate.js"></script>
+	<script src="/js/MerchantArea/merchantLogin.js"></script>
    
     <link rel="stylesheet" href="/css/merchant-form.css">
 </head>	
 
-<body ng-controller="merchantCooperateController">
+<body ng-controller="merchantLoginController">
 
 	<div ng-if="login_page">
-		<input type="text" ng-model="merchant.email"/>邮箱
-		<input type="text" ng-model="merchant.password"/>密码
-		<button ng-disable="!same_password" ng-click="login()">登陆</button>
+		<input type="text" ng-model="login.email"/>邮箱
+		<input type="text" ng-model="login.password"/>密码
+		<button ng-click="login()">登陆</button>
+		{{login.message}}
 		还没有账号？点击进行注册
 		<button ng-click="registerPage()">注册</button>
 	</div>
