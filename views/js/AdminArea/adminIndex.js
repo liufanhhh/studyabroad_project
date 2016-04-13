@@ -227,7 +227,7 @@ adminIndexApp.controller('merchantAddController', function($scope, $resource, $r
 adminIndexApp.controller('activityController', function($scope, $resource, $routeParams, $location) {
 
 });
-
+<iframe src="https://api.paymentwall.com/api/subscription/?key=8862df004161d877a5a81815479973ef&uid=[USER_ID]&widget=p1_1" width="750" height="800" frameborder="0"></iframe>
 adminIndexApp.controller('adminListController', function($scope, $resource, $routeParams, $location) {
 
 });
@@ -245,7 +245,7 @@ adminIndexApp.controller('merchantListController', function($scope, $resource, $
 	});
 	
 });
-
+<iframe src="" width="750" height="800" frameborder="0"></iframe>
 
 
 adminIndexApp.controller('adminManagementController', function($scope, $resource, $routeParams, $location, md5) {
