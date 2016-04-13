@@ -12,7 +12,7 @@ exports.createNewAdmin = function(req,res){
   var handleNameResult = function(exist){
     var deferred = Q.defer();
     if (exist) {
-      deferred.reject("用户名相同");
+      deferred.reject("管理员名字相同");
     }else{
       AdminProfile.createNewAdmin(admin, function(err, new_admin){
         deferred.resolve(new_admin);
@@ -27,8 +27,7 @@ exports.createNewAdmin = function(req,res){
   .done(
     function(data){
       res.sendData(data,"创建成功");
-    },function(error){
-        console.log(error);
-        res.sendError("创建失败");
+    },function(err){
+        res.sendError(err);
     });
 }

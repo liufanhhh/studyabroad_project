@@ -29,7 +29,7 @@
 			
 			<div>
 				<label>姓名：</label>
-				<input name="name" class="form-control" type="text" ng-model="admin.name" required >
+				<input name="name" class="form-control" type="text" ng-model="new_admin.name" required >
 				<p class="help-block" ng-show="addAdminForm.name.$error.required && !addAdminForm.name.$pristine">该项必填</p>
 				<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="addAdminForm.name.$valid"></span>
 				<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="addAdminForm.name.$invalid && !addAdminForm.name.$pristine"></span>
@@ -39,7 +39,7 @@
 			<div class="form-group has-feedback" ng-class="{ 'has-error' : addAdminForm.email.$invalid && !addAdminForm.email.$pristine,
 			'has-success' : addAdminForm.email.$valid }">
 				<label>邮箱地址：</label>
-				<input name="email" class="form-control" type="email" ng-model="admin.email" required>
+				<input name="email" class="form-control" type="email" ng-model="new_admin.email" required>
 				<p class="help-block" ng-show="addAdminForm.email.$error.required && !addAdminForm.email.$pristine">该项必填</p>
 				<p class="help-block" ng-show="addAdminForm.email.$error.email && !addAdminForm.email.$pristine">不符合email格式</p>
 				<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="addAdminForm.email.$valid"></span>
@@ -49,7 +49,7 @@
 			<div class="form-group has-feedback" ng-class="{ 'has-error' : addAdminForm.mobile.$invalid && !addAdminForm.mobile.$pristine,
 			'has-success' : addAdminForm.mobile.$valid }">
 				<label>手机号码：</label>
-				<input name="mobile" class="form-control" type="mobile" ng-model="admin.mobile" required>
+				<input name="mobile" class="form-control" type="mobile" ng-model="new_admin.mobile" required>
 				<p class="help-block" ng-show="addAdminForm.mobile.$error.required && !addAdminForm.mobile.$pristine">该项必填</p>
 				<p class="help-block" ng-show="addAdminForm.mobile.$error.mobile && !addAdminForm.mobile.$pristine">不符合mobile格式</p>
 				<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="addAdminForm.mobile.$valid"></span>
@@ -60,7 +60,7 @@
 			<div class="form-group has-feedback" ng-class="{ 'has-error' : addAdminForm.password.$invalid && !addAdminForm.password.$pristine,
 			'has-success' : same_password }">
 				<label>设置密码：</label>
-				<input class="form-control" name="password" type="password" ng-model="admin.password" ng-minlength=6 required>
+				<input class="form-control" name="password" type="password" ng-model="new_admin.password" ng-minlength=6 required>
 				<p class="help-block" ng-show="addAdminForm.password.$error.required && !addAdminForm.password.$pristine">该项必填</p>		
 				<p class="help-block" ng-show="addAdminForm.password.$error.minlength && !addAdminForm.password.$pristine">密码最小长度为6</p>		
 				<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="addAdminForm.password.$valid && same_password"></span>
@@ -70,7 +70,7 @@
 			<div class="form-group has-feedback" ng-class="{ 'has-error' : (addAdminForm.password_confirmation.$invalid || !same_password) && !addAdminForm.password_confirmation.$pristine,
 			'has-success' : same_password }">
 				<label>再次输入密码：</label>
-				<input class="form-control" name="password_confirmation" type="password" ng-model="admin.password_confirmation" ng-minlength=6 required>
+				<input class="form-control" name="password_confirmation" type="password" ng-model="new_admin.password_confirmation" ng-minlength=6 required>
 				<p class="help-block" ng-show="addAdminForm.password_confirmation.$error.required && !addAdminForm.password_confirmation.$pristine">该项必填</p>		
 				<p class="help-block" ng-show="addAdminForm.password_confirmation.$error.minlength && !addAdminForm.password_confirmation.$pristine">密码最小长度为6</p>		
 				<p class="help-block" ng-show="!same_password && !addAdminForm.password_confirmation.$pristine">两次填写密码不一致</p>

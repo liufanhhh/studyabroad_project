@@ -15,15 +15,14 @@ exports.companyPasswordChecking = function(req, res) {
 }
 
 exports.returnToken = function (req, res) {
-  var admin_name = req.body.admin_name;
-  AdminProfile.findAdminByName( admin_name, function (err, admin) {
-    if (err) {
+  var admin_name = req.body.name;
+  console.log(admin_name);
+  AdminProfile.findAdminByName( admin_name, function (err, profile) {
+    if (err||profile==null) {
       res.sendError("密码错误");
     } else{
-      token = {
-        token1: admin._id,
-        token2: admin.create_time
-      }
+      token = profile.admin.create_time;
+      console.log(token);
       res.sendData(token,"获取成功");
     };
   })
@@ -53,15 +52,16 @@ exports.findOneAdmin = function (req, res) {
   };
 }
 
-exports.AdminLogin = function (req, res) {
+exports.adminLogin = function (req, res) {
   var session = req.session;
-  var admin_name = req.body.admin_name;
-  var admin_password = req.body.admin_password;
+  var admin_name = req.body.name;
+  var admin_password = req.body.password;
   AdminProfile.findAdminByName( admin_name, function (err, admin_profile) {
     if (err) {
       res.sendError(err);
-    } else if (admin_password == admin_profile.password){
-      session.admin_name = admin_profile.name;
+    } else if (admin_password == admin_profile.admin.password){
+      session.admin_name = admin_profile.admin.name;
+      console.log(session.admin_name);
       res.status(200).send({location:'/admin/index'});
     } else{
       res.sendError("密码错误");      

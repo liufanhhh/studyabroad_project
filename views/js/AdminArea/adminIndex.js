@@ -38,9 +38,19 @@ adminIndexApp.config(function($routeProvider, $locationProvider) {
 
 adminIndexApp.controller('adminIndexController', function($scope, $resource, $routeParams, $location, FileUploader, md5) {
 
-	$scope.current_admin = "liufan";
+	$scope.current_admin = "";
 	$scope.nav_child = {};
 
+
+	$scope.getCurrentAdmin = function () {
+		$resource("/admin/current/name").get({
+		},function (res) {
+			$scope.current_admin = res.data;
+			console.log($scope.current_admin);
+		})
+	}
+	$scope.getCurrentAdmin();
+	console.log($scope.current_admin);
 
 	if ($scope.current_admin == "liufan") {
 		$scope.show_admin_control = true;
@@ -249,32 +259,33 @@ adminIndexApp.controller('merchantListController', function($scope, $resource, $
 
 
 adminIndexApp.controller('adminManagementController', function($scope, $resource, $routeParams, $location, md5) {
+	$scope.new_admin = {};
 	/*监视密码2的输入，如果输入和密码1的相同，则可以注册。
 	若不同，或者两个密码都为空，则不可注册。*/
-	$scope.$watch("admin.password_confirmation", function(newVal,oldVal,scope){
+	$scope.$watch("new_admin.password_confirmation", function(newVal,oldVal,scope){
 		if (newVal === oldVal){
 		}
-		else if(!$scope.admin.password_confirmation){
+		else if(!$scope.new_admin.password_confirmation){
 			$scope.same_password=false;
 		}
-		else if($scope.admin.password !== $scope.admin.password_confirmation){
+		else if($scope.new_admin.password !== $scope.new_admin.password_confirmation){
 			$scope.same_password=false;
 		}
-		else if($scope.admin.password === $scope.admin.password_confirmation){
+		else if($scope.new_admin.password === $scope.new_admin.password_confirmation){
 			$scope.same_password=true;
 		}
 	});
 	/*按监视密码2的方法监视密码1*/
-	$scope.$watch("admin.password", function(newVal,oldVal,scope){
+	$scope.$watch("new_admin.password", function(newVal,oldVal,scope){
 		if (newVal === oldVal){
 		}
-		else if(!$scope.admin.password){
+		else if(!$scope.new_admin.password){
 			$scope.same_password=false;
 		}
-		else if($scope.admin.password !== $scope.admin.password_confirmation){
+		else if($scope.new_admin.password !== $scope.new_admin.password_confirmation){
 			$scope.same_password=false;
 		}
-		else if($scope.admin.password === $scope.admin.password_confirmation){
+		else if($scope.new_admin.password === $scope.new_admin.password_confirmation){
 			$scope.same_password=true;
 		}
 	});
@@ -285,11 +296,13 @@ adminIndexApp.controller('adminManagementController', function($scope, $resource
 	}
 
 	$scope.addNewAdmin = function () {
-		$scope.admin.create_time = new Date().getTime();
-		$scope.admin.password_sign = $scope.signature($scope.admin.create_time, $scope.admin.password);
-		$scope.admin.password = $scope.admin.password_confirmation = null;
+		$scope.new_admin.create_time = new Date().getTime();
+		console.log($scope.new_admin.create_time);
+		console.log($scope.new_admin.password);
+		$scope.new_admin.password_sign = $scope.signature($scope.new_admin.create_time, $scope.new_admin.password);
+		$scope.new_admin.password = $scope.new_admin.password_confirmation = null;
 		$resource("/admin/create").save({
-			admin: $scope.admin
+			admin: $scope.new_admin
 		},function(res){
 			$scope.register_result = res.mess;
 		})

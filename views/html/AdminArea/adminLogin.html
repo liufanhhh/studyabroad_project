@@ -19,7 +19,8 @@
 	<div ng-if="admin_page">
 		<input ng-model="admin.name">用户名<br/>
 		<input ng-model="admin.password">密码<br/>
-		<button ng-click="login()">登陆</button>		
+		<button ng-click="login()">登陆</button>	
+		{{admin.message}}	
 	</div>
 
 	<div ng-if="fail_page">
