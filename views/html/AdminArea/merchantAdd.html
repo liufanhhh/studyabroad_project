@@ -71,7 +71,7 @@
 			<option value = "false">不想合作</option>
 		</select>
 		此商户是否可以合作 <br>
-		<select  ng-model = "merchant.follow_up_people" >
+		<select  ng-model = "merchant.follow_up_admin" >
 			<option value = "Nobody">无人跟进</option>
 			<option value = "{{admin.admin.name}}" ng-repeat = "admin in all_admins">{{admin.admin.name}}</option>
 		</select>
@@ -84,18 +84,8 @@
 
 		<br>
 
-		<button ng-click="addMerchantDetails()">添加商户详细信息</button>	<button ng-click="merchantRegister()">确定添加商户</button><br>
-
-		<div>
-			<input type="text" ng-model = "merchant.owner_name" />商户CEO或主要负责人姓名 <br>
-			<button ng-click = "addedNewContactMethod()">增加一个联系方式</button>
-			<div ng-repeat = "area in merchant.support_area">
-				<input type="text" ng-model = "merchant.support_area[$index]" />
-			</div><br>
-		</div>
-
 		<!-- 除了ng自带的表单验证外，加上密码验证，才可以注册 -->
-		<button ng-click ="merchantRegister()" class="btn btn-primary" ng-disabled="registerForm.$invalid || !same_password" >注册</button>
+		<button ng-click ="merchantRegister()" class="btn btn-primary" ng-disabled="registerForm.$invalid || !same_password" >确定添加商户</button>
 		  		{{register_result}}
 		</form>
 

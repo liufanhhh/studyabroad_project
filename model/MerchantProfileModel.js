@@ -44,12 +44,7 @@ var MerchantProfileSchema = mongoose.Schema({
             article_score: Number,
             total_score: Number
         },
-        follow_up_people: [
-        /*{
-            name: String,
-            reason: String
-        }*/
-        ],
+
 
         //status
         live: Boolean,

@@ -22,9 +22,9 @@ adminIndexApp.config(function($routeProvider, $locationProvider) {
         templateUrl: '../html/AdminArea/merchantList.html',
         controller: 'merchantListController'
     }).
-    when('/admin/m', {
-        templateUrl: '../html/MainHtml/groupon.html',
-        controller: 'grouponController'
+    when('/admin/task/list', {
+        templateUrl: '../html/AdminArea/task.html',
+        controller: 'taskController'
     }).
     when('/admin', {
         templateUrl: '../html/MainHtml/school.html',
@@ -64,6 +64,7 @@ adminIndexApp.controller('adminIndexController', function($scope, $resource, $ro
 			case "users": $scope.nav_child.users = true; break;
 			case "transactions": $scope.nav_child.transactions = true; break;
 			case "admin": $scope.nav_child.admin = true; break;
+			case "tasks": $scope.nav_child.tasks = true; break;
 		}
 	}
 
@@ -225,6 +226,11 @@ adminIndexApp.controller('merchantAddController', function($scope, $resource, $r
 		$scope.merchant.create_time = new Date().getTime();
 		$scope.merchant.password_sign = $scope.signature($scope.merchant.create_time, $scope.merchant.password);
 		$scope.merchant.password = $scope.merchant.password_confirmation = null;
+		if ($scope.merchant.follow_up_admin == null) {
+			$scope.merchant.follow_up_admin = "nobody";
+		};
+		console.log($scope.merchant.follow_up_admin == null);
+		console.log($scope.merchant.follow_up_admin);
 		$scope.merchant.banned = false;
 		$resource("/merchant/profile/create").save({
 			merchant: $scope.merchant
@@ -237,8 +243,11 @@ adminIndexApp.controller('merchantAddController', function($scope, $resource, $r
 adminIndexApp.controller('activityController', function($scope, $resource, $routeParams, $location) {
 
 });
-<iframe src="https://api.paymentwall.com/api/subscription/?key=8862df004161d877a5a81815479973ef&uid=[USER_ID]&widget=p1_1" width="750" height="800" frameborder="0"></iframe>
 adminIndexApp.controller('adminListController', function($scope, $resource, $routeParams, $location) {
+
+});
+
+adminIndexApp.controller('taskController', function($scope, $resource, $routeParams, $location) {
 
 });
 
@@ -255,7 +264,6 @@ adminIndexApp.controller('merchantListController', function($scope, $resource, $
 	});
 	
 });
-<iframe src="" width="750" height="800" frameborder="0"></iframe>
 
 
 adminIndexApp.controller('adminManagementController', function($scope, $resource, $routeParams, $location, md5) {
@@ -297,8 +305,6 @@ adminIndexApp.controller('adminManagementController', function($scope, $resource
 
 	$scope.addNewAdmin = function () {
 		$scope.new_admin.create_time = new Date().getTime();
-		console.log($scope.new_admin.create_time);
-		console.log($scope.new_admin.password);
 		$scope.new_admin.password_sign = $scope.signature($scope.new_admin.create_time, $scope.new_admin.password);
 		$scope.new_admin.password = $scope.new_admin.password_confirmation = null;
 		$resource("/admin/create").save({

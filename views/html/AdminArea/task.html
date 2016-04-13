@@ -1,0 +1,22 @@
+<div class="admin-index-child">
+
+	<div>
+
+		<table>   
+		    <tr>
+	           <th>管理员姓名</th>
+	           <th>管理员邮箱</th>
+	           <th>管理员手机</th>
+	           <th>所负责商户</th>
+	        </tr>
+
+	        <tr ng-repeat = "one in all_admins">
+	            <td ng-bind="one.admin.name"></td>
+	            <td ng-bind="one.admin.email"></td>
+	            <td ng-bind="one.admin.mobile"></td>、
+	            <td><button class="button" ng-click="checkAdminMerchantList(one.admin.name)">查看</button></td>
+	        </tr>
+        </table>
+	</div>
+
+</div>

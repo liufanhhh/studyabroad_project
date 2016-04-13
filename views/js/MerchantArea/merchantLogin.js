@@ -57,7 +57,7 @@ merchantLoginApp.controller('merchantLoginController',function($scope, $resource
 		$scope.merchant.password = $scope.merchant.password_confirmation = null;
 		$scope.merchant.willing_to_cooperate = true;
 		$scope.merchant.hierarchy = 2;
-		$scope.merchant.follow_up_people = "Nobody";
+		$scope.merchant.follow_up_admin = "nobody";
 		$scope.merchant.banned = false;
 		$resource("/merchant/profile/create").save({
 			merchant: $scope.merchant
