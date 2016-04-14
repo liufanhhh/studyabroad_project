@@ -38,24 +38,20 @@ adminIndexApp.config(function($routeProvider, $locationProvider) {
 
 adminIndexApp.controller('adminIndexController', function($scope, $resource, $routeParams, $location, FileUploader, md5) {
 
-	$scope.current_admin = "";
 	$scope.nav_child = {};
-
 
 	$scope.getCurrentAdmin = function () {
 		$resource("/admin/current/name").get({
 		},function (res) {
 			$scope.current_admin = res.data;
-			console.log($scope.current_admin);
+			if ($scope.current_admin == "liufan") {
+				$scope.show_admin_control = true;
+				console.log($scope.show_admin_control);
+			};
 		})
 	}
 	$scope.getCurrentAdmin();
-	console.log($scope.current_admin);
 
-	if ($scope.current_admin == "liufan") {
-		$scope.show_admin_control = true;
-		console.log($scope.show_admin_control);
-	};
 
 	$scope.navChildOptionsShow = function () {
 		switch(arguments[0]){
@@ -88,7 +84,7 @@ adminIndexApp.controller('adminIndexController', function($scope, $resource, $ro
 		},function(res){
 			$scope.all_admins = res.data;
 			console.log($scope.all_admins);
-		})
+		});
 	}
 
 	$scope.getAllAdmins();
@@ -244,6 +240,21 @@ adminIndexApp.controller('activityController', function($scope, $resource, $rout
 
 });
 adminIndexApp.controller('adminListController', function($scope, $resource, $routeParams, $location) {
+	$scope.admin_merchant_list = [];
+	$scope.checkAdminMerchantList = function(admin_name) {
+		$resource("/admin/response/merchants/name").get({
+			admin_name: admin_name
+		},function(res){
+			if (res.status==0) {
+				$scope.admin_merchant_list_message = res.mess;
+			} else{
+				for(var i=0; i<res.data.length; i++){
+					$scope.admin_merchant_list.push(res.data[i].task.merchant.name);
+				};
+				$scope.admin_merchant_list_show = true;
+			};
+		})
+	}
 
 });
 

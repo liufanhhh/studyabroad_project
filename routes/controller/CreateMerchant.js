@@ -74,7 +74,8 @@ exports.createNewMerchant = function(req,res){
         merchant: {
             id: merchant_profile.merchant.id,
             hierarchy: merchant_profile.merchant.hierarchy,
-            willing_to_cooperate: merchant_profile.merchant.willing_to_cooperate
+            willing_to_cooperate: merchant_profile.merchant.willing_to_cooperate,
+            name: merchant_profile.merchant.name
         },
         admin: merchant.follow_up_admin,
         task_type: "SignUpMerchant",

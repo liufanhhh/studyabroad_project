@@ -25,7 +25,7 @@ exports.returnToken = function (req, res) {
       console.log(token);
       res.sendData(token,"获取成功");
     };
-  })
+  });
 }
 
 exports.findOneAdmin = function (req, res) {

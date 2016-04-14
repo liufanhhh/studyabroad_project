@@ -7,6 +7,7 @@ var CreateUser = require('./controller/CreateUser.js');
 var CreateMerchant = require('./controller/CreateMerchant.js');
 var CreateAdmin = require('./controller/CreateAdmin.js');
 var AdminProfile = require('./controller/AdminProfile.js');
+var AdminTaskProfile = require('./controller/AdminTaskProfile.js');
 var MerchantProfile = require('./controller/MerchantProfile.js');
 var UserInformation = require('./controller/UserInformation.js');
 var ResetWebsiteProfile = require('./controller/ResetWebsiteProfile.js');
@@ -36,7 +37,7 @@ module.exports = function(app) {
     app.get("/admin/current/name", function(req, res) {
     	res.sendData(req.session.admin_name,"获取成功");
     });
-
+    app.get("/admin/response/merchants/name", Enter.authenticateAdmin, AdminTaskProfile.getAdminResponseMerchantList);
 
 
     app.get("/website/profile/create", ResetWebsiteProfile.createWebsiteInformation);

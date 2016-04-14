@@ -1,4 +1,4 @@
-var merchantLoginApp = angular.module('merchantLoginApp', ['ngResource', 'ngRoute', 'angular-md5', 'liufanhh']);
+var merchantLoginApp = angular.module('merchantLoginApp', ['ngResource', 'ngRoute', 'angular-md5']);
 
 merchantLoginApp.controller('merchantLoginController',function($scope, $resource, $routeParams, $location, md5){
 	$scope.merchant = {};

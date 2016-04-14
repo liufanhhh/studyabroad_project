@@ -11,6 +11,7 @@ var AdminTaskProfileSchema = mongoose.Schema({
         header: String,
         merchant: {
             id: Number,
+            name: String,
             hierarchy: String,
             willing_to_cooperate: Boolean
         },
@@ -23,10 +24,14 @@ var AdminTaskProfileSchema = mongoose.Schema({
 });
 //----------------static method--------------------//
 AdminTaskProfileSchema.statics.createNewTask = function(task, cb) {
-    console.log(task);
     this.create({
         task: task
     }, cb);
+}
+
+AdminTaskProfileSchema.statics.getAdminResponseMerchantList = function(admin_name, cb) {
+    console.log(admin_name);
+    this.find({"task.admin":admin_name}).select("task.merchant.name").exec(cb);
 }
 
 
