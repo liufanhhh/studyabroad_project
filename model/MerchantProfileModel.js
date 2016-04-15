@@ -44,8 +44,6 @@ var MerchantProfileSchema = mongoose.Schema({
             article_score: Number,
             total_score: Number
         },
-
-
         //status
         live: Boolean,
         banned: Boolean,
@@ -78,7 +76,11 @@ MerchantProfileSchema.statics.uploadLogo = function(MID, path, cb) {
 }
 
 MerchantProfileSchema.statics.getMerchantsLogo = function(cb) {
-    this.find().skip(0).limit(6).sort({merchant_name: 'desc'}).exec(cb);
+    this.find().sort({"merchant.create_time": 'desc'}).skip(0).limit(6).exec(cb);
+}
+
+MerchantProfileSchema.statics.getMerchantList = function(page, page_size, cb) {
+    this.find().sort({"merchant.create_time": 'desc'}).skip(page_size*(page-1)).limit(page_size).exec(cb);
 }
 
 MerchantProfileSchema.statics.findMerchantByName = function(merchant, cb) {
@@ -112,7 +114,7 @@ MerchantProfileSchema.statics.countMerchantsAmount = function(conditions, cb) {
     this.count(conditions, cb);
 }
 
-MerchantProfileSchema.statics.nameComplete= function(unfinished_name, cb) {
+MerchantProfileSchema.statics.nameComplete = function(unfinished_name, cb) {
     var name = new RegExp(unfinished_name, "gi");
     this.find({
         "merchant.name": {
@@ -121,6 +123,47 @@ MerchantProfileSchema.statics.nameComplete= function(unfinished_name, cb) {
     }).select('merchant.name').exec(cb);
 }
 
+MerchantProfileSchema.statics.findMerchantById = function(id, cb) {
+    this.findOne({
+        "merchant.id": id
+    }).exec(cb);
+}
+
+MerchantProfileSchema.statics.findMerchantByName = function(name, cb) {
+    this.findOne({
+        "merchant.name": name
+    }).exec(cb);
+}
+
+MerchantProfileSchema.statics.findMerchantByEmail = function(email, cb) {
+    this.findOne({
+        "merchant.email": email
+    }).exec(cb);
+}
+
+MerchantProfileSchema.statics.findMerchantByContactPerson = function(contact_person, cb) {
+    this.find({
+        "merchant.contact_person": contact_person
+    }).exec(cb);
+}
+
+MerchantProfileSchema.statics.findMerchantByMobile = function(mobile, cb) {
+    this.find({
+        "merchant.mobile": mobile
+    }).exec(cb);
+}
+
+MerchantProfileSchema.statics.findMerchantByWebsite = function(website, cb) {
+    this.find({
+        "merchant.website": website
+    }).exec(cb);
+}
+
+MerchantProfileSchema.statics.findMerchantByLocationCity = function(location_city, cb) {
+    this.findOne({
+        "merchant.location_city": location_city
+    }).exec(cb);
+}
 
 //-------------------export-------------------------//
 module.exports = mongoose.model("MerchantProfile", MerchantProfileSchema);

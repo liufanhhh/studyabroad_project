@@ -81,8 +81,19 @@ exports.createNewPassword = function (req, res) {
   })
 }
 
+exports.updateAdmin = function (req, res) {
+  var admin = req.body.admin;
+  admin.password = admin.password_sign;
+  AdminProfile.updateAdmin( admin, function (err, admin_profile) {
+    if (err||admin_profile==null) {
+      res.sendError("密码错误");
+    } else{
+      res.sendSuccess("修改成功");
+    };
+  })
+}
+
 exports.getAllAdmins = function(req, res){
-  console.log("aa");
   AdminProfile.getAllAdmins(function (err, admins) {
     if (err) {
       res.sendError(err);

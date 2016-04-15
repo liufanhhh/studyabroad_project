@@ -18,8 +18,15 @@
 	        </tr>
         </table>
 	</div>
-{{admin_merchant_list_message}}
+
+	<!--查看Admin负责商户  -->
 	<div ng-if = "admin_merchant_list_show">
-		{{admin_merchant_list}}
+
+		<ol>
+			<li ng-repeat = "merchant in admin_merchant_list">
+				{{merchant}}
+			</li>
+		</ol>
+
 	</div>
 </div>

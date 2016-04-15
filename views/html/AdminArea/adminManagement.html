@@ -1,9 +1,6 @@
 <div class="admin-index-child">
 
 	<div>
-
-
-		<button ng-click = "add_admin_show=true">添加管理员</button>
 		<table>   
 		    <tr>
 	           <th>管理员姓名</th>
@@ -15,7 +12,7 @@
 	        <tr ng-repeat = "one in all_admins">
 	            <td ng-bind="one.admin.name"></td>
 	            <td ng-bind="one.admin.email"></td>
-	            <td ng-bind="one.admin.mobile"></td>、
+	            <td ng-bind="one.admin.mobile"></td>
 	            <td><button class="button" ng-click="checkAdminMerchantList(one.admin.name)">查看</button></td>
 	            <td><button class="button" ng-click="changeAdminProfile(one.admin.name)">修改</button></td>
 	            <td><button class="button" ng-click="deleteAdminProfile(one.admin.name)">删除</button></td>
@@ -23,10 +20,11 @@
         </table>
 	</div>
 
+
+	<button ng-click = "add_admin_show=true">添加管理员</button>
 	<div ng-if="add_admin_show">
 
 		<form name="addAdminForm" role="form" ng-submit="addNewAdmin()" novalidate>
-			
 			<div>
 				<label>姓名：</label>
 				<input name="name" class="form-control" type="text" ng-model="new_admin.name" required >
@@ -83,5 +81,24 @@
 	  		{{register_result}}
 	  	</form>
 	</div>
-</div>
 
+	<!--查看Admin负责商户  -->
+	<div ng-if = "admin_merchant_list_show">
+
+		<ol>
+			<li ng-repeat = "merchant in admin_merchant_list">
+				{{merchant}}
+			</li>
+		</ol>
+
+	</div>
+
+	<div ng-if = "admin_profile_change_show">
+		<input type="text" ng-model="admin_changing_profile.name">
+		<input type="text" ng-model="admin_changing_profile.email">
+		<input type="text" ng-model="admin_changing_profile.mobile">
+		<input type="text" placeholder="新密码" ng-model="admin_changing_profile.new_password">
+		<button ng-click = "changeAdminProfileConfirm()">修改</button>
+		{{admin_change_result}}
+	</div>
+</div>

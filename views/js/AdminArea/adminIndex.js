@@ -33,7 +33,6 @@ adminIndexApp.config(function($routeProvider, $locationProvider) {
 
     // configure html5 to get links working on jsfiddle
     // $locationProvider.html5Mode(true);
-    console.log("initialize route");
 });
 
 adminIndexApp.controller('adminIndexController', function($scope, $resource, $routeParams, $location, FileUploader, md5) {
@@ -46,10 +45,9 @@ adminIndexApp.controller('adminIndexController', function($scope, $resource, $ro
 			$scope.current_admin = res.data;
 			if ($scope.current_admin == "liufan") {
 				$scope.show_admin_control = true;
-				console.log($scope.show_admin_control);
 			};
 		})
-	}
+	};
 	$scope.getCurrentAdmin();
 
 
@@ -62,11 +60,11 @@ adminIndexApp.controller('adminIndexController', function($scope, $resource, $ro
 			case "admin": $scope.nav_child.admin = true; break;
 			case "tasks": $scope.nav_child.tasks = true; break;
 		}
-	}
+	};
 
 	$scope.navChildOptionsHide = function () {
 		$scope.nav_child = {};
-	}
+	};
 
 	$scope.websiteProfileReset = function () {
 		$resource("/website/profile/create").get({
@@ -74,113 +72,13 @@ adminIndexApp.controller('adminIndexController', function($scope, $resource, $ro
 			user_amount: 0,
 			merchant_amount: 0
 		},function (res) {
-			console.log(res.mess);
 		})
-	}
-
-	$scope.getAllAdmins = function  (argument) {
-		$resource("/admin/get/all").get({
-
-		},function(res){
-			$scope.all_admins = res.data;
-			console.log($scope.all_admins);
-		});
-	}
-
-	$scope.getAllAdmins();
-
-	function getMerchantsLogo () {
-		$resource("/merchant/logos").get({},function (res) {
-			console.log("aa");
-			if (res.status===1) {
-				$scope.logos = res.data;
-				console.info(res.data);
-			} else{
-				console.log(res.mess);
-				console.info(res.data);
-			};
-		});
-	}
-
-	getMerchantsLogo();
-
-	$scope.addedNewArea = function(){
-		$scope.merchant.support_area[$scope.change] = "留学地区"+$scope.change;
-		$scope.change++;
 	};
-
-	$scope.showAddMerchantArea = function(){
-		$scope.new_merchant = true;
-		$scope.find_merchant = false;
-	}
-
-	$scope.showFindArea = function(){
-		$scope.new_merchant = false;
-		$scope.find_merchant = true;
-	}
-
-	
-
-	$scope.findMerchant = function(){
-		$resource("/merchant/profile/find").get({
-			merchant_name: 	$scope.finded_merchant.merchant_name,
-			merchant_email: $scope.finded_merchant.email
-		}, function(res) {
-			console.info(res);
-			if (res.mess = "success") {
-				$scope.showProfile = true;
-				$scope.finded_merchant = res.data;
-			} else{
-				cosole.log(res.mess);
-			};
-		});		
-	}
-
-	var uploader = $scope.uploader = new FileUploader({removeAfterUpload: true,autoUpload: true});
-
-	uploader.onBeforeUploadItem = function(item) {
-		var filename = item.file.type;
-		var filename = filename.substring(filename.indexOf("\/"),filename.length);
-		var filename = filename.replace(/\//,"\.");
-		if (item.url === "/merchant/profile/logo") {
-			filename = "logo"+filename;
-		} else if(item.url === "/merchant/profile/tax_registration"){
-			filename = "tax_registration"+filename;
-		} else {
-			filename = "organization_order"+filename;
-		};
-		item.formData[0] = {file_name: filename};
-		item.formData[1] = {merchant_id: $scope.finded_merchant.merchant_id};
-	    console.info('onBeforeUploadItem', item);
-	};
-
-	uploader.onProgressItem = function(fileItem, progress) {
-	    console.info('onProgressItem', fileItem, progress);
-	};
-
-	uploader.onErrorItem = function(fileItem, response, status, headers) {
-	    console.info('onErrorItem', fileItem, response, status, headers);
-	};
-
-	uploader.SuccessItem = function(fileItem, response, status, headers) {
-	    console.info('onSuccessItem', fileItem, response, status, headers);
-	};
-
 });
 
 
 adminIndexApp.controller('mainController', function($scope, $resource, $routeParams, $location) {
-    function getMerchantsLogo () {
-        $resource("/merchant/logos").get({},function (res) {
-            if (res.status===1) {
-                console.info(res.data);
-                $scope.merchants = res.data;
-            } else{
-                window.location = "/404";
-            };
-        });
-    }
-    getMerchantsLogo();
+
 });
 
 adminIndexApp.controller('merchantAddController', function($scope, $resource, $routeParams, $location, md5) {
@@ -225,8 +123,6 @@ adminIndexApp.controller('merchantAddController', function($scope, $resource, $r
 		if ($scope.merchant.follow_up_admin == null) {
 			$scope.merchant.follow_up_admin = "nobody";
 		};
-		console.log($scope.merchant.follow_up_admin == null);
-		console.log($scope.merchant.follow_up_admin);
 		$scope.merchant.banned = false;
 		$resource("/merchant/profile/create").save({
 			merchant: $scope.merchant
@@ -240,6 +136,14 @@ adminIndexApp.controller('activityController', function($scope, $resource, $rout
 
 });
 adminIndexApp.controller('adminListController', function($scope, $resource, $routeParams, $location) {
+	$scope.getAllAdmins = function  (argument) {
+		$resource("/admin/get/admin/list").get({
+
+		},function(res){
+			$scope.all_admins = res.data;
+		});
+	};
+	$scope.getAllAdmins();
 	$scope.admin_merchant_list = [];
 	$scope.checkAdminMerchantList = function(admin_name) {
 		$resource("/admin/response/merchants/name").get({
@@ -248,13 +152,17 @@ adminIndexApp.controller('adminListController', function($scope, $resource, $rou
 			if (res.status==0) {
 				$scope.admin_merchant_list_message = res.mess;
 			} else{
-				for(var i=0; i<res.data.length; i++){
-					$scope.admin_merchant_list.push(res.data[i].task.merchant.name);
+				if (res.data[0]!=null) {
+					for(var i=0; i<res.data.length; i++){
+						$scope.admin_merchant_list.push(res.data[i].task.merchant.name);
+					};
+					$scope.admin_merchant_list_show = true;
+				} else{
+					$scope.admin_merchant_list_show = false;
 				};
-				$scope.admin_merchant_list_show = true;
 			};
 		})
-	}
+	};
 
 });
 
@@ -263,15 +171,54 @@ adminIndexApp.controller('taskController', function($scope, $resource, $routePar
 });
 
 adminIndexApp.controller('merchantListController', function($scope, $resource, $routeParams, $location) {
+
+	$scope.getAllmerchants = function  (page) {
+		$resource("/admin/get/merchant/list").get({
+			page: page,
+			page_show_amount: 10
+		},function(res){
+			if (res.status==0) {
+				alert("数据库错误");
+			} else{
+				$scope.merchants = res.data;
+			};
+		});
+	};
+	$scope.getAllmerchants(1);
+
+	$scope.findMerchant = function () {
+		for ( var key in $scope.merchant) {
+			if ($scope.merchant[key] != null && $scope.merchant[key] != "") {
+				console.log($scope.merchant[key]);
+				console.log($scope.merchant);
+				$resource("/admin/search/merchant").get({
+					key: key,
+					value: $scope.merchant[key]
+				},function(res){
+					if (res.status==0) {
+						console.log("warning");
+					} else if (res.status == 1){
+						$scope.all_merchant_list_show = false;
+						$scope.search_merchant_list_show = true;
+						$scope.search_merchant = res.data.merchant;
+						console.log($scope.search_merchant);
+					} else if(typeof(res.data)==Array) {
+						$scope.merchants = res.data;
+					};
+				});
+				break;
+			} else{
+			};
+		};
+	};
+
 	$scope.$watch("merchant.name", function(newVal,oldVal,scope){
 		if (newVal !== oldVal && newVal!=null){
 			$resource("/merchant/name/complete").get({
 				name: newVal
 			},function(res){
-				console.log(res.mess);
-				console.log(res.data);
 			})
-		}
+		};
 	});
 	
 });
@@ -279,6 +226,34 @@ adminIndexApp.controller('merchantListController', function($scope, $resource, $
 
 adminIndexApp.controller('adminManagementController', function($scope, $resource, $routeParams, $location, md5) {
 	$scope.new_admin = {};
+	$scope.admin_merchant_list = [];
+	$scope.getAllAdmins = function  (argument) {
+		$resource("/admin/get/admin/list").get({
+
+		},function(res){
+			$scope.all_admins = res.data;
+		});
+	};
+	$scope.getAllAdmins();
+	//获取此Admin负责的商户
+	$scope.checkAdminMerchantList = function(admin_name) {
+		$resource("/admin/response/merchants/name").get({
+			admin_name: admin_name
+		},function(res){
+			if (res.status==0) {
+				$scope.admin_merchant_list_message = res.mess;
+			} else{
+				if (res.data[0]!=null) {
+					for(var i=0; i<res.data.length; i++){
+						$scope.admin_merchant_list.push(res.data[i].task.merchant.name);
+					};
+					$scope.admin_merchant_list_show = true;
+				} else{
+					$scope.admin_merchant_list_show = false;
+				};
+			};
+		})
+	};
 	/*监视密码2的输入，如果输入和密码1的相同，则可以注册。
 	若不同，或者两个密码都为空，则不可注册。*/
 	$scope.$watch("new_admin.password_confirmation", function(newVal,oldVal,scope){
@@ -325,10 +300,34 @@ adminIndexApp.controller('adminManagementController', function($scope, $resource
 		})
 	}
 
+	$scope.changeAdminProfile = function(admin_name){
+		for (var i = $scope.all_admins.length - 1; i >= 0; i--) {
+			console.log($scope.all_admins);
+			if ($scope.all_admins[i].admin.name == admin_name) {
+				$scope.admin_changing_profile = $scope.all_admins[i].admin;
+				$scope.admin_changing_profile._id = $scope.all_admins[i]._id;
+				$scope.admin_changing_profile.password_sign = $scope.admin_changing_profile.password;
+				console.log($scope.admin_changing_profile.password_sign);
+				$scope.admin_changing_profile.password = null;	
+				break;
+			} else{
+			};
+		 }; 
+		$scope.admin_profile_change_show = true;
+	}
 
+	$scope.changeAdminProfileConfirm = function (argument) {
+		if ($scope.admin_changing_profile.new_password != null) {
+			$scope.admin_changing_profile.password_sign = $scope.signature(new Date($scope.admin_changing_profile.create_time).getTime(), $scope.admin_changing_profile.new_password);
+		} else{
 
-	$scope.responseMerchantShow = function(){
-		console.log(arguments[0]);
+		};
+		$resource("/admin/profile/change").save({
+			admin: $scope.admin_changing_profile
+		},function(res){
+			$scope.admin_change_result = res.mess;
+			$scope.admin_changing_profile.password = null;
+		});
 	}
 
 });

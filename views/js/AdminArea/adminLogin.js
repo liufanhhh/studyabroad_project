@@ -47,6 +47,7 @@ adminLoginApp.controller('adminLoginController',function($scope, $resource, $rou
 				}
 				else{
 					$scope.admin.password_sign = $scope.signature(new Date(res.data).getTime(), $scope.admin.password);
+					console.log($scope.admin.password_sign);
 					$scope.admin.password = null;
 					$resource("/admin/login").save({
 						name: $scope.admin.name,

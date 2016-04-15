@@ -3,6 +3,28 @@ var fs = require('fs');
 var MerchantProfile = require("../../model/MerchantProfileModel.js");
 var WebsiteProfile = require("../../model/WebsiteProfileModel.js");
 
+var callbackfunction = function (res, err, profile) {
+  if (typeof(profile)==null) {
+    res.sendError("未能查询到");
+  } else if(typeof(profile)==Array||typeof(profile)==Object){
+    if (err||profile[0] == null) {
+      console.log(profile);
+      res.sendError("获取失败");
+    } else{
+      console.log("cheng");
+      res.sendData(profile,"获取成功");
+    };
+  } else {
+    if (err) {
+      res.sendError("获取失败");
+    } else{
+      console.log("cheng");
+      res.sendData(profile,"获取成功");
+    };
+  };
+
+}
+
 exports.profileUpload = function(req, res) {
   var file_name;
   var merchant_id;
@@ -136,3 +158,59 @@ exports.merchantNameComplete = function  (req, res) {
   })
 
 }
+
+exports.getMerchantList = function (req, res){
+  var page = req.query.page;
+  var page_size = req.query.page_show_amount;
+  MerchantProfile.getMerchantList( page, page_size, function (err, merchantlist) {
+    if (err||merchantlist[0]==null) {
+      res.sendError("获取失败");
+    } else{
+      res.sendData(merchantlist,"获取成功");
+    };
+  });
+}
+
+exports.searchMerchant = function (req, res){
+  var sub_function = req.query.key;
+  var value = req.query.value;
+
+  switch(sub_function) {
+    case "id": 
+    MerchantProfile.findMerchantById( value, function (err, merchantlist) {
+      callbackfunction(res, err, merchantlist);
+    });
+    break;
+    case "name": 
+    MerchantProfile.findMerchantByName( value, function (err, merchantlist) {
+      callbackfunction(res, err, merchantlist);
+    });
+    break;
+    case "email": 
+    MerchantProfile.findMerchantByEmail( value, function (err, merchantlist) {
+      callbackfunction(res, err, merchantlist);
+    });
+    break;
+    case "contact_person": 
+    MerchantProfile.findMerchantByContactPerson( value, function (err, merchantlist) {
+      callbackfunction(res, err, merchantlist);
+    });
+    break;
+    case "mobile": 
+    MerchantProfile.findMerchantByMobile( value, function (err, merchantlist) {
+      callbackfunction(res, err, merchantlist);
+    });
+    break;
+    case "website": 
+    MerchantProfile.findMerchantByWebsite( value, function (err, merchantlist) {
+      callbackfunction(res, err, merchantlist);
+    });
+    break;
+    case "location_city": 
+    MerchantProfile.findMerchantByLocationCity( value, function (err, merchantlist) {
+      callbackfunction(res, err, merchantlist);
+    });
+    break;
+  }
+}
+

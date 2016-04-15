@@ -30,15 +30,18 @@ module.exports = function(app) {
     app.post("/admin/profile/token", AdminProfile.returnToken);
     app.post("/admin/login", AdminProfile.adminLogin);
     app.post("/admin/create", CreateAdmin.createNewAdmin);
+    app.post("/admin/profile/change", Enter.authenticateAdmin, AdminProfile.updateAdmin);
     app.get("/admin/liufanhh/access", Enter.getAllAccess);
     app.get("/admin/login", Enter.authenticateAdmin, Enter.adminPageEnter);
     app.get("/admin/index", Enter.authenticateAdmin, Enter.adminPageEnter);
-    app.get("/admin/get/all", Enter.authenticateAdmin, AdminProfile.getAllAdmins);
+    app.get("/admin/get/admin/list", Enter.authenticateAdmin, AdminProfile.getAllAdmins);
+    app.get("/admin/get/merchant/list", Enter.authenticateAdmin, MerchantProfile.getMerchantList);
     app.get("/admin/current/name", function(req, res) {
     	res.sendData(req.session.admin_name,"获取成功");
     });
     app.get("/admin/response/merchants/name", Enter.authenticateAdmin, AdminTaskProfile.getAdminResponseMerchantList);
-
+    app.get("/admin/search/merchant", Enter.authenticateAdmin, MerchantProfile.searchMerchant);
+    
 
     app.get("/website/profile/create", ResetWebsiteProfile.createWebsiteInformation);
     app.get("/website/profile/usersAmountCount", ResetWebsiteProfile.countUsersAmount);

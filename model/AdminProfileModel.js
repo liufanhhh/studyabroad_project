@@ -9,12 +9,13 @@ var mongoose = require("mongoose");
 var AdminProfileSchema = mongoose.Schema({
     admin:{
         name: String,
-        response_company: Array,
         email: String,
         password: String,
         mobile: String,
-        birthday: String,
+
         status: String,
+        birthday: String,
+        title: String,
         create_time: Date
     }
 });
@@ -73,6 +74,12 @@ AdminProfileSchema.statics.updatePasswordByEmail = function(name_email, newpassw
     var conditions = {email: name_email};
     var update = {$set :{password: newpassword}};
     this.update(conditions,update,false,cb)
+}
+
+AdminProfileSchema.statics.updateAdmin = function(admin, cb){
+    this.findOneAndUpdate({
+        _id: admin._id
+    }, {$set:{admin:admin}}, cb);
 }
 
 
