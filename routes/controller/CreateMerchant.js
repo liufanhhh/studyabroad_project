@@ -11,6 +11,7 @@ exports.createNewMerchant = function(req,res){
   var sameName = Q.nfbind(MerchantProfile.findMerchantByName.bind(MerchantProfile));
 
   var handleNameResult = function(exist){
+    console.log(exist);
     var deferred = Q.defer();
     if (exist) {
       deferred.reject("商户名重复");
@@ -29,11 +30,12 @@ exports.createNewMerchant = function(req,res){
   }
 
   var checkEmail = function(amount){
+    console.log(amount);
     var deferred = Q.defer();
     if (!amount) {
       deferred.reject("设置失败");
     }else{
-      MerchantProfile.findMerchantByEmail(merchant, function (err, profile) {
+      MerchantProfile.findMerchantByEmail(merchant.email, function (err, profile) {
         if (err||profile!==null) {
           deferred.reject("邮箱重复");
         } else{
@@ -46,6 +48,7 @@ exports.createNewMerchant = function(req,res){
   }
 
   var createMerchant = function (amount){
+    console.log(amount);
     var deferred = Q.defer();
     if (!amount) {
       deferred.reject("设置失败");
@@ -94,7 +97,7 @@ exports.createNewMerchant = function(req,res){
     return deferred.promise;
   }
 
-  sameName(merchant)
+  sameName(merchant.name)
   .then(handleNameResult)
   .then(checkEmail)
   .then(createMerchant)
@@ -104,6 +107,7 @@ exports.createNewMerchant = function(req,res){
       fs.mkdir("./views/storage/merchant/"+data.merchant.id);
       res.sendData(data,"创建成功");
     },function(error){
+        console.log(error);
         res.sendError(error);
     });
 }

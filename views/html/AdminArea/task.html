@@ -1,19 +1,31 @@
 <div class="admin-index-child">
 
 	<div>
-
 		<table>   
 		    <tr>
-	           <th>管理员姓名</th>
-	           <th>管理员邮箱</th>
-	           <th>管理员手机</th>
-	           <th>所负责商户</th>
+	           <th>任务ID</th>
+	           <th>负责人</th>
+	           <th>类型</th>
+	           <th>商户ID</th>
 	        </tr>
 
-	        <tr ng-repeat = "one in all_admins">
-	            <td ng-bind="one.admin.name"></td>
-	            <td ng-bind="one.admin.email"></td>
-	            <td ng-bind="one.admin.mobile"></td>、
+	        <tr >
+	            <td><input ng-model="search_task.id"></td>
+	            <td>	            	
+	            	<select name="task_type" ng-model="search_task.admin">
+	            	  <option value = "all">全部</option>
+	            	  <option value = "Nobody">无人跟进</option>
+	            	  <option value = "{{admin.admin.name}}" ng-repeat = "admin in all_admins" ng-bind = "admin.admin.name"></option>
+	            	</select>
+	            </td>
+	            <td>
+	            	<select name="task_type" ng-model="search_task.task_type">
+	            	  <option value = "all">全部</option>
+	            	  <option value = "Nobody">无人跟进</option>
+	            	  <option value = "{{admin.admin.name}}" ng-repeat = "admin in all_admins" ng-bind = "admin.admin.name"></option>
+	            	</select>
+	            </td>
+	            <td><input ng-model="search_task.merchant.id"></td>
 	            <td><button class="button" ng-click="checkAdminMerchantList(one.admin.name)">查看</button></td>
 	        </tr>
         </table>

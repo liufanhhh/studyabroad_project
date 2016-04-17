@@ -20,6 +20,11 @@
         </table>
 	</div>
 
+	<div class="message-box" ng-if="delete_admin_confirmation_show">
+		确认删除{{delete_admin_name}}？
+		<button ng-click="deleteAdminProfileConfirm()">删除</button>
+		<button ng-click="deleteAdminProfileCancel()">取消</button>
+	</div>
 
 	<button ng-click = "add_admin_show=true">添加管理员</button>
 	<div ng-if="add_admin_show">

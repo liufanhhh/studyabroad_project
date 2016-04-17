@@ -32,6 +32,7 @@ module.exports = function(app) {
     app.post("/admin/create", CreateAdmin.createNewAdmin);
     app.post("/admin/profile/change", Enter.authenticateAdmin, AdminProfile.updateAdmin);
     app.get("/admin/liufanhh/access", Enter.getAllAccess);
+    app.get("/admin/delete", Enter.authenticateAdmin, AdminProfile.deleteAdmin);
     app.get("/admin/login", Enter.authenticateAdmin, Enter.adminPageEnter);
     app.get("/admin/index", Enter.authenticateAdmin, Enter.adminPageEnter);
     app.get("/admin/get/admin/list", Enter.authenticateAdmin, AdminProfile.getAllAdmins);

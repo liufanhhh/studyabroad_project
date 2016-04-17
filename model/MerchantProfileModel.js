@@ -83,18 +83,6 @@ MerchantProfileSchema.statics.getMerchantList = function(page, page_size, cb) {
     this.find().sort({"merchant.create_time": 'desc'}).skip(page_size*(page-1)).limit(page_size).exec(cb);
 }
 
-MerchantProfileSchema.statics.findMerchantByName = function(merchant, cb) {
-    this.findOne({
-        "merchant.name": merchant.name
-    }, cb);
-}
-
-MerchantProfileSchema.statics.findMerchantByEmail = function(merchant, cb) {
-    this.findOne({
-        'merchant.email': merchant.email
-    }, cb);
-}
-
 MerchantProfileSchema.statics.findMerchantById = function(id, cb) {
     this.findOne({
         _id: id

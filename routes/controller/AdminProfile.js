@@ -28,6 +28,20 @@ exports.returnToken = function (req, res) {
   });
 }
 
+exports.deleteAdmin = function (req, res) {
+  var admin_name = req.query.admin;
+  console.log(admin_name);
+  AdminProfile.deleteAdminByName( admin_name, function (err, profile) {
+    if (err||profile==null) {
+      console.log(err+profile);
+      res.sendError("数据库错误");
+    } else{
+      res.sendData(profile,"删除成功");
+    };
+  });
+}
+
+
 exports.findOneAdmin = function (req, res) {
   var admin_name = req.query.admin_name;
   var admin_email = req.query.admin_email;

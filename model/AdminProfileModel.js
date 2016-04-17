@@ -26,6 +26,13 @@ AdminProfileSchema.statics.findAdminById = function(id, cb) {
     }, cb);
 }
 
+AdminProfileSchema.statics.deleteAdminByName = function(name, cb) {
+    console.log(name);
+    this.findOneAndRemove({
+        "admin.name": name
+    }, cb);
+}
+
 AdminProfileSchema.statics.countAdminsAmount = function(conditions, cb) {
     var conditions = conditions||null;
     this.count({

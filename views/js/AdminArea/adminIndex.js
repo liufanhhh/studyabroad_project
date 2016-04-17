@@ -50,6 +50,18 @@ adminIndexApp.controller('adminIndexController', function($scope, $resource, $ro
 	};
 	$scope.getCurrentAdmin();
 
+	$scope.getAllAdmins = function  (argument) {
+		$resource("/admin/get/admin/list").get({
+
+		},function(res){
+			$scope.all_admins = res.data;
+		});
+	};
+	$scope.getAllAdmins();
+	//密码加密
+	$scope.signature = function (salt, value) {
+		return md5.createHash(salt+"liufanhh"+md5.createHash(value));
+	}
 
 	$scope.navChildOptionsShow = function () {
 		switch(arguments[0]){
@@ -82,7 +94,11 @@ adminIndexApp.controller('mainController', function($scope, $resource, $routePar
 });
 
 adminIndexApp.controller('merchantAddController', function($scope, $resource, $routeParams, $location, md5) {
-
+	$scope.merchant = {
+		location_city: "Beijing",
+		follow_up_admin: "Nobody"
+	};
+	$scope.getAllAdmins();
 	$scope.$watch("merchant.password_confirmation", function(newVal,oldVal,scope){
 		if (newVal === oldVal){
 		}
@@ -111,18 +127,10 @@ adminIndexApp.controller('merchantAddController', function($scope, $resource, $r
 		}
 	});
 
-	//密码加密
-	$scope.signature = function (salt, value) {
-		return md5.createHash(salt+"liufanhh"+md5.createHash(value));
-	}
-
 	$scope.merchantRegister = function () {
 		$scope.merchant.create_time = new Date().getTime();
 		$scope.merchant.password_sign = $scope.signature($scope.merchant.create_time, $scope.merchant.password);
 		$scope.merchant.password = $scope.merchant.password_confirmation = null;
-		if ($scope.merchant.follow_up_admin == null) {
-			$scope.merchant.follow_up_admin = "nobody";
-		};
 		$scope.merchant.banned = false;
 		$resource("/merchant/profile/create").save({
 			merchant: $scope.merchant
@@ -136,13 +144,6 @@ adminIndexApp.controller('activityController', function($scope, $resource, $rout
 
 });
 adminIndexApp.controller('adminListController', function($scope, $resource, $routeParams, $location) {
-	$scope.getAllAdmins = function  (argument) {
-		$resource("/admin/get/admin/list").get({
-
-		},function(res){
-			$scope.all_admins = res.data;
-		});
-	};
 	$scope.getAllAdmins();
 	$scope.admin_merchant_list = [];
 	$scope.checkAdminMerchantList = function(admin_name) {
@@ -167,7 +168,7 @@ adminIndexApp.controller('adminListController', function($scope, $resource, $rou
 });
 
 adminIndexApp.controller('taskController', function($scope, $resource, $routeParams, $location) {
-
+	$scope.getAllAdmins();
 });
 
 adminIndexApp.controller('merchantListController', function($scope, $resource, $routeParams, $location) {
@@ -284,11 +285,6 @@ adminIndexApp.controller('adminManagementController', function($scope, $resource
 		}
 	});
 
-	//密码加密
-	$scope.signature = function (salt, value) {
-		return md5.createHash(salt+"liufanhh"+md5.createHash(value));
-	}
-
 	$scope.addNewAdmin = function () {
 		$scope.new_admin.create_time = new Date().getTime();
 		$scope.new_admin.password_sign = $scope.signature($scope.new_admin.create_time, $scope.new_admin.password);
@@ -299,6 +295,29 @@ adminIndexApp.controller('adminManagementController', function($scope, $resource
 			$scope.register_result = res.mess;
 		})
 	}
+
+	$scope.deleteAdminProfile = function (name) {
+		$scope.delete_admin_confirmation_show = true;
+		$scope.delete_admin_name = name;
+	};
+
+	$scope.deleteAdminProfileConfirm = function(){
+		$resource("/admin/delete").get({
+			admin: $scope.delete_admin_name
+		},function(res){
+			if (res.status==1) {
+				$scope.delete_admin_confirmation_show = false;
+				$scope.delete_admin_name = null;
+			} else{
+				console.log(res.mess);
+			};
+		})
+	};
+
+	$scope.deleteAdminProfileCancel = function(){
+		$scope.delete_admin_confirmation_show = false;
+		$scope.delete_admin_name = null;
+	};
 
 	$scope.changeAdminProfile = function(admin_name){
 		for (var i = $scope.all_admins.length - 1; i >= 0; i--) {

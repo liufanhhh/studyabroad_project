@@ -72,12 +72,6 @@ app.use(session({
     })
 }));
 
-// require('./passport-config')(passport);
-
-// app.use(session({ secret: 'Shia' }));
-// app.use(passport.initialize());
-// app.use(passport.session());
-
 // give the routes to control the require
 routes(app);
 

@@ -13,7 +13,7 @@
 
 		<div>
 			<label>公司所在城市：</label>
-			<select name="location_city" ng-init = "merchant.location_city=Beijing" required>
+			<select ng-model="merchant.location_city" >
 				<option value = "Beijing">北京</option>
 				<option value = "Shanghai">上海</option>
 				<option value = "Tianjin">天津</option>
@@ -73,7 +73,7 @@
 		此商户是否可以合作 <br>
 		<select  ng-model = "merchant.follow_up_admin" >
 			<option value = "Nobody">无人跟进</option>
-			<option value = "{{admin.admin.name}}" ng-repeat = "admin in all_admins">{{admin.admin.name}}</option>
+			<option value = "{{admin.admin.name}}" ng-repeat = "admin in all_admins" ng-bind = "admin.admin.name"></option>
 		</select>
 		由谁负责跟进 <br>
 		<select  ng-model = "merchant.hierarchy" ng-init = "merchant.hierarchy=2">
