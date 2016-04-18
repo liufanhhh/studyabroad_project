@@ -61,40 +61,12 @@ MerchantProfileSchema.statics.createNewMerchant = function(merchant, cb) {
     }, cb);
 }
 
-MerchantProfileSchema.statics.findMerchantByMID = function(MID, cb) {
-    this.findOne({
-        merchant_id: MID
-    }, cb);
-}
-
-MerchantProfileSchema.statics.uploadLogo = function(MID, path, cb) {
-    this.findOneAndUpdate({
-        merchant_id: MID
-    }, {
-        $set:{logo: path}
-    }, cb);
-}
-
 MerchantProfileSchema.statics.getMerchantsLogo = function(cb) {
     this.find().sort({"merchant.create_time": 'desc'}).skip(0).limit(6).exec(cb);
 }
 
 MerchantProfileSchema.statics.getMerchantList = function(page, page_size, cb) {
     this.find().sort({"merchant.create_time": 'desc'}).skip(page_size*(page-1)).limit(page_size).exec(cb);
-}
-
-MerchantProfileSchema.statics.findMerchantById = function(id, cb) {
-    this.findOne({
-        _id: id
-    },cb);
-}
-
-MerchantProfileSchema.statics.updatePassword = function(merchant_id, new_password, cb) {
-    this.findOneAndUpdate({
-        merchant_id: merchant_id
-    }, {
-        password: new_password 
-    }, cb);
 }
 
 MerchantProfileSchema.statics.countMerchantsAmount = function(conditions, cb) {
@@ -112,44 +84,80 @@ MerchantProfileSchema.statics.nameComplete = function(unfinished_name, cb) {
 }
 
 MerchantProfileSchema.statics.findMerchantById = function(id, cb) {
-    this.findOne({
+    this.find({
         "merchant.id": id
     }).exec(cb);
 }
 
 MerchantProfileSchema.statics.findMerchantByName = function(name, cb) {
-    this.findOne({
+    this.find({
         "merchant.name": name
     }).exec(cb);
 }
 
 MerchantProfileSchema.statics.findMerchantByEmail = function(email, cb) {
-    this.findOne({
+    this.find({
         "merchant.email": email
     }).exec(cb);
 }
 
-MerchantProfileSchema.statics.findMerchantByContactPerson = function(contact_person, cb) {
+MerchantProfileSchema.statics.findMerchantByContactPerson = function(contact_person, banned, location_city, cb) {
+    if (location_city!=null) {
+        this.find({
+            "merchant.contact_person": contact_person,
+            "merchant.banned": banned,
+            "merchant.location_city": location_city
+        }).exec(cb);
+    } else{
+        this.find({
+            "merchant.contact_person": contact_person,
+            "merchant.banned": banned
+        }).exec(cb);
+    };
+
+}
+
+MerchantProfileSchema.statics.findMerchantByMobile = function(mobile, banned, location_city, cb) {
+    if (location_city!=null) {
+        this.find({
+            "merchant.mobile": mobile,
+            "merchant.banned": banned,
+            "merchant.location_city": location_city
+        }).exec(cb);
+    } else{
+        this.find({
+            "merchant.mobile": mobile,
+            "merchant.banned": banned
+        }).exec(cb);
+    };
+}
+
+MerchantProfileSchema.statics.findMerchantByWebsite = function(website, banned, location_city, cb) {
+    if (location_city!=null) {
+        this.find({
+            "merchant.website": website,
+            "merchant.banned": banned,
+            "merchant.location_city": location_city
+        }).exec(cb);
+    } else{
+        this.find({
+            "merchant.website": website,
+            "merchant.banned": banned
+        }).exec(cb);
+    };
+
+}
+
+MerchantProfileSchema.statics.findMerchantByLocationCity = function(location_city, banned, cb) {
     this.find({
-        "merchant.contact_person": contact_person
+        "merchant.location_city": location_city,
+        "merchant.banned": banned
     }).exec(cb);
 }
 
-MerchantProfileSchema.statics.findMerchantByMobile = function(mobile, cb) {
+MerchantProfileSchema.statics.findMerchantByBanned = function(banned, cb) {
     this.find({
-        "merchant.mobile": mobile
-    }).exec(cb);
-}
-
-MerchantProfileSchema.statics.findMerchantByWebsite = function(website, cb) {
-    this.find({
-        "merchant.website": website
-    }).exec(cb);
-}
-
-MerchantProfileSchema.statics.findMerchantByLocationCity = function(location_city, cb) {
-    this.findOne({
-        "merchant.location_city": location_city
+        "merchant.banned": banned
     }).exec(cb);
 }
 

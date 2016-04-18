@@ -13,3 +13,17 @@ exports.getAdminResponseMerchantList = function(req,res){
 		};
 	});
 }
+
+exports.getAllTasks = function(req, res){
+
+	var page = req.query.page;
+	var page_size = req.query.page_show_amount;
+
+	  AdminTaskProfile.getAllTasks( page, page_size, function (err, tasks) {
+	    if (err) {
+	      	res.sendError(err);
+	    } else{
+	      	res.sendData(tasks,"获取成功");
+	    };
+	  })
+}

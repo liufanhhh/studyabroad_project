@@ -36,6 +36,7 @@ module.exports = function(app) {
     app.get("/admin/login", Enter.authenticateAdmin, Enter.adminPageEnter);
     app.get("/admin/index", Enter.authenticateAdmin, Enter.adminPageEnter);
     app.get("/admin/get/admin/list", Enter.authenticateAdmin, AdminProfile.getAllAdmins);
+    app.get("/admin/all/task/list", Enter.authenticateAdmin, AdminTaskProfile.getAllTasks);
     app.get("/admin/get/merchant/list", Enter.authenticateAdmin, MerchantProfile.getMerchantList);
     app.get("/admin/current/name", function(req, res) {
     	res.sendData(req.session.admin_name,"获取成功");

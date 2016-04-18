@@ -172,45 +172,57 @@ exports.getMerchantList = function (req, res){
 }
 
 exports.searchMerchant = function (req, res){
-  var sub_function = req.query.key;
-  var value = req.query.value;
+  var sub_function = req.query.key||null;
+  var value = req.query.value||null;
+  var banned = req.query.banned;
+  var location_city = req.query.location_city||null;
 
-  switch(sub_function) {
-    case "id": 
-    MerchantProfile.findMerchantById( value, function (err, merchantlist) {
+  if (sub_function!=null) {
+
+    switch(sub_function) {
+      case "id": 
+      MerchantProfile.findMerchantById( value, function (err, merchantlist) {
+        callbackfunction(res, err, merchantlist);
+      });
+      break;
+      case "name": 
+      MerchantProfile.findMerchantByName( value, function (err, merchantlist) {
+        callbackfunction(res, err, merchantlist);
+      });
+      break;
+      case "email": 
+      MerchantProfile.findMerchantByEmail( value, function (err, merchantlist) {
+        callbackfunction(res, err, merchantlist);
+      });
+      break;
+      case "contact_person": 
+      MerchantProfile.findMerchantByContactPerson( value, banned, location_city, function (err, merchantlist) {
+        callbackfunction(res, err, merchantlist);
+      });
+      break;
+      case "mobile": 
+      MerchantProfile.findMerchantByMobile( value, banned, location_city, function (err, merchantlist) {
+        callbackfunction(res, err, merchantlist);
+      });
+      break;
+      case "website": 
+      MerchantProfile.findMerchantByWebsite(value, banned, location_city, function (err, merchantlist) {
+        callbackfunction(res, err, merchantlist);
+      });
+      break;
+    }
+
+  } else if(location_city!=null){
+    MerchantProfile.findMerchantByLocationCity( location_city, banned, function (err, merchantlist) {
       callbackfunction(res, err, merchantlist);
     });
-    break;
-    case "name": 
-    MerchantProfile.findMerchantByName( value, function (err, merchantlist) {
+  } else if(banned==true) {
+    MerchantProfile.findMerchantByBanned(banned, function (err, merchantlist) {
       callbackfunction(res, err, merchantlist);
     });
-    break;
-    case "email": 
-    MerchantProfile.findMerchantByEmail( value, function (err, merchantlist) {
-      callbackfunction(res, err, merchantlist);
-    });
-    break;
-    case "contact_person": 
-    MerchantProfile.findMerchantByContactPerson( value, function (err, merchantlist) {
-      callbackfunction(res, err, merchantlist);
-    });
-    break;
-    case "mobile": 
-    MerchantProfile.findMerchantByMobile( value, function (err, merchantlist) {
-      callbackfunction(res, err, merchantlist);
-    });
-    break;
-    case "website": 
-    MerchantProfile.findMerchantByWebsite( value, function (err, merchantlist) {
-      callbackfunction(res, err, merchantlist);
-    });
-    break;
-    case "location_city": 
-    MerchantProfile.findMerchantByLocationCity( value, function (err, merchantlist) {
-      callbackfunction(res, err, merchantlist);
-    });
-    break;
-  }
+  } else {
+    res.sendError("必填项未填写");
+  };
+
 }
 

@@ -103,7 +103,7 @@ body {
 	z-index: 20;
 }
 
-.avatar {
+.logo {
 	position:absolute; 
 	width:70px;
 	height:70px;
@@ -111,6 +111,14 @@ body {
 	padding-right: 0px;
 	right:30px;
 	z-index: 30;
+}
+
+.avatar {
+	position:absolute;
+	max-width: 150px;
+	max-height: 150px;
+	border: 7px solid white;
+	background-color: gray;
 }
 
 .admin-index-child{

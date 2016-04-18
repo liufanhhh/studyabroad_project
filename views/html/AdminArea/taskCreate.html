@@ -1,0 +1,40 @@
+<div class="admin-index-child">
+
+	<div>      
+		<table>   
+		    <tr>
+	           <th>任务标题</th>
+	           <th>商户ID或名称</th>
+	           <th>负责人</th>
+	           <th>任务内容</th>
+	        </tr>
+	        header: String,
+	              merchant: {
+	                  id: Number,
+	                  name: String,
+	                  hierarchy: String,
+	                  willing_to_cooperate: Boolean
+	              },
+	              assign_admin: String,
+	              create_admin: String,
+	              task_type: String,
+	              status: String,
+	              create_time: Date,
+	              note: Array
+	        <tr >
+	            <td><input ng-model="task.header"></td>
+	            <td><input ng-model="task.merchant."></td>
+	            <td>	            	
+	            	<select name="task_type" ng-model="task.assign_admin">
+	            	  <option value = "{{admin.admin.name}}" ng-repeat = "admin in all_admins" ng-bind = "admin.admin.name"></option>
+	            	</select>
+	            </td>
+	            <td>
+	            	<input ng-model="task.content">
+	            </td>
+	            <td><button class="button" ng-click="findTask()">搜索</button></td>
+	        </tr>
+        </table>
+	</div>
+
+</div>

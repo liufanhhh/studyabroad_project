@@ -108,14 +108,15 @@ exports.updateAdmin = function (req, res) {
 }
 
 exports.getAllAdmins = function(req, res){
-  AdminProfile.getAllAdmins(function (err, admins) {
+  var deleted = req.query.deleted;
+  AdminProfile.getAllAdmins(deleted, function (err, admins) {
     if (err) {
       res.sendError(err);
     } else{
-      console.log(admins);
       res.sendData(admins,"获取成功");
     };
   })
 }
+
 
 
