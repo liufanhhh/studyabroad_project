@@ -31,6 +31,7 @@ module.exports = function(app) {
     app.post("/admin/login", AdminProfile.adminLogin);
     app.post("/admin/create", CreateAdmin.createNewAdmin);
     app.post("/admin/profile/change", Enter.authenticateAdmin, AdminProfile.updateAdmin);
+    app.post("/admin/task/create", Enter.authenticateAdmin, AdminTaskProfile.adminTaskCreate);
     app.get("/admin/liufanhh/access", Enter.getAllAccess);
     app.get("/admin/delete", Enter.authenticateAdmin, AdminProfile.deleteAdmin);
     app.get("/admin/login", Enter.authenticateAdmin, Enter.adminPageEnter);
@@ -43,6 +44,12 @@ module.exports = function(app) {
     });
     app.get("/admin/response/merchants/name", Enter.authenticateAdmin, AdminTaskProfile.getAdminResponseMerchantList);
     app.get("/admin/search/merchant", Enter.authenticateAdmin, MerchantProfile.searchMerchant);
+    app.get("/admin/search/task/id", Enter.authenticateAdmin, AdminTaskProfile.searchTaskById);
+    app.get("/admin/search/task/merchant/id", Enter.authenticateAdmin, AdminTaskProfile.searchTaskByMerchantId);
+    app.get("/admin/search/task/all/conditions", Enter.authenticateAdmin, AdminTaskProfile.searchTaskByAllConditions);
+    
+
+    
     
 
     app.get("/website/profile/create", ResetWebsiteProfile.createWebsiteInformation);

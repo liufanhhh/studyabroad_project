@@ -28,7 +28,7 @@ adminIndexApp.config(function($routeProvider, $locationProvider) {
     }).
     when('/task/create', {
         templateUrl: '../html/AdminArea/taskCreate.html',
-        controller: 'taskController'
+        controller: 'taskCreateController'
     }).    
     when('/admin/profile', {
         templateUrl: '../html/AdminArea/adminProfile.html',
@@ -62,6 +62,7 @@ adminIndexApp.controller('adminIndexController', function($scope, $resource, $ro
 		});
 	};
 	$scope.getAllAdmins(0);
+	
 	//密码加密
 	$scope.signature = function (salt, value) {
 		return md5.createHash(salt+"liufanhh"+md5.createHash(value));
@@ -172,8 +173,8 @@ adminIndexApp.controller('adminListController', function($scope, $resource, $rou
 });
 
 adminIndexApp.controller('taskController', function($scope, $resource, $routeParams, $location) {
-	$scope.getAllAdmins(1);
-
+	
+	$scope.search_task = {};
 	$scope.getAllTasks = function  (page) {
 		$resource("/admin/all/task/list").get({
 			page: page,
@@ -188,68 +189,76 @@ adminIndexApp.controller('taskController', function($scope, $resource, $routePar
 	};
 	$scope.getAllTasks(1);
 
+	$scope.getAllAdmins = function  (deleted) {
+		$resource("/admin/get/admin/list").get({
+			deleted: deleted
+		},function(res){
+			$scope.all_admins = res.data;
+			$scope.search_task_default = {
+				assign_admin: [],
+				create_admin: [],
+				task_type: ["SignUpMerchant","AdminCreate","LiveApproval"],
+				status: ["Initial","Processing","Finished"]
+			};
+
+			for (var i = $scope.all_admins.length - 1; i >= 0; i--) {
+				$scope.search_task_default.assign_admin.push($scope.all_admins[i].admin.name);
+				$scope.search_task_default.create_admin.push($scope.all_admins[i].admin.name);
+			};
+
+			$scope.search_task_default.assign_admin.push("Nobody");
+			$scope.search_task_default.create_admin.push("System");
+			
+		});
+	};
+	$scope.getAllAdmins(1);
+
 	$scope.findTask = function () {
 
-		if ($scope.search_task.id!=null) {
+		if ($scope.search_task.id!=null&&$scope.search_task.id!="") {
+			console.log($scope.search_task.id);
 			$resource("/admin/search/task/id").get({
-				id: id
+				_id: $scope.search_task.id
 			},function(res){
 				if (res.status==0) {
 					console.log("warning");
 				} else if (res.status == 1){
-
+					$scope.tasks = res.data;
 				}
 			});
-		} else if($scope.search_task.merchant!=null&&$scope.search_task.merchant.id!=null){
-
-		};
-
-		for ( var key in $scope.merchant) {
-			if ($scope.merchant[key] != null && $scope.merchant[key] != "") {
-				$scope.detail_checking = true;
-				$resource("/admin/search/merchant").get({
-					key: key,
-					value: $scope.merchant[key],
-					banned: $scope.banned,
-					location_city: $scope.location_city
-				},function(res){
-					if (res.status==0) {
-						console.log("warning");
-					} else if (res.status == 1){
-						if (typeof(res.data)=="array"||typeof(res.data)=="object") {
-							$scope.merchants = res.data;
-						} else{
-							$scope.all_merchant_list_show = false;
-							$scope.search_merchant_list_show = true;
-							$scope.search_merchant = res.data.merchant;
-						};
-					};
-				});
-				break;
-			};
-		};
-
-		if (!$scope.detail_checking) {
-			$resource("/admin/search/merchant").get({
-				banned: $scope.banned,
-				location_city: $scope.location_city
+		} else if($scope.search_task.merchant!=null&&$scope.search_task.merchant.id!=""){
+			$resource("/admin/search/task/merchant/id").get({
+				merchant_id: $scope.search_task.merchant.id
 			},function(res){
 				if (res.status==0) {
 					console.log("warning");
 				} else if (res.status == 1){
-					if (typeof(res.data)=="array"||typeof(res.data)=="object") {
-						$scope.merchants = res.data;
-					} else{
-						$scope.all_merchant_list_show = false;
-						$scope.search_merchant_list_show = true;
-						$scope.search_merchant = res.data.merchant;
-					};
-
+					$scope.tasks = res.data;
+				}
+			});
+		} else{
+			$scope.search_task_new = new Object();
+			for (var key in $scope.search_task_default) {
+				$scope.search_task_new[key] = $scope.search_task_default[key];
+			};
+			for ( var key in $scope.search_task) {
+				if ($scope.search_task[key] != null && $scope.search_task[key] != "") {
+					$scope.search_task_new[key] = [];
+					$scope.search_task_new[key].push($scope.search_task[key]);
 				};
+			};
+			$resource("/admin/search/task/all/conditions").get({
+				task: $scope.search_task_new
+			},function(res){
+				if (res.status==0) {
+					console.log("warning");
+				} else if (res.status == 1){
+					$scope.tasks = res.data;
+				}
 			});
 		};
-
 	};
+
 });
 
 adminIndexApp.controller('merchantListController', function($scope, $resource, $routeParams, $location) {
@@ -443,5 +452,34 @@ adminIndexApp.controller('adminManagementController', function($scope, $resource
 			$scope.admin_changing_profile.password = null;
 		});
 	}
+
+});
+
+adminIndexApp.controller('taskCreateController', function($scope, $resource, $routeParams, $location) {
+
+	$scope.task = {
+		assign_admin: "Nobody",
+		note: [],
+		create_admin: $scope.current_admin,
+		task_type: "AdminCreate",
+		status: "Initial",
+		create_time: new Date()
+	};
+
+	$scope.taskCreate = function (argument) {
+		$scope.task.note[0] = {
+			create_admin: $scope.current_admin,
+			content: $scope.task.content
+		};
+		$resource("/admin/task/create").save({
+			task: $scope.task
+		},function(res){
+			if (res.status==0) {
+				console.log("warning");
+			} else if (res.status == 1){
+				$scope.taskCreate_result = "创建成功";
+			}
+		});
+	};
 
 });

@@ -15,9 +15,9 @@ db.once('open', function() {
 });
 
 
-var id = "571458929261657c1f3446b0";
+var assign_admin = ["Nobody","liufan"];
 
-AdminTaskProfile.findTaskByTaskId(id,function(error,profile){
+AdminTaskProfile.findTaskByFilter(assign_admin,function(error,profile){
 	if (error) {
 		console.log(error);
 	} else {

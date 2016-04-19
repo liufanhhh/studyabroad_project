@@ -61,21 +61,23 @@ exports.countUsersAmount = function(req,res){
 }
 
 exports.createWebsiteInformation = function (req,res) {
-	var website_name = req.query.website_name;
-	var user_amount = req.query.user_amount||0;
-	var merchant_amount = req.query.merchant_amount||0;
-	WebsiteProfile.getInformation(website_name, function(error, website_profile){
-		console.log(website_profile);
-		if (website_profile == null) {
-			WebsiteProfile.createWebsiteInformation(website_name, user_amount, merchant_amount, function (error, website_profile) {
-				if (error) {
-					res.sendError("设定失败");
-				}else {
-					res.sendSuccess("成功初始化网站信息");
-				}
-			});
-		} else{
-			res.sendError("设定失败，网站信息已存在");
-		};
-	});
+	var merchant = {
+		id: 0
+	};
+	var user = {
+		id:0
+	};
+	MerchantProfile.createNewMerchant(merchant, function(err, new_merchant){
+        if (err||new_merchant==null) {
+          	res.sendError("设置失败");
+        } else{
+        	UserProfile.createNewUser(user, function(err, new_user){
+        		if (err||new_user==null) {
+        			res.sendError("设置失败");
+        		} else{
+	          		res.sendSuccess("设置成功");
+        		};
+        	});
+        };
+    });
 }

@@ -54,7 +54,8 @@ var app = express();
 app.set('view engine', 'ejs');
 app.engine('.html', require('ejs').renderFile);
 // uncomment after placing your favicon in /public
-app.use(favicon(__dirname + '/storage/public/logo.jpg'));
+console.log(__dirname);
+app.use(favicon(__dirname + '/views/storage/public/logo.jpg'));
 app.use(logger('dev'));busboy
 app.use(busboy());
 app.use(bodyParser.json());

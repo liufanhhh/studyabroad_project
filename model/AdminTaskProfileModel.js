@@ -21,6 +21,11 @@ var AdminTaskProfileSchema = mongoose.Schema({
         status: String,
         create_time: Date,
         note: Array
+        // {
+        //     create_admin: String,
+        //     content: String
+        // }
+        
     }
 });
 //----------------static method--------------------//
@@ -34,16 +39,26 @@ AdminTaskProfileSchema.statics.getAllTasks = function(page, page_size, cb) {
     this.find().sort({"task.create_time": 'desc'}).skip(page_size*(page-1)).limit(page_size).exec(cb);
 }
 
-AdminTaskProfileSchema.statics.findTaskByMerchantId = function(merchant_id, cb) {
+AdminTaskProfileSchema.statics.searchTaskByMerchantId = function(merchant_id, cb) {
     this.find({"task.merchant.id":merchant_id}, cb);
 }
 
-AdminTaskProfileSchema.statics.findTaskByTaskId = function(task_id, cb) {
-    this.find({_id:task_id}, cb);
+AdminTaskProfileSchema.statics.searchTaskById = function(_id, cb) {
+    this.find({_id:_id}, cb);
 }
 
 AdminTaskProfileSchema.statics.getAdminResponseMerchantList = function(admin_name, cb) {
     this.find({"task.assign_admin":admin_name}).select("task.merchant.name").exec(cb);
+}
+
+AdminTaskProfileSchema.statics.searchTaskByAllConditions = function(task, cb) {
+    console.log(task);
+    this
+    .where("task.assign_admin").in(task.assign_admin)
+    .where("task.create_admin").in(task.create_admin)
+    .where("task.status").in(task.status)
+    .where("task.task_type").in(task.task_type)
+    .exec(cb);
 }
 
 
