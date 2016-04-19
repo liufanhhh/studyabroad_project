@@ -1,0 +1,42 @@
+<div class="admin-index-child">
+
+	<h1>创建任务</h1>
+
+		<form name="taskCreateForm" role="form"  novalidate>
+
+			<div>
+				<label>任务标题：</label>
+				<input name="header" class="form-control" type="text" ng-model="task.header" required >
+				<p class="help-block" ng-show="taskCreateForm.header.$error.required && !taskCreateForm.header.$pristine">该项必填</p>
+				<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="taskCreateForm.header.$valid"> 对</span>
+				<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="taskCreateForm.header.$invalid && !taskCreateForm.header.$pristine">x</span>
+			</div>
+
+			<div>
+				<label>商户ID或者名称：</label>
+				<input name="merchant_name_id" class="form-control" type="text" ng-model="task.merchant_name_id" required >
+				<p class="help-block" ng-show="taskCreateForm.merchant_name_id.$error.required && !taskCreateForm.merchant_name_id.$pristine">该项必填</p>
+				<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="taskCreateForm.merchant_name_id.$valid"> 对</span>
+				<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="taskCreateForm.merchant_name_id.$invalid && !taskCreateForm.merchant_name_id.$pristine">x</span>
+			</div>
+
+			<div>
+				<label>分配任务给：</label>
+				<select name="assign_admin" ng-model="task.assign_admin">
+				  <option value = "Nobody">无人跟进</option>
+				  <option value = "{{admin.admin.name}}" ng-repeat = "admin in all_admins" ng-bind = "admin.admin.name"></option>
+				</select>
+			</div>
+			</br>
+			<div>
+				<label>任务详细内容：</label>
+				<input name="content" class="form-control" type="text" ng-model="task.content" required >
+				<p class="help-block" ng-show="taskCreateForm.content.$error.required && !taskCreateForm.content.$pristine">该项必填</p>
+				<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="taskCreateForm.content.$valid"> 对</span>
+				<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="taskCreateForm.content.$invalid && !taskCreateForm.content.$pristine">x</span>
+			</div>
+			<button ng-click ="taskCreate()" class="btn btn-primary" ng-disabled="taskCreateForm.$invalid" >确定添加商户</button>
+		  		{{taskCreate_result}}
+		</form>
+		
+</div>
