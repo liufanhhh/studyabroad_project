@@ -80,10 +80,11 @@ exports.createNewMerchant = function(req,res){
             willing_to_cooperate: merchant_profile.merchant.willing_to_cooperate,
             name: merchant_profile.merchant.name
         },
-        admin: merchant.follow_up_admin,
+        assign_admin: merchant.follow_up_admin,
+        create_admin: "System",
         task_type: "SignUpMerchant",
-        status: "initial",
-        create_time: new Date().getTime(),
+        status: "Initial",
+        create_time: new Date().getTime()
       };
       AdminTaskProfile.createNewTask(task, function(err, new_task){
         if (err||new_task==null) {

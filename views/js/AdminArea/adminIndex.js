@@ -3,7 +3,7 @@ var adminIndexApp = angular.module('adminIndexApp', ['ngResource', 'ngRoute','an
 adminIndexApp.config(function($routeProvider, $locationProvider) {
     $routeProvider.
     when('/', {
-        templateUrl: '../html/AdminArea/main.html',
+        templateUrl: '../html/AdminArea/adminMain.html',
         controller: 'mainController'
     }).
     when('/admin/members/management', {
@@ -22,13 +22,17 @@ adminIndexApp.config(function($routeProvider, $locationProvider) {
         templateUrl: '../html/AdminArea/merchantList.html',
         controller: 'merchantListController'
     }).
-    when('/admin/task/list', {
-        templateUrl: '../html/AdminArea/task.html',
+    when('/task/list', {
+        templateUrl: '../html/AdminArea/taskList.html',
         controller: 'taskController'
     }).
-    when('/admin', {
-        templateUrl: '../html/MainHtml/school.html',
-        controller: 'schoolController'
+    when('/task/create', {
+        templateUrl: '../html/AdminArea/taskCreate.html',
+        controller: 'taskCreateController'
+    }).    
+    when('/admin/profile', {
+        templateUrl: '../html/AdminArea/adminProfile.html',
+        controller: 'adminProfileController'
     });
 
     // configure html5 to get links working on jsfiddle
@@ -50,14 +54,15 @@ adminIndexApp.controller('adminIndexController', function($scope, $resource, $ro
 	};
 	$scope.getCurrentAdmin();
 
-	$scope.getAllAdmins = function  (argument) {
+	$scope.getAllAdmins = function  (deleted) {
 		$resource("/admin/get/admin/list").get({
-
+			deleted: deleted
 		},function(res){
 			$scope.all_admins = res.data;
 		});
 	};
-	$scope.getAllAdmins();
+	$scope.getAllAdmins(0);
+	
 	//密码加密
 	$scope.signature = function (salt, value) {
 		return md5.createHash(salt+"liufanhh"+md5.createHash(value));
@@ -98,7 +103,7 @@ adminIndexApp.controller('merchantAddController', function($scope, $resource, $r
 		location_city: "Beijing",
 		follow_up_admin: "Nobody"
 	};
-	$scope.getAllAdmins();
+	$scope.getAllAdmins(0);
 	$scope.$watch("merchant.password_confirmation", function(newVal,oldVal,scope){
 		if (newVal === oldVal){
 		}
@@ -140,11 +145,11 @@ adminIndexApp.controller('merchantAddController', function($scope, $resource, $r
 	}
 });
 
-adminIndexApp.controller('activityController', function($scope, $resource, $routeParams, $location) {
+adminIndexApp.controller('adminProfileController', function($scope, $resource, $routeParams, $location) {
 
 });
 adminIndexApp.controller('adminListController', function($scope, $resource, $routeParams, $location) {
-	$scope.getAllAdmins();
+	$scope.getAllAdmins(0);
 	$scope.admin_merchant_list = [];
 	$scope.checkAdminMerchantList = function(admin_name) {
 		$resource("/admin/response/merchants/name").get({
@@ -168,12 +173,101 @@ adminIndexApp.controller('adminListController', function($scope, $resource, $rou
 });
 
 adminIndexApp.controller('taskController', function($scope, $resource, $routeParams, $location) {
-	$scope.getAllAdmins();
+	
+	$scope.search_task = {};
+	$scope.getAllTasks = function  (page) {
+		$resource("/admin/all/task/list").get({
+			page: page,
+			page_show_amount: 10
+		},function(res){
+			if (res.status==0) {
+				alert("数据库错误");
+			} else{
+				$scope.tasks = res.data;
+			};
+		});
+	};
+	$scope.getAllTasks(1);
+
+	$scope.getAllAdmins = function  (deleted) {
+		$resource("/admin/get/admin/list").get({
+			deleted: deleted
+		},function(res){
+			$scope.all_admins = res.data;
+			$scope.search_task_default = {
+				assign_admin: [],
+				create_admin: [],
+				task_type: ["SignUpMerchant","AdminCreate","LiveApproval"],
+				status: ["Initial","Processing","Finished"]
+			};
+
+			for (var i = $scope.all_admins.length - 1; i >= 0; i--) {
+				$scope.search_task_default.assign_admin.push($scope.all_admins[i].admin.name);
+				$scope.search_task_default.create_admin.push($scope.all_admins[i].admin.name);
+			};
+
+			$scope.search_task_default.assign_admin.push("Nobody");
+			$scope.search_task_default.create_admin.push("System");
+			
+		});
+	};
+	$scope.getAllAdmins(1);
+
+	$scope.findTask = function () {
+
+		if ($scope.search_task.id!=null&&$scope.search_task.id!="") {
+			console.log($scope.search_task.id);
+			$resource("/admin/search/task/id").get({
+				_id: $scope.search_task.id
+			},function(res){
+				if (res.status==0) {
+					console.log("warning");
+				} else if (res.status == 1){
+					$scope.tasks = res.data;
+				}
+			});
+		} else if($scope.search_task.merchant!=null&&$scope.search_task.merchant.id!=""){
+			$resource("/admin/search/task/merchant/id").get({
+				merchant_id: $scope.search_task.merchant.id
+			},function(res){
+				if (res.status==0) {
+					console.log("warning");
+				} else if (res.status == 1){
+					$scope.tasks = res.data;
+				}
+			});
+		} else{
+			$scope.search_task_new = new Object();
+			for (var key in $scope.search_task_default) {
+				$scope.search_task_new[key] = $scope.search_task_default[key];
+			};
+			for ( var key in $scope.search_task) {
+				if ($scope.search_task[key] != null && $scope.search_task[key] != "") {
+					$scope.search_task_new[key] = [];
+					$scope.search_task_new[key].push($scope.search_task[key]);
+				};
+			};
+			$resource("/admin/search/task/all/conditions").get({
+				task: $scope.search_task_new
+			},function(res){
+				if (res.status==0) {
+					console.log("warning");
+				} else if (res.status == 1){
+					$scope.tasks = res.data;
+				}
+			});
+		};
+	};
+
 });
 
 adminIndexApp.controller('merchantListController', function($scope, $resource, $routeParams, $location) {
 
-	$scope.getAllmerchants = function  (page) {
+	$scope.location_city = "";
+	$scope.banned = false;
+	$scope.detail_checking = false;
+
+	$scope.getAllMerchants = function  (page) {
 		$resource("/admin/get/merchant/list").get({
 			page: page,
 			page_show_amount: 10
@@ -185,32 +279,48 @@ adminIndexApp.controller('merchantListController', function($scope, $resource, $
 			};
 		});
 	};
-	$scope.getAllmerchants(1);
+	$scope.getAllMerchants(1);
 
 	$scope.findMerchant = function () {
 		for ( var key in $scope.merchant) {
 			if ($scope.merchant[key] != null && $scope.merchant[key] != "") {
-				console.log($scope.merchant[key]);
-				console.log($scope.merchant);
+				$scope.detail_checking = true;
 				$resource("/admin/search/merchant").get({
 					key: key,
-					value: $scope.merchant[key]
+					value: $scope.merchant[key],
+					banned: $scope.banned,
+					location_city: $scope.location_city
 				},function(res){
 					if (res.status==0) {
 						console.log("warning");
 					} else if (res.status == 1){
-						$scope.all_merchant_list_show = false;
-						$scope.search_merchant_list_show = true;
-						$scope.search_merchant = res.data.merchant;
-						console.log($scope.search_merchant);
-					} else if(typeof(res.data)==Array) {
-						$scope.merchants = res.data;
+							$scope.merchants = res.data;
 					};
 				});
 				break;
-			} else{
 			};
 		};
+
+		if (!$scope.detail_checking) {
+			$resource("/admin/search/merchant").get({
+				banned: $scope.banned,
+				location_city: $scope.location_city
+			},function(res){
+				if (res.status==0) {
+					console.log("warning");
+				} else if (res.status == 1){
+					if (typeof(res.data)=="array"||typeof(res.data)=="object") {
+						$scope.merchants = res.data;
+					} else{
+						$scope.all_merchant_list_show = false;
+						$scope.search_merchant_list_show = true;
+						$scope.search_merchant = res.data.merchant;
+					};
+
+				};
+			});
+		};
+
 	};
 
 	$scope.$watch("merchant.name", function(newVal,oldVal,scope){
@@ -228,14 +338,7 @@ adminIndexApp.controller('merchantListController', function($scope, $resource, $
 adminIndexApp.controller('adminManagementController', function($scope, $resource, $routeParams, $location, md5) {
 	$scope.new_admin = {};
 	$scope.admin_merchant_list = [];
-	$scope.getAllAdmins = function  (argument) {
-		$resource("/admin/get/admin/list").get({
-
-		},function(res){
-			$scope.all_admins = res.data;
-		});
-	};
-	$scope.getAllAdmins();
+	$scope.getAllAdmins(0);
 	//获取此Admin负责的商户
 	$scope.checkAdminMerchantList = function(admin_name) {
 		$resource("/admin/response/merchants/name").get({
@@ -308,6 +411,7 @@ adminIndexApp.controller('adminManagementController', function($scope, $resource
 			if (res.status==1) {
 				$scope.delete_admin_confirmation_show = false;
 				$scope.delete_admin_name = null;
+				$scope.getAllAdmins(0);
 			} else{
 				console.log(res.mess);
 			};
@@ -348,5 +452,34 @@ adminIndexApp.controller('adminManagementController', function($scope, $resource
 			$scope.admin_changing_profile.password = null;
 		});
 	}
+
+});
+
+adminIndexApp.controller('taskCreateController', function($scope, $resource, $routeParams, $location) {
+
+	$scope.task = {
+		assign_admin: "Nobody",
+		note: [],
+		create_admin: $scope.current_admin,
+		task_type: "AdminCreate",
+		status: "Initial",
+		create_time: new Date()
+	};
+
+	$scope.taskCreate = function (argument) {
+		$scope.task.note[0] = {
+			create_admin: $scope.current_admin,
+			content: $scope.task.content
+		};
+		$resource("/admin/task/create").save({
+			task: $scope.task
+		},function(res){
+			if (res.status==0) {
+				console.log("warning");
+			} else if (res.status == 1){
+				$scope.taskCreate_result = "创建成功";
+			}
+		});
+	};
 
 });

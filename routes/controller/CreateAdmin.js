@@ -6,6 +6,7 @@ var WebsiteProfile = require("../../model/WebsiteProfileModel.js");
 exports.createNewAdmin = function(req,res){
   var admin = req.body.admin;
   admin.password = admin.password_sign;
+  admin.deleted = false;
   var sameName = Q.nfbind(AdminProfile.findAdminByName.bind(AdminProfile));
   var websit_name = "留学点评网";
 

@@ -12,7 +12,7 @@ var AdminProfileSchema = mongoose.Schema({
         email: String,
         password: String,
         mobile: String,
-
+        deleted: Boolean,
         status: String,
         birthday: String,
         title: String,
@@ -28,8 +28,10 @@ AdminProfileSchema.statics.findAdminById = function(id, cb) {
 
 AdminProfileSchema.statics.deleteAdminByName = function(name, cb) {
     console.log(name);
-    this.findOneAndRemove({
+    this.findOneAndUpdate({
         "admin.name": name
+    },{
+        $set:{"admin.deleted": true}
     }, cb);
 }
 
@@ -175,11 +177,13 @@ AdminProfileSchema.statics.saveAdmin = function(Admin, cb) {
     }, cb);
 }
 
-AdminProfileSchema.statics.getAllAdmins = function(cb) {
-    this.find().exec(cb);
+AdminProfileSchema.statics.getAllAdmins = function(deleted, cb) {
+    if (deleted==false) {
+        this.find({"admin.deleted":deleted}).exec(cb);
+    } else{
+        this.find().exec(cb);
+    };
 }
-
-
 
 //---------------non-static method------------------//
 

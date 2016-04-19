@@ -74,13 +74,13 @@
 				任务管理
 					<ul class="drop-down-list-ul" ng-if="nav_child.tasks">
 						<li class="drop-down-list-li">
-							<a class="button big" href="#/admin/task/list">全部任务</a>
+							<a class="button big" href="#/task/list">全部任务</a>
 						</li>
 						<li class="drop-down-list-li">
-							<a class="button big" href="#/admin/mytasks">我的任务</a>
+							<a class="button big" href="#/mytasks">我的任务</a>
 						</li>
 						<li class="drop-down-list-li">
-							<a class="button big" href="#/admin/create/task">创建任务</a>
+							<a class="button big" href="#/task/create">创建任务</a>
 						</li>
 					</ul>
 				</li>
@@ -89,7 +89,7 @@
 			</ul>
 
 			<div ng-mouseover="navChildOptionsShow('admin')" ng-mouseleave="navChildOptionsHide()" >			
-				<img class="avatar"  ng-src="/storage/Admin/logo.jpg">
+				<a href="#/"><img class="logo" ng-src="/storage/Admin/logo.jpg"></a>
 				<ul class="admin-drop-down-list-ul" ng-mouseover="navChildOptionsShow('admin')" ng-mouseleave="navChildOptionsHide()" ng-if="nav_child.admin">
 					<li class="admin-drop-down-list-li-first">
 						<a class="button big" href="#/admin/profile">个人资料</a>

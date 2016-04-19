@@ -23,7 +23,7 @@
           <td><input type="text" ng-model = "merchant.mobile" /></td> 
           <td><input type="text" ng-model = "merchant.website" /></td> 
           <td>      
-            <select name="location_city" ng-model="merchant.location_city">
+            <select name="location_city" ng-model="location_city">
               <option value = "">全部</option>
               <option value = "Beijing">北京</option>
               <option value = "Shanghai">上海</option>
@@ -31,7 +31,7 @@
             </select>
           </td> 
           <td>      
-            <select name="banned" ng-model="merchant.banned" ng-init="false">
+            <select name="banned" ng-model="banned">
               <option value = "false">未封号</option>
               <option value = "true">已封号</option>
             </select>
@@ -50,10 +50,12 @@
            <th>商户官网</th>
            <th>商户城市</th>
            <th>是否封号</th>
+           <th>是否愿意合作</th>
+           <th>商户等级</th>
            <th>操作</th>
         </tr>
 
-        <tr ng-repeat = "profile in merchants" ng-if = "!search_merchant_list_show">
+        <tr ng-repeat = "profile in merchants">
             <td ng-bind="profile.merchant.id"></td>
             <td ng-bind="profile.merchant.name"></td>
             <td ng-bind="profile.merchant.email"></td>
@@ -61,24 +63,12 @@
             <td ng-bind="profile.merchant.website"></td>
             <td ng-bind="profile.merchant.location_city"></td>
             <td ng-bind="profile.merchant.banned"></td>
+            <td ng-bind="profile.merchant.willing_to_cooperate"></td>
+            <td ng-bind="profile.merchant.hierarchy"></td>
             <td>
               <button class="button" ng-click="adminLogin(profile.merchant.id)">登陆</button>
               <button class="button" ng-click="merchantProfileChangePage(profile.merchant.id)">编辑</button>
               <button class="button" ng-click="merchantLiveSetting()">上线审核</button>
-            </td>
-        </tr>
-        <tr ng-if = "search_merchant_list_show">
-            <td ng-bind="search_merchant.id"></td>
-            <td ng-bind="search_merchant.name"></td>
-            <td ng-bind="search_merchant.email"></td>
-            <td ng-bind="search_merchant.mobile"></td>
-            <td ng-bind="search_merchant.website"></td>
-            <td ng-bind="search_merchant.location_city"></td>
-            <td ng-bind="profile.merchant.banned"></td>
-            <td>
-              <button class="button" ng-click="adminLogin(search_merchant.id)">登陆商户账号</button>
-              <button class="button" ng-click="">编辑商户信息</button>
-              <button class="button" ng-click="">商户上线审核</button>
             </td>
         </tr>
 	</table>

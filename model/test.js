@@ -14,20 +14,15 @@ db.once('open', function() {
 	console.log("succeeded to open mongodb://" +"localhost"+"/"+"studyabroad");
 });
 
-var task = { 
-header: '新创建的商户33311等待跟进',
-  merchant: { id: 11, hierarchy: '2', willing_to_cooperate: true },
-  admin: 'nobody',
-  type: 'SignUpMerchant',
-  status: 'initial',
-  create_time: 1460544317298 
-}
 
-AdminTaskProfile.createNewTask ( task,function(error,userprofile){
+var assign_admin = ["Nobody","liufan"];
+
+AdminTaskProfile.findTaskByFilter(assign_admin,function(error,profile){
 	if (error) {
 		console.log(error);
 	} else {
-		console.log(userprofile);
+		console.log(typeof(profile));
+		console.log(profile);
 	};
 	db.close();
 });

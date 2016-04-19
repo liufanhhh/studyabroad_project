@@ -3,26 +3,20 @@ var fs = require('fs');
 var MerchantProfile = require("../../model/MerchantProfileModel.js");
 var WebsiteProfile = require("../../model/WebsiteProfileModel.js");
 
-var callbackfunction = function (res, err, profile) {
-  if (typeof(profile)==null) {
+var callbackFunction = function (res, err, profile) {
+  if (typeof(profile)=="null") {
     res.sendError("未能查询到");
-  } else if(typeof(profile)==Array||typeof(profile)==Object){
-    if (err||profile[0] == null) {
-      console.log(profile);
+  } else if(typeof(profile)=="array"||typeof(profile)=="object"){
+    if (profile==null||profile[0] == null) {
       res.sendError("获取失败");
     } else{
-      console.log("cheng");
       res.sendData(profile,"获取成功");
     };
-  } else {
-    if (err) {
-      res.sendError("获取失败");
-    } else{
-      console.log("cheng");
-      res.sendData(profile,"获取成功");
-    };
+  } else if(err) {
+     res.sendError(err);
+  } else{
+    res.sendData(profile,"获取成功");
   };
-
 }
 
 exports.profileUpload = function(req, res) {
@@ -172,45 +166,57 @@ exports.getMerchantList = function (req, res){
 }
 
 exports.searchMerchant = function (req, res){
-  var sub_function = req.query.key;
-  var value = req.query.value;
+  var sub_function = req.query.key||null;
+  var value = req.query.value||null;
+  var banned = req.query.banned;
+  var location_city = req.query.location_city||null;
 
-  switch(sub_function) {
-    case "id": 
-    MerchantProfile.findMerchantById( value, function (err, merchantlist) {
-      callbackfunction(res, err, merchantlist);
+  if (sub_function!=null) {
+
+    switch(sub_function) {
+      case "id": 
+      MerchantProfile.findMerchantById( value, function (err, merchantlist) {
+        callbackFunction(res, err, merchantlist);
+      });
+      break;
+      case "name": 
+      MerchantProfile.findMerchantByName( value, function (err, merchantlist) {
+        callbackFunction(res, err, merchantlist);
+      });
+      break;
+      case "email": 
+      MerchantProfile.findMerchantByEmail( value, function (err, merchantlist) {
+        callbackFunction(res, err, merchantlist);
+      });
+      break;
+      case "contact_person": 
+      MerchantProfile.findMerchantByContactPerson( value, banned, location_city, function (err, merchantlist) {
+        callbackFunction(res, err, merchantlist);
+      });
+      break;
+      case "mobile": 
+      MerchantProfile.findMerchantByMobile( value, banned, location_city, function (err, merchantlist) {
+        callbackFunction(res, err, merchantlist);
+      });
+      break;
+      case "website": 
+      MerchantProfile.findMerchantByWebsite(value, banned, location_city, function (err, merchantlist) {
+        callbackFunction(res, err, merchantlist);
+      });
+      break;
+    }
+
+  } else if(location_city!=null){
+    MerchantProfile.findMerchantByLocationCity( location_city, banned, function (err, merchantlist) {
+      callbackFunction(res, err, merchantlist);
     });
-    break;
-    case "name": 
-    MerchantProfile.findMerchantByName( value, function (err, merchantlist) {
-      callbackfunction(res, err, merchantlist);
+  } else if(banned==true) {
+    MerchantProfile.findMerchantByBanned(banned, function (err, merchantlist) {
+      callbackFunction(res, err, merchantlist);
     });
-    break;
-    case "email": 
-    MerchantProfile.findMerchantByEmail( value, function (err, merchantlist) {
-      callbackfunction(res, err, merchantlist);
-    });
-    break;
-    case "contact_person": 
-    MerchantProfile.findMerchantByContactPerson( value, function (err, merchantlist) {
-      callbackfunction(res, err, merchantlist);
-    });
-    break;
-    case "mobile": 
-    MerchantProfile.findMerchantByMobile( value, function (err, merchantlist) {
-      callbackfunction(res, err, merchantlist);
-    });
-    break;
-    case "website": 
-    MerchantProfile.findMerchantByWebsite( value, function (err, merchantlist) {
-      callbackfunction(res, err, merchantlist);
-    });
-    break;
-    case "location_city": 
-    MerchantProfile.findMerchantByLocationCity( value, function (err, merchantlist) {
-      callbackfunction(res, err, merchantlist);
-    });
-    break;
-  }
+  } else {
+    res.sendError("必填项未填写");
+  };
+
 }
 
