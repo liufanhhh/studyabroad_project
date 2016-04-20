@@ -95,6 +95,124 @@ adminIndexApp.controller('adminIndexController', function($scope, $resource, $ro
 
 
 adminIndexApp.controller('mainController', function($scope, $resource, $routeParams, $location) {
+	$scope.search_task = {};
+	$scope.change_assign_admin_show = false;
+	$scope.new_note_content = "";
+	$scope.getAllAdmins = function  (deleted) {
+		$resource("/admin/get/admin/list").get({
+			deleted: deleted
+		},function(res){
+			$scope.all_admins = res.data;
+			$scope.search_task_default = {
+				assign_admin: [],
+				create_admin: [],
+				task_type: ["SignUpMerchant","AdminCreate","LiveApproval"],
+				status: ["Initial","Processing","Finished"]
+			};
+			$scope.search_task_default.assign_admin.push($scope.current_admin);
+
+			for (var i = $scope.all_admins.length - 1; i >= 0; i--) {
+				$scope.search_task_default.create_admin.push($scope.all_admins[i].admin.name);
+			};
+
+			$scope.search_task_default.create_admin.push("System");
+			$scope.findTask();
+		});
+	};
+	$scope.getAllAdmins(1);
+
+	$scope.findTask = function () {
+		$scope.search_task_new = new Object();
+		for (var key in $scope.search_task_default) {
+			$scope.search_task_new[key] = $scope.search_task_default[key];
+		};
+		for ( var key in $scope.search_task) {
+			if ($scope.search_task[key] != null && $scope.search_task[key] != "") {
+				$scope.search_task_new[key] = [];
+				$scope.search_task_new[key].push($scope.search_task[key]);
+			};
+		};
+		$resource("/admin/search/task/all/conditions").get({
+			task: $scope.search_task_new
+		},function(res){
+			if (res.status==0) {
+				console.log("warning");
+			} else if (res.status == 1){
+				$scope.tasks = res.data;
+			}
+		});
+	};
+
+
+	$scope.tasksCurrentAdminCreate = function () {
+		$scope.search_task_default.assign_admin = [];
+		for (var i = $scope.all_admins.length - 1; i >= 0; i--) {
+			$scope.search_task_default.assign_admin.push($scope.all_admins[i].admin.name);
+		};
+		$scope.search_task_default.assign_admin.push("Nobody");
+		$scope.search_task_default.create_admin = [];
+		$scope.search_task_default.create_admin.push($scope.current_admin);
+		$scope.findTask();
+	}
+
+	$scope.tasksAssignToCurrentAdmin = function () {
+		$scope.search_task_default.create_admin = [];
+		for (var i = $scope.all_admins.length - 1; i >= 0; i--) {
+			$scope.search_task_default.create_admin.push($scope.all_admins[i].admin.name);
+		};
+		$scope.search_task_default.create_admin.push("System");
+		$scope.search_task_default.assign_admin = [];
+		$scope.search_task_default.assign_admin.push($scope.current_admin);
+		$scope.findTask();
+	}
+
+	$scope.taskDetail = function (_id) {
+		$scope.task_detail = null;
+		$resource("/admin/search/task/id").get({
+			_id: _id
+		},function(res){
+			if (res.status==0) {
+				console.log("warning");
+			} else if (res.status == 1){
+				console.log(res.data);
+				$scope.task_detail = res.data[0];
+				$scope.task_content_show = true;
+			}
+		});
+	}
+
+	$scope.$watch("task_detail.task.new_assign_admin", function(newVal,oldVal,scope){
+		if (newVal !== oldVal && newVal!=null){
+			$resource("/admin/task/assign/update").get({
+				_id: $scope.task_detail._id,
+				assign_admin: newVal
+			},function(res){
+				$scope.task_detail.task.assign_admin = newVal;
+				$scope.change_assign_admin_show = false;
+			});
+		};
+	});
+
+	$scope.showAssignAdminChange = function () {
+		$scope.change_assign_admin_show = true;
+	};
+
+	$scope.newTaskNoteAdd = function (){
+		$scope.new_note = {
+			create_admin: $scope.current_admin,
+			content: $scope.new_note_content,
+			create_time: new Date()
+		};
+		console.log($scope.new_note);
+		$scope.task_detail.task.note.push($scope.new_note);
+
+		$resource("/admin/task/note/update").save({
+			_id: $scope.task_detail._id,
+			new_note: $scope.task_detail.task.note
+		},function(res){
+			$scope.task_note_update_result = res.mess;
+		});
+	};
 
 });
 
@@ -174,7 +292,6 @@ adminIndexApp.controller('adminListController', function($scope, $resource, $rou
 
 adminIndexApp.controller('taskController', function($scope, $resource, $routeParams, $location) {
 	
-	$scope.search_task = {};
 	$scope.getAllTasks = function  (page) {
 		$resource("/admin/all/task/list").get({
 			page: page,
@@ -189,6 +306,9 @@ adminIndexApp.controller('taskController', function($scope, $resource, $routePar
 	};
 	$scope.getAllTasks(1);
 
+	$scope.search_task = {};
+	$scope.change_assign_admin_show = false;
+	$scope.new_note_content = "";
 	$scope.getAllAdmins = function  (deleted) {
 		$resource("/admin/get/admin/list").get({
 			deleted: deleted
@@ -257,6 +377,54 @@ adminIndexApp.controller('taskController', function($scope, $resource, $routePar
 				}
 			});
 		};
+	};
+
+	$scope.taskDetail = function (_id) {
+		$scope.task_detail = null;
+		$resource("/admin/search/task/id").get({
+			_id: _id
+		},function(res){
+			if (res.status==0) {
+				console.log("warning");
+			} else if (res.status == 1){
+				console.log(res.data);
+				$scope.task_detail = res.data[0];
+				$scope.task_content_show = true;
+			}
+		});
+	}
+
+	$scope.$watch("task_detail.task.new_assign_admin", function(newVal,oldVal,scope){
+		if (newVal !== oldVal && newVal!=null){
+			$resource("/admin/task/assign/update").get({
+				_id: $scope.task_detail._id,
+				assign_admin: newVal
+			},function(res){
+				$scope.task_detail.task.assign_admin = newVal;
+				$scope.change_assign_admin_show = false;
+			});
+		};
+	});
+
+	$scope.showAssignAdminChange = function () {
+		$scope.change_assign_admin_show = true;
+	};
+
+	$scope.newTaskNoteAdd = function (){
+		$scope.new_note = {
+			create_admin: $scope.current_admin,
+			content: $scope.new_note_content,
+			create_time: new Date()
+		};
+		console.log($scope.new_note);
+		$scope.task_detail.task.note.push($scope.new_note);
+
+		$resource("/admin/task/note/update").save({
+			_id: $scope.task_detail._id,
+			new_note: $scope.task_detail.task.note
+		},function(res){
+			$scope.task_note_update_result = res.mess;
+		});
 	};
 
 });
@@ -453,6 +621,8 @@ adminIndexApp.controller('adminManagementController', function($scope, $resource
 		});
 	}
 
+
+
 });
 
 adminIndexApp.controller('taskCreateController', function($scope, $resource, $routeParams, $location) {
@@ -469,7 +639,8 @@ adminIndexApp.controller('taskCreateController', function($scope, $resource, $ro
 	$scope.taskCreate = function (argument) {
 		$scope.task.note[0] = {
 			create_admin: $scope.current_admin,
-			content: $scope.task.content
+			content: $scope.task.content,
+			create_time: new Date()
 		};
 		$resource("/admin/task/create").save({
 			task: $scope.task

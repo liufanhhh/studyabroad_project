@@ -23,7 +23,8 @@ var AdminTaskProfileSchema = mongoose.Schema({
         note: Array
         // {
         //     create_admin: String,
-        //     content: String
+        //     content: String,
+        //     create_time: Date,
         // }
         
     }
@@ -61,6 +62,21 @@ AdminTaskProfileSchema.statics.searchTaskByAllConditions = function(task, cb) {
     .exec(cb);
 }
 
+AdminTaskProfileSchema.statics.taskAssignAdminUpdate = function(_id, assign_admin, cb) {
+    this.findOneAndUpdate({
+        _id:_id
+    }, {
+        "task.assign_admin": assign_admin
+    }, cb);
+};
+
+AdminTaskProfileSchema.statics.taskNoteUpdate = function(_id, new_note, cb) {
+    this.findOneAndUpdate({
+        _id:_id
+    }, {
+        "task.note": new_note
+    }, cb);
+};
 
 //-------------------export-------------------------//
 module.exports = mongoose.model("AdminTaskProfile", AdminTaskProfileSchema);

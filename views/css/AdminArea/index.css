@@ -124,3 +124,14 @@ body {
 .admin-index-child{
 	position: absolute;
 }
+
+.current-admin-task-center{
+	position:absolute;
+	left:150px;
+}
+
+.current-admin-task-list{
+	position: absolute;
+	left: 150px;
+	top:30px;
+}

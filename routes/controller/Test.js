@@ -1,7 +1,6 @@
 var Q = require('q');
 var signature = require('./Signature.js');
 
-console.log(signature.calculate("2016-01-28T11:00:17.636Z","123321"));
 
 // var MerchantProfile = require("../../model/MerchantProfileModel.js");
 // var WebsiteProfile = require("../../model/WebsiteProfileModel.js");
