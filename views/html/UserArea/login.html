@@ -34,10 +34,8 @@
 		<div class="form-group has-feedback" ng-class="{ 'has-error' : loginForm.name_email.$invalid && !loginForm.name_email.$pristine, 
 		'has-success' : loginForm.name_email.$valid }">
 			<label>昵称或邮箱：</label>
-			<input name="name_email" class="form-control" type="text" ng-model="person.name_email" ng-maxlength=9 ng-minlength=2 required >
+			<input name="name_email" class="form-control" type="text" ng-model="person.name_email" required >
 			<p class="help-block" ng-show="loginForm.name_email.$error.required && !loginForm.name_email.$pristine">该项必填</p>
-			<p class="help-block" ng-show="loginForm.name_email.$error.minlength && !loginForm.name_email.$pristine">昵称最少为两个字</p>
-			<p class="help-block" ng-show="loginForm.name_email.$error.maxlength && !loginForm.name_email.$pristine">昵称最多为九个字</p>
 			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="loginForm.name_email.$valid"></span>
 			<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="loginForm.name_email.$invalid && !loginForm.name_email.$pristine"></span>
 		</div>

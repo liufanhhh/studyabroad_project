@@ -2,7 +2,6 @@ var Q = require('q');
 var fs = require('fs');
 var md5 = require("../md5.min.js");
 var AdminProfile = require("../../model/AdminProfileModel.js");
-var WebsiteProfile = require("../../model/WebsiteProfileModel.js");
 
 
 exports.companyPasswordChecking = function(req, res) {

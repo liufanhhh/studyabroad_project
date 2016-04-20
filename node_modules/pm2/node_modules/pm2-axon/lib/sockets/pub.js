@@ -49,3 +49,32 @@ PubSocket.prototype.send = function(msg){
 
   return this;
 };
+
+PubSocket.prototype.sendv2 = function(data, cb){
+  var socks = this.socks;
+  var len = socks.length;
+  var sock;
+
+  if (len == 0)
+    return process.nextTick(cb);
+
+  var buf = this.pack([data]);
+
+  var i = 0;
+
+  socks.forEach(function(sock) {
+    if (sock.writable)
+      sock.write(buf, function() {
+        i++;
+        if (i == len)
+          process.nextTick(cb);
+      });
+    else {
+      i++;
+      if (i == len)
+        process.nextTick(cb);
+    }
+  });
+
+  return this;
+};

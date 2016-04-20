@@ -1,7 +1,6 @@
 var Q = require('q');
 var fs = require('fs');
 var MerchantProfile = require("../../model/MerchantProfileModel.js");
-var WebsiteProfile = require("../../model/WebsiteProfileModel.js");
 
 var callbackFunction = function (res, err, profile) {
   if (typeof(profile)=="null") {
