@@ -9,7 +9,6 @@ var mongoose = require("mongoose");
 var UserProfileSchema = mongoose.Schema({
     user: {
         id: Number,
-        login_times: Number,
         nickname: String,
         realname: String,
         email: String,
@@ -17,8 +16,8 @@ var UserProfileSchema = mongoose.Schema({
         mobile: String,
         current_school: String,
         current_major: String,
-        target_school: String,
-        target_major: String,
+        target_school: Array,
+        target_major: Array,
         target_area: Array,
         language_level: String,
         identitynumber:String,

@@ -53,9 +53,8 @@ var app = express();
 app.set('view engine', 'ejs');
 app.engine('.html', require('ejs').renderFile);
 // uncomment after placing your favicon in /public
-console.log(__dirname);
 app.use(favicon(__dirname + '/views/storage/public/logo.jpg'));
-app.use(logger('dev'));busboy
+app.use(logger('dev'));
 app.use(busboy());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -63,6 +62,8 @@ app.use(express.static(path.join(__dirname, '/views')));
 
 app.use(session({
     secret: 'Angel',
+    saveUninitialized: false,
+    resave: true,
     store: new MongoStore({
         // db:"SessionStore",
         // host:"localhost",

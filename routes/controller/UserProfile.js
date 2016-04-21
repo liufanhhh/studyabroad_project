@@ -132,6 +132,6 @@ exports.emailVerify = function (req, res) {
 			};
 		});
 	} else {
-		res.status(401).send("<p>验证码错误或已经失效</p>");
+		res.status(401).send("<p>验证码错误或已经失效请重新注册</p>");
 	};
 }

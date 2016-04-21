@@ -25,10 +25,10 @@
 
 <body ng-controller="SignUpController">
 
-<div class="container">
+<div class="login-wrap">
 
   <div  class="login-form" >
-	<h1>用户注册</h1>
+		<h1>用户注册</h1>
 		<form name="loginForm" role="form" ng-submit="register()" novalidate>
 			
 		<div class="form-group has-feedback" ng-class="{ 'has-error' : loginForm.name.$invalid && !loginForm.name.$pristine, 

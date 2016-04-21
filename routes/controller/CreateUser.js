@@ -10,11 +10,15 @@ exports.newuserCreate = function(req, res) {
     console.log(user);
     var findUserByEmail = Q.nfbind(UserProfileModel.findUserByEmail.bind(UserProfileModel));
 
-    var findUserByNickname = function(exist){
+    var findUserByNickname = function(email_found_profile){
       var deferred = Q.defer();
-      if (exist) {
+      if (email_found_profile&&email_found_profile.user.email_confirm==true) {
         deferred.reject("邮箱相同");
-      }else{
+      }else if(email_found_profile&&email_found_profile.user.email_confirm==false){
+        createConfirmEmail(email_found_profile);
+        res.status(200).send({location:'/user/email/sent'});
+        deferred.reject("邮箱未验证");
+      }else if(!email_found_profile) {
         UserProfileModel.findUserByNickname(user.name,function (err, user_profile) {
           if (user_profile) {
             deferred.reject("用户昵称重复");
@@ -23,12 +27,12 @@ exports.newuserCreate = function(req, res) {
           };
           return deferred.promise;
         });
-      }
+      };
       return deferred.promise;
     }
-    var getUserId = function(exist){
+    var getUserId = function(email_found_profile){
       var deferred = Q.defer();
-      if (exist!=1) {
+      if (email_found_profile!=1) {
         deferred.reject("服务器错误");
       }else{
         UserProfileModel.countUsersAmount(function(err, amount){
@@ -61,7 +65,7 @@ exports.newuserCreate = function(req, res) {
     var createConfirmEmail = function (new_user) {
       var deferred = Q.defer();
       if (new_user) {
-        var sign = md5(new_user._id);
+        var sign = md5(new Date());
         req.session.sign = sign;
         req.session.userid = new_user._id;
         var expire_time = 5*60*1000;

@@ -4,7 +4,9 @@
 	<h1>添加商户</h1>
 		<form name="registerForm" role="form"  novalidate>
 		<div>
-			<label>公司名称：</label>
+			<div class="inp-flag">
+				<label>公司名称：</label>	
+			</div>
 			<input name="name" class="form-control" type="text" ng-model="merchant.name" required >
 			<p class="help-block" ng-show="registerForm.name.$error.required && !registerForm.name.$pristine">该项必填</p>
 			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="registerForm.name.$valid"> 对</span>
@@ -12,7 +14,9 @@
 		</div>
 
 		<div>
-			<label>公司所在城市：</label>
+			<div class="inp-flag">
+				<label>公司所在城市：</label>
+			</div>
 			<select ng-model="merchant.location_city" >
 				<option value = "Beijing">北京</option>
 				<option value = "Shanghai">上海</option>
@@ -21,7 +25,9 @@
 		</div>
 
 		<div>
-			<label>设置密码：</label>
+			<div class="inp-flag">
+				<label>设置密码：</label>
+			</div>
 			<input class="form-control" name="password" type="password" ng-model="merchant.password" ng-minlength=6 required>
 			<p class="help-block" ng-show="registerForm.password.$error.required && !registerForm.password.$pristine">该项必填</p>		
 			<p class="help-block" ng-show="registerForm.password.$error.minlength && !registerForm.password.$pristine">密码最小长度为6</p>		
@@ -30,7 +36,9 @@
 		</div>
 
 		<div>
-			<label>再次输入密码：</label>
+			<div class="inp-flag">
+				<label>再次输入密码：</label>
+			</div>
 			<input class="form-control" name="password_confirmation" type="password" ng-model="merchant.password_confirmation" ng-minlength=6 required>
 			<p class="help-block" ng-show="registerForm.password_confirmation.$error.required && !registerForm.password_confirmation.$pristine">该项必填</p>		
 			<p class="help-block" ng-show="registerForm.password_confirmation.$error.minlength && !registerForm.password_confirmation.$pristine">密码最小长度为6</p>		
@@ -40,7 +48,9 @@
 		</div>
 
 		<div>
-			<label>联系人姓名：</label>
+			<div class="inp-flag">
+				<label>联系人姓名：</label>
+			</div>
 			<input name="contact_person_name" class="form-control" type="text" ng-model="merchant.contact_person_name" required >
 			<p class="help-block" ng-show="registerForm.contact_person_name.$error.required && !registerForm.contact_person_name.$pristine">该项必填</p>
 			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="registerForm.contact_person_name.$valid"> 对</span>
@@ -48,7 +58,9 @@
 		</div>
 
 		<div>
-			<label>联系人邮件：</label>
+			<div class="inp-flag">
+				<label>联系人邮件：</label>
+			</div>
 			<input name="email" class="form-control" type="email" ng-model="merchant.email" required>
 			<p class="help-block" ng-show="registerForm.email.$error.required && !registerForm.email.$pristine">该项必填</p>
 			<p class="help-block" ng-show="registerForm.email.$error.email && !registerForm.email.$pristine">不符合email格式</p>
@@ -57,7 +69,9 @@
 		</div>
 
 		<div>
-			<label>联系人手机号：</label>
+			<div class="inp-flag">
+				<label>联系人手机号：</label>
+			</div>
 			<input name="mobile" class="form-control" type="text" ng-model="merchant.mobile" required >
 			<p class="help-block" ng-show="registerForm.mobile.$error.required && !registerForm.mobile.$pristine">该项必填</p>
 			<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="registerForm.mobile.$valid"> 对</span>

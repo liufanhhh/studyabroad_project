@@ -23,6 +23,8 @@ var MerchantInformationSchema = mongoose.Schema({
     location: String,
     support_area: Array,
     logo: String,
+
+    introduction: String,
     business_license: String,
     tax_registration_certification: String,
     organization_order_certificaion: String,
