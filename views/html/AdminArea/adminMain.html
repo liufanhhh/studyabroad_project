@@ -1,8 +1,93 @@
 <div class="admin-index-child">
 	<img class="avatar" src="/storage/Admin/avatar.jpeg">
-	<div style="position:relative;" ng-bind="current_admin"></div>
-	<div>
-		未完成任务
-		
+
+	<div class="current-admin-task-center">
+
+		<table>
+			<tr>
+				<td><button class="big button" ng-click = "tasksCurrentAdminCreate()">我创建的任务：</button></td>
+				<td><button class="big button" ng-click = "tasksAssignToCurrentAdmin()">分配给我的任务：</button></td>
+				<td>
+					<select name="status" ng-model="search_task.status">
+					  <option value = "">全部</option>
+					  <option value = "Initial">新任务</option>
+					  <option value = "Processing">处理中</option>
+					  <option value = "Finished">已完成</option>
+					</select>
+				</td>
+				<td>
+					<select name="task_type" ng-model="search_task.task_type">
+					  <option value = "">全部</option>
+					  <option value = "SignUpMerchant">新商户注册</option>
+					  <option value = "LiveApproval">商户上线审核</option>
+					  <option value = "AdminCreate">管理员创建</option>
+					</select>	
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="current-admin-task-list">
+			<table class="" >
+			    <tr>
+				    <th>任务ID</th>
+				    <th>负责人</th>
+				    <th>类型</th>
+				    <th>任务状态</th>
+				    <th>商户ID</th>
+				    <th>商户名</th>
+				    <th>是否愿意合作</th>
+				    <th>商户等级</th>
+				    <th>任务详情</th>
+		        </tr>
+
+		        <tr ng-repeat = "profile in tasks">
+		            <td ng-bind="profile._id"></td>
+		            <td ng-bind="profile.task.assign_admin"></td>
+		            <td ng-bind="profile.task.task_type"></td>
+		            <td ng-bind="profile.task.status"></td>
+		            <td ng-bind="profile.task.merchant.id"></td>
+		            <td ng-bind="profile.task.merchant.name"></td>
+		            <td ng-bind="profile.task.merchant.willing_to_cooperate"></td>
+		            <td ng-bind="profile.task.merchant.hierarchy"></td>
+		            <td>
+		              <button class="button" ng-click="taskDetail(profile._id)">查看</button>
+		            </td>
+		        </tr>
+			</table>
+
+	</div>
+
+
+	<div class="current-admin-task-list" ng-if="task_content_show">
+		<header ng-bind = "task_detail.task.header"></header>
+
+		商户id: {{task_detail.task.merchant.id}}<br>
+		商户名: {{task_detail.task.merchant.name}}<br>
+		商户等级:{{task_detail.task.merchant.hierarchy}}
+		商户合作意愿:{{task_detail.task.merchant.willing_to_cooperate}}
+
+		分配给:
+			{{task_detail.task.assign_admin}}
+		<span ng-if = "change_assign_admin_show">
+			<select ng-model = "task_detail.task.new_assign_admin">
+				<option value = "Nobody">无人跟进</option>
+				<option value = "{{admin.admin.name}}" ng-repeat = "admin in all_admins" ng-bind = "admin.admin.name"></option>
+			</select>
+		</span>
+		<button ng-click="showAssignAdminChange()">更改</button> 
+		<br>
+
+		任务类型: {{task_detail.task.task_type}}<br>
+		任务状态: {{task_detail.task.status}}<br>
+		任务于{{task_detail.task.create_time}}创建,创建者: {{task_detail.task.create_admin}}<br>
+
+		<section ng-repeat="note in task_detail.task.note">
+			{{note.create_admin}}:
+			{{note.content}}
+		</section><br>
+
+		<input ng-model = "$parent.new_note_content"><br>
+		<button ng-click = "newTaskNoteAdd()">添加</button>
+		{{task_note_update_result}}
 	</div>
 </div>

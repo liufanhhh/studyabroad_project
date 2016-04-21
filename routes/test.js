@@ -28,9 +28,6 @@
 //     transport.close();
 // });
 
-var date = new Date().getTime()+20*60*60;
-console.log(date);
-
 // var transport = nodemailer.createTransport("SMTP", {
 //     host: "smtp.126.com",
 //     secureConnection: true, // use SSL

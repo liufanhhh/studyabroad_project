@@ -13,18 +13,28 @@
 	<script src="/test-fan.js"></script>	
 	<script src="/js/MerchantArea/merchantLogin.js"></script>
    
+   	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/merchant-form.css">
 </head>	
 
 <body ng-controller="merchantLoginController">
 
-	<div ng-if="login_page">
-		<input type="text" ng-model="login.email"/>邮箱
-		<input type="text" ng-model="login.password"/>密码
-		<button ng-click="login()">登陆</button>
+	<div ng-if="login_page" class="login-wrap">
+		<h1>商户登陆</h1>
+		<div class="form-group">
+			<label>邮箱：</label>
+			<input type="text" class="form-control" ng-model="login.email"/>
+		</div>
+		
+		<div class="form-group">
+			<label>密码：</label>
+			<input type="text" class="form-control" ng-model="login.password"/>
+		</div>
+		
+		<button class="btn btn-primary" ng-click="login()">登陆</button>
 		{{login.message}}
 		还没有账号？点击进行注册
-		<button ng-click="registerPage()">注册</button>
+		<button class="btn btn-default" ng-click="registerPage()">注册</button>
 	</div>
 
 	<div ng-if="register_page">
@@ -34,7 +44,7 @@
 			<form name="registerForm" role="form"  novalidate>
 			
 			<div ng-show="register_step===1">	
-				<div>
+				<div class="form-group">
 					<label>公司名称：</label>
 					<input name="name" class="form-control" type="text" ng-model="merchant.name" required >
 					<p class="help-block" ng-show="registerForm.name.$error.required && !registerForm.name.$pristine">该项必填</p>
@@ -42,7 +52,7 @@
 					<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="registerForm.name.$invalid && !registerForm.name.$pristine">x</span>
 				</div>
 
-				<div>
+				<div class="form-group">
 					<label>公司所在城市：</label>
 					<select name="location_city" ng-init = "merchant.location_city=Beijing" required>
 						<option value = "Beijing">北京</option>
@@ -51,7 +61,7 @@
 					</select>
 				</div>
 
-				<div>
+				<div class="form-group">
 					<label>设置密码：</label>
 					<input class="form-control" name="password" type="password" ng-model="merchant.password" ng-minlength=6 required>
 					<p class="help-block" ng-show="registerForm.password.$error.required && !registerForm.password.$pristine">该项必填</p>		
@@ -60,7 +70,7 @@
 					<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="registerForm.password.$invalid && !registerForm.password.$pristine"></span>
 				</div>
 
-				<div>
+				<div class="form-group">
 					<label>再次输入密码：</label>
 					<input class="form-control" name="password_confirmation" type="password" ng-model="merchant.password_confirmation" ng-minlength=6 required>
 					<p class="help-block" ng-show="registerForm.password_confirmation.$error.required && !registerForm.password_confirmation.$pristine">该项必填</p>		
@@ -74,7 +84,7 @@
 			
 
 			<div ng-show="register_step===2">
-				<div>
+				<div class="form-group">
 					<label>联系人姓名：</label>
 					<input name="contact_person_name" class="form-control" type="text" ng-model="merchant.contact_person_name" required >
 					<p class="help-block" ng-show="registerForm.contact_person_name.$error.required && !registerForm.contact_person_name.$pristine">该项必填</p>
@@ -82,7 +92,7 @@
 					<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="registerForm.contact_person_name.$invalid && !registerForm.contact_person_name.$pristine">x</span>
 				</div>
 
-				<div>
+				<div class="form-group">
 					<label>联系人邮件：</label>
 					<input name="email" class="form-control" type="email" ng-model="merchant.email" required>
 					<p class="help-block" ng-show="registerForm.email.$error.required && !registerForm.email.$pristine">该项必填</p>
@@ -91,7 +101,7 @@
 					<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="registerForm.email.$invalid && !registerForm.email.$pristine">x</span>
 				</div>
 
-				<div>
+				<div class="form-group">
 					<label>联系人手机号：</label>
 					<input name="mobile" class="form-control" type="text" ng-model="merchant.mobile" required >
 					<p class="help-block" ng-show="registerForm.mobile.$error.required && !registerForm.mobile.$pristine">该项必填</p>

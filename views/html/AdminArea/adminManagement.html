@@ -26,12 +26,14 @@
 		<button ng-click="deleteAdminProfileCancel()">取消</button>
 	</div>
 
-	<button ng-click = "add_admin_show=true">添加管理员</button>
-	<div ng-if="add_admin_show">
+	<button ng-click = "add_admin_show=true" class="add-admin">添加管理员</button>
+	<div ng-if="add_admin_show" class="form-actions">
 
 		<form name="addAdminForm" role="form" ng-submit="addNewAdmin()" novalidate>
 			<div>
-				<label>姓名：</label>
+				<div class="inp-flag">
+					<label>姓名：</label>
+				</div>
 				<input name="name" class="form-control" type="text" ng-model="new_admin.name" required >
 				<p class="help-block" ng-show="addAdminForm.name.$error.required && !addAdminForm.name.$pristine">该项必填</p>
 				<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="addAdminForm.name.$valid"></span>
@@ -41,7 +43,9 @@
 
 			<div class="form-group has-feedback" ng-class="{ 'has-error' : addAdminForm.email.$invalid && !addAdminForm.email.$pristine,
 			'has-success' : addAdminForm.email.$valid }">
-				<label>邮箱地址：</label>
+				<div class="inp-flag">
+					<label>邮箱地址：</label>
+				</div>
 				<input name="email" class="form-control" type="email" ng-model="new_admin.email" required>
 				<p class="help-block" ng-show="addAdminForm.email.$error.required && !addAdminForm.email.$pristine">该项必填</p>
 				<p class="help-block" ng-show="addAdminForm.email.$error.email && !addAdminForm.email.$pristine">不符合email格式</p>
@@ -51,7 +55,9 @@
 
 			<div class="form-group has-feedback" ng-class="{ 'has-error' : addAdminForm.mobile.$invalid && !addAdminForm.mobile.$pristine,
 			'has-success' : addAdminForm.mobile.$valid }">
-				<label>手机号码：</label>
+				<div class="inp-flag">
+					<label>手机号码：</label>
+				</div>
 				<input name="mobile" class="form-control" type="mobile" ng-model="new_admin.mobile" required>
 				<p class="help-block" ng-show="addAdminForm.mobile.$error.required && !addAdminForm.mobile.$pristine">该项必填</p>
 				<p class="help-block" ng-show="addAdminForm.mobile.$error.mobile && !addAdminForm.mobile.$pristine">不符合mobile格式</p>
@@ -62,7 +68,9 @@
 
 			<div class="form-group has-feedback" ng-class="{ 'has-error' : addAdminForm.password.$invalid && !addAdminForm.password.$pristine,
 			'has-success' : same_password }">
-				<label>设置密码：</label>
+				<div class="inp-flag">
+					<label>设置密码：</label>
+				</div>
 				<input class="form-control" name="password" type="password" ng-model="new_admin.password" ng-minlength=6 required>
 				<p class="help-block" ng-show="addAdminForm.password.$error.required && !addAdminForm.password.$pristine">该项必填</p>		
 				<p class="help-block" ng-show="addAdminForm.password.$error.minlength && !addAdminForm.password.$pristine">密码最小长度为6</p>		
@@ -72,7 +80,9 @@
 
 			<div class="form-group has-feedback" ng-class="{ 'has-error' : (addAdminForm.password_confirmation.$invalid || !same_password) && !addAdminForm.password_confirmation.$pristine,
 			'has-success' : same_password }">
-				<label>再次输入密码：</label>
+				<div class="inp-flag">
+					<label>再次输入密码：</label>
+				</div>
 				<input class="form-control" name="password_confirmation" type="password" ng-model="new_admin.password_confirmation" ng-minlength=6 required>
 				<p class="help-block" ng-show="addAdminForm.password_confirmation.$error.required && !addAdminForm.password_confirmation.$pristine">该项必填</p>		
 				<p class="help-block" ng-show="addAdminForm.password_confirmation.$error.minlength && !addAdminForm.password_confirmation.$pristine">密码最小长度为6</p>		

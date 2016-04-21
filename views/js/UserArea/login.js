@@ -13,20 +13,24 @@ LoginApp.controller('LoginController',function($scope, $resource, $routeParams, 
 		$resource("/user/profile/token").save({
 			name_email: $scope.person.name_email
 		}, function(res) {
-			var token = res.data;
-			$scope.person.password_sign = $scope.signature(token, $scope.person.password);
-			var salt = $scope.person.salt = new Date().getTime();
-			$scope.person.signature = $scope.signature(salt, $scope.person.password_sign);
-			$scope.person.password = null;
-			$resource("/user/login").save({
-				user: $scope.person
-			}, function(res) {
-				if (res.status==1) {
-					window.location = res.location;
-				} else{
-					$scope.login_result = res.mess;
-				};
-			});
+			if (res.status==1) {
+				$scope.person.password_sign = $scope.signature(new Date(res.data).getTime(), $scope.person.password);
+				$scope.person.password = null;
+				console.log($scope.person.password_sign);
+				console.log(new Date(res.data).getTime());
+
+				$resource("/user/login").save({
+					user: $scope.person
+				}, function(res) {
+					if (res.status!= 0) {
+						window.location = res.location;
+					} else{
+						$scope.login_result = res.mess;
+					};
+				});
+			} else{
+				$scope.login_result = res.mess;
+			};
 		});
 	};
 });

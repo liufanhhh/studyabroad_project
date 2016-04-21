@@ -5,17 +5,15 @@ var AdminTaskProfile = require("../../model/AdminTaskProfileModel.js");
 var MerchantProfile = require("../../model/MerchantProfileModel.js");
 
 var callbackFunction = function (res, err, profile) {
-	console.log(profile);
   if (typeof(profile)=="null") {
     res.sendError("未能查询到");
-  } else if(typeof(profile)=="array"||typeof(profile)=="object"){
+  } else if(typeof(profile)=="array"){
     if (profile==null||profile[0] == null) {
-      res.sendError("获取失败");
+      res.sendData(profile,"没有符合记录");
     } else{
       res.sendData(profile,"获取成功");
     };
   } else if(err) {
-  	console.log(err);
     res.sendError(err);
   } else{
   	res.sendData(profile,"获取成功");
@@ -89,7 +87,7 @@ exports.adminTaskCreate = function(req, res){
 					});
 				} else{
 					console.log(merchant_profile);
-					res.sendError("数据库错误");
+					res.sendError("商户未查到");
 				};
 			})
 		} else if(merchant_profile!=null&&merchant_profile[0]!=null){
@@ -111,12 +109,28 @@ exports.adminTaskCreate = function(req, res){
 			});
 		} else {
 			console.log(merchant_profile);
-			res.sendError("数据库错误"+err+merchant_profile);
+			res.sendError("商户未查到");
 		};
 
 	});
 	// AdminTaskProfile.searchTaskByAllConditions( task, function (err, tasks) {
 	// 	callbackFunction (res, err, tasks);
 	// });
+}
+
+exports.taskAssignAdminUpdate = function(req, res){
+	var _id = req.query._id;
+	var assign_admin = req.query.assign_admin;
+	AdminTaskProfile.taskAssignAdminUpdate( _id, assign_admin, function (err, tasks) {
+		callbackFunction (res, err, tasks);
+	});
+}
+
+exports.taskNoteUpdate = function(req, res){
+	var _id = req.body._id;
+	var new_note = req.body.new_note;
+	AdminTaskProfile.taskNoteUpdate( _id, new_note, function (err, tasks) {
+		callbackFunction (res, err, tasks);
+	});
 }
 

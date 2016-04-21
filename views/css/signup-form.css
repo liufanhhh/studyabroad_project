@@ -1,4 +1,12 @@
-.login-form {
-	width: 20%;
+.login-wrap {
+	font-family: "\5FAE\8F6F\96C5\9ED1";
+	height: 424px;
+	padding-left: 788px;
+	background: #ffffff url(../images/logo.jpg) no-repeat 240px 20px;
+	margin: 0 auto;
 }
-
+.login-form {
+	width: 30%;
+	margin: 40px 0 0 0;
+	padding: 40px 0 0 0;
+}

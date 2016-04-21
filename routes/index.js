@@ -9,7 +9,7 @@ var CreateAdmin = require('./controller/CreateAdmin.js');
 var AdminProfile = require('./controller/AdminProfile.js');
 var AdminTaskProfile = require('./controller/AdminTaskProfile.js');
 var MerchantProfile = require('./controller/MerchantProfile.js');
-var UserInformation = require('./controller/UserInformation.js');
+var UserProfile = require('./controller/UserProfile.js');
 var ResetWebsiteProfile = require('./controller/ResetWebsiteProfile.js');
 
 
@@ -21,9 +21,6 @@ module.exports = function(app) {
 	app.all("/", Enter.indexpageEnter);
 	app.all("/admin", Enter.authenticateAdmin, Enter.adminPageEnter);
 
-
-
-
     //Admin Area
     app.get("/admin", Enter.authenticateAdmin, Enter.getAllAccess);
     app.post("/admin/password", AdminProfile.companyPasswordChecking);
@@ -32,6 +29,8 @@ module.exports = function(app) {
     app.post("/admin/create", CreateAdmin.createNewAdmin);
     app.post("/admin/profile/change", Enter.authenticateAdmin, AdminProfile.updateAdmin);
     app.post("/admin/task/create", Enter.authenticateAdmin, AdminTaskProfile.adminTaskCreate);
+    app.get("/admin/task/assign/update", Enter.authenticateAdmin, AdminTaskProfile.taskAssignAdminUpdate);
+    app.post("/admin/task/note/update", Enter.authenticateAdmin, AdminTaskProfile.taskNoteUpdate);
     app.get("/admin/liufanhh/access", Enter.getAllAccess);
     app.get("/admin/delete", Enter.authenticateAdmin, AdminProfile.deleteAdmin);
     app.get("/admin/login", Enter.authenticateAdmin, Enter.adminPageEnter);
@@ -53,10 +52,7 @@ module.exports = function(app) {
     
 
     app.get("/website/profile/create", ResetWebsiteProfile.createWebsiteInformation);
-    app.get("/website/profile/usersAmountCount", ResetWebsiteProfile.countUsersAmount);
-    app.get("/website/profile/usersAmountSet", ResetWebsiteProfile.setUsersAmount);
-    app.get("/website/profile/merchantsAmountCount", ResetWebsiteProfile.countMerchantsAmount);
-    app.get("/website/profile/merchantsAmountSet", ResetWebsiteProfile.setMerchantsAmount);
+
 
 
 
@@ -69,12 +65,12 @@ module.exports = function(app) {
 	// app.get("/user/login", Enter.authenticateUser, Enter.indexpageEnter);
 	app.get("/user/login/profile", Enter.authenticateUser, Enter.userProfilePage);
 	app.post("/user/register", CreateUser.newuserCreate);
-	app.post("/user/profile/token", UserInformation.getToken);
-	app.post("/user/name/checking", UserInformation.nameChecking);
-	app.post("/user/email/checking", UserInformation.emailChecking);
-	app.post("/user/information", Enter.authenticateUser, UserInformation.getOneUser);
-	app.post("/user/login", UserInformation.userLogin);
-	app.get("/verification", UserInformation.emailVerify);
+	app.post("/user/profile/token", UserProfile.getToken);
+	app.post("/user/name/checking", UserProfile.nameChecking);
+	app.post("/user/email/checking", UserProfile.emailChecking);
+	app.post("/user/information", Enter.authenticateUser, UserProfile.getOneUser);
+	app.post("/user/login", UserProfile.userLogin);
+	app.get("/verification", UserProfile.emailVerify);
 	app.get("/user/email/sent", Enter.emailSent);
 
 

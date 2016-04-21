@@ -1,0 +1,19 @@
+.login-wrap {
+	font-family: "\5FAE\8F6F\96C5\9ED1";
+	height: 424px;
+	background: #ffffff url(../images/logo.jpg) no-repeat 240px 20px;
+	margin: 0 auto;
+	margin: 40px 0 0 0;
+	padding: 40px 0 0 788px;
+}
+.login-form {
+	font-family: "\5FAE\8F6F\96C5\9ED1";
+	height: 424px;
+	background: #ffffff url(../images/logo.jpg) no-repeat 240px 20px;
+	margin: 0 auto;
+	margin: 40px 0 0 0;
+	padding: 40px 0 0 788px;
+}
+.form-group {
+	width: 40%;
+}
