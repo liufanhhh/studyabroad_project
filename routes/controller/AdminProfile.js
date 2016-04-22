@@ -3,6 +3,24 @@ var fs = require('fs');
 var md5 = require("../md5.min.js");
 var AdminProfile = require("../../model/AdminProfileModel.js");
 
+var callbackFunction = function (res, err, profile, data) {
+  var data = data||null;
+  if (data!=null) {
+    res.sendData(data,"获取成功");
+  } else if(profile instanceof Array&&data==null){
+    if (profile[0] == null) {
+      res.sendData(profile,"没有符合记录");
+    } else{
+      res.sendData(profile,"获取成功");
+    };
+  } else if (profile==undefined||profile==null) {
+    res.sendError("未能查询到");
+  } else if(err) {
+    res.sendError(err);
+  } else{
+    res.sendData(profile,"获取成功");
+  };
+}
 
 exports.companyPasswordChecking = function(req, res) {
   var company_password = req.body.company_password;
@@ -17,13 +35,7 @@ exports.returnToken = function (req, res) {
   var admin_name = req.body.name;
   console.log(admin_name);
   AdminProfile.findAdminByName( admin_name, function (err, profile) {
-    if (err||profile==null) {
-      res.sendError("密码错误");
-    } else{
-      token = profile.admin.create_time;
-      console.log(token);
-      res.sendData(token,"获取成功");
-    };
+    callbackFunction(res, err, profile, profile.admin.create_time);
   });
 }
 
@@ -31,12 +43,7 @@ exports.deleteAdmin = function (req, res) {
   var admin_name = req.query.admin;
   console.log(admin_name);
   AdminProfile.deleteAdminByName( admin_name, function (err, profile) {
-    if (err||profile==null) {
-      console.log(err+profile);
-      res.sendError("数据库错误");
-    } else{
-      res.sendData(profile,"删除成功");
-    };
+    callbackFunction(res, err, profile);
   });
 }
 
@@ -46,19 +53,11 @@ exports.findOneAdmin = function (req, res) {
   var admin_email = req.query.admin_email;
   if (admin_name) {
     AdminProfile.findAdminByName(admin_name,function(err, admin){
-      if (err) {
-        res.sendError(err);
-      } else{
-        res.sendData(admin,"success");
-      }
+      callbackFunction(res, err, admin);
     }); 
   } else if (admin_email){
     AdminProfile.findAdminByEmail(admin_email,function(err, admin){
-      if (err) {
-        res.sendError(err);
-      } else{
-        res.sendData(admin,"success");
-      }
+      callbackFunction(res, err, admin);
     }); 
   } else{
     res.sendError("至少需要邮箱或商户名中的一个");

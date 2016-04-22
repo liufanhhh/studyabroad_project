@@ -1,8 +1,6 @@
-var Model = require("./model/MerchantProfileModel.js");
+function test (b){
+	var b = b||null;
+	console.log(b instanceof Array);
+}
 
-Model.countMerchantsAmount(function(amount){
-	console.log("aa");
-	console.log(amount);
-})
-
-console.log("add");
+test();

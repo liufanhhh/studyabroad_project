@@ -5,10 +5,10 @@ var AdminTaskProfile = require("../../model/AdminTaskProfileModel.js");
 var MerchantProfile = require("../../model/MerchantProfileModel.js");
 
 var callbackFunction = function (res, err, profile) {
-  if (typeof(profile)=="null") {
+  if (profile instanceof undefined||profile instanceof null) {
     res.sendError("未能查询到");
-  } else if(typeof(profile)=="array"){
-    if (profile==null||profile[0] == null) {
+  } else if(profile instanceof Array){
+    if (profile[0] == null) {
       res.sendData(profile,"没有符合记录");
     } else{
       res.sendData(profile,"获取成功");

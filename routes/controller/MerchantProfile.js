@@ -2,17 +2,20 @@ var Q = require('q');
 var fs = require('fs');
 var MerchantProfile = require("../../model/MerchantProfileModel.js");
 
-var callbackFunction = function (res, err, profile) {
-  if (typeof(profile)=="null") {
-    res.sendError("未能查询到");
-  } else if(typeof(profile)=="array"||typeof(profile)=="object"){
-    if (profile==null||profile[0] == null) {
-      res.sendError("获取失败");
+var callbackFunction = function (res, err, profile, data) {
+  var data = data||null;
+  if (data!=null) {
+    res.sendData(data,"获取成功");
+  } else if(profile instanceof Array&&data==null){
+    if (profile[0] == null) {
+      res.sendData(profile,"没有符合记录");
     } else{
       res.sendData(profile,"获取成功");
     };
+  } else if (profile==undefined||profile==null) {
+    res.sendError("未能查询到");
   } else if(err) {
-     res.sendError(err);
+    res.sendError(err);
   } else{
     res.sendData(profile,"获取成功");
   };
