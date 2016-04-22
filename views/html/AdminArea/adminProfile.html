@@ -1,5 +1,100 @@
 <div class="admin-index-child">
-	
+	<div>
+		<img ng-src="{{avatar_path}}">
 
+		<div>上传新头像: <input type="file" nv-file-select="" uploader="uploader"></div>
+		<div class="cropArea">
+		  <img-crop image="myImage" result-image="myCroppedImage" area-type="square"></img-crop>
+		</div>
+		<div>预览:</div>
+		<div><img ng-src="{{myCroppedImage}}" /></div>
+
+		<button ng-click="uploadAdminAvatar()">确定上传</button>
+	</div>
+
+	<div>
+		<h1>更改信息</h1>
+			<form name="adminProfileForm" role="form"  novalidate>
+			<div>
+				<div class="inp-flag">
+					<label>姓名：</label>	
+				</div>
+				<input name="name" class="form-control" type="text" ng-model="current_admin_profile.admin.name" required >
+				<p class="help-block" ng-show="adminProfileForm.name.$error.required && !adminProfileForm.name.$pristine">该项必填</p>
+				<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="adminProfileForm.name.$valid"> 对</span>
+				<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="adminProfileForm.name.$invalid && !adminProfileForm.name.$pristine">x</span>
+			</div>
+			<br>
+
+			<div>
+				<div class="inp-flag">
+					<label>邮箱地址：</label>	
+				</div>
+				<input name="name" class="form-control" type="text" ng-model="current_admin_profile.admin.email" required >
+				<p class="help-block" ng-show="adminProfileForm.email.$error.required && !adminProfileForm.email.$pristine">该项必填</p>
+				<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="adminProfileForm.email.$valid"> 对</span>
+				<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="adminProfileForm.email.$invalid && !adminProfileForm.email.$pristine">x</span>
+			</div>
+			<br>
+
+			<div>
+				<div class="inp-flag">
+					<label>设置密码：</label>
+				</div>
+				<input class="form-control" name="password" type="password" ng-model="current_admin_profile.admin.password" ng-minlength=6 required>
+				<p class="help-block" ng-show="adminProfileForm.password.$error.required && !adminProfileForm.password.$pristine">该项必填</p>		
+				<p class="help-block" ng-show="adminProfileForm.password.$error.minlength && !adminProfileForm.password.$pristine">密码最小长度为6</p>		
+				<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="adminProfileForm.password.$valid && same_password"></span>
+				<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="adminProfileForm.password.$invalid && !adminProfileForm.password.$pristine"></span>
+			</div>
+			<br>
+
+			<div>
+				<div class="inp-flag">
+					<label>再次输入密码：</label>
+				</div>
+				<input class="form-control" name="password_confirmation" type="password" ng-model="current_admin_profile.admin.password_confirmation" ng-minlength=6 required>
+				<p class="help-block" ng-show="adminProfileForm.password_confirmation.$error.required && !adminProfileForm.password_confirmation.$pristine">该项必填</p>		
+				<p class="help-block" ng-show="adminProfileForm.password_confirmation.$error.minlength && !adminProfileForm.password_confirmation.$pristine">密码最小长度为6</p>		
+				<p class="help-block" ng-show="!same_password && !adminProfileForm.password_confirmation.$pristine">两次填写密码不一致</p>
+				<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="adminProfileForm.password_confirmation.$valid && same_password"></span>
+				<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="adminProfileForm.password_confirmation.$invalid && !adminProfileForm.password_confirmation.$pristine"></span>
+			</div>
+			<br>
+
+			<div>
+				<div class="inp-flag">
+					<label>联系人手机号：</label>
+				</div>
+				<input name="mobile" class="form-control" type="text" ng-model="current_admin_profile.admin.mobile" required >
+				<p class="help-block" ng-show="adminProfileForm.mobile.$error.required && !adminProfileForm.mobile.$pristine">该项必填</p>
+				<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="adminProfileForm.mobile.$valid"> 对</span>
+				<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="adminProfileForm.mobile.$invalid && !adminProfileForm.mobile.$pristine">x</span>
+			</div>
+	  		<br>
+
+			<div>
+				<div class="inp-flag">
+					<label>生日：</label>
+				</div>
+				<input name="birthday" class="form-control" type="date" ng-model="current_admin_profile.admin.birthday" required >
+				<p class="help-block" ng-show="adminProfileForm.birthday.$error.required && !adminProfileForm.birthday.$pristine">该项必填</p>
+				<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="adminProfileForm.birthday.$valid"> 对</span>
+				<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="adminProfileForm.birthday.$invalid && !adminProfileForm.birthday.$pristine">x</span>
+			</div>
+	  		<br>
+
+	  		<select name="status" ng-model="current_admin_profile.admin.status">
+	  		  <option value = "Fulltime">全职工作</option>
+	  		  <option value = "Parttime">兼职工作</option>
+	  		  <option value = "Inschool">在校兼职</option>
+	  		</select>
+	  		<br>
+
+			<!-- 除了ng自带的表单验证外，加上密码验证，才可以注册 -->
+			<button ng-click ="adminProfileUpdate()" class="btn btn-primary" ng-disabled="adminProfileForm.$invalid || !same_password" >确定更改信息</button>
+			  		{{register_result}}
+			</form>
+	</div>
 
 </div>

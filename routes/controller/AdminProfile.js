@@ -117,4 +117,41 @@ exports.getAllAdmins = function(req, res){
 }
 
 
+exports.adminAvatarUpload = function(req, res) {
+  var file_name;
+  var admin_name;
+
+  req.busboy.on('field', function(fieldname, value) {
+    if (fieldname == "filename") {
+      file_name = value;
+    } else if (fieldname == "admin_name"){
+      admin_name = value;
+    };
+  });
+
+  
+  req.busboy.on('file', function (fieldname, file, filename) {
+
+    var file_path = "./views/storage/Admin/"+ file_name;
+    var storage_path = "/storage/Admin/"+file_name;
+
+    var steam = fs.createWriteStream(file_path);
+    file.pipe(steam);
+    steam.on('error', function () {
+        res.sendError("上传失败，请重新上传");
+    });
+    steam.on('close', function () {
+      console.log(file_name);
+      AdminProfile.uploadAvatar(admin_name, storage_path, function(err, admin){
+        callbackFunction( res, err, admin);
+      })
+    });
+
+  });
+  req.pipe(req.busboy);
+}
+
+
+
+
 

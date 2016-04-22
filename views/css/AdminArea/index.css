@@ -125,16 +125,6 @@ body {
 	position: absolute;
 }
 
-.current-admin-task-center{
-	position:absolute;
-	left:150px;
-}
-
-.current-admin-task-list{
-	position: absolute;
-	left: 150px;
-	top:30px;
-}
 .form-actions {
 	width: 100%;
 	padding: 19px 20px 20px 50px;
@@ -177,4 +167,11 @@ tr.alt td  {
 }
 .admin_profile_change {
 	margin: 0 0 0 300px;
+}
+
+.cropArea {
+  background: #E4E4E4;
+  overflow: hidden;
+  width:500px;
+  height:350px;
 }

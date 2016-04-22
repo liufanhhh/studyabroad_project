@@ -48,9 +48,12 @@ AdminTaskProfileSchema.statics.searchTaskById = function(_id, cb) {
     this.find({_id:_id}, cb);
 }
 
+
+
 AdminTaskProfileSchema.statics.getAdminResponseMerchantList = function(admin_name, cb) {
     this.find({"task.assign_admin":admin_name}).select("task.merchant.name").exec(cb);
 }
+
 
 AdminTaskProfileSchema.statics.searchTaskByAllConditions = function(task, cb) {
     console.log(task);

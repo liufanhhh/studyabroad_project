@@ -1,4 +1,4 @@
-var adminIndexApp = angular.module('adminIndexApp', ['ngResource', 'ngRoute','angularFileUpload','angular-md5']);
+var adminIndexApp = angular.module('adminIndexApp', ['ngResource', 'ngRoute','angularFileUpload','angular-md5','ngImgCrop']);
 
 adminIndexApp.config(function($routeProvider, $locationProvider) {
     $routeProvider.
@@ -98,28 +98,7 @@ adminIndexApp.controller('mainController', function($scope, $resource, $routePar
 	$scope.search_task = {};
 	$scope.change_assign_admin_show = false;
 	$scope.new_note_content = "";
-	$scope.getAllAdmins = function  (deleted) {
-		$resource("/admin/get/admin/list").get({
-			deleted: deleted
-		},function(res){
-			$scope.all_admins = res.data;
-			$scope.search_task_default = {
-				assign_admin: [],
-				create_admin: [],
-				task_type: ["SignUpMerchant","AdminCreate","LiveApproval"],
-				status: ["Initial","Processing","Finished"]
-			};
-			$scope.search_task_default.assign_admin.push($scope.current_admin);
 
-			for (var i = $scope.all_admins.length - 1; i >= 0; i--) {
-				$scope.search_task_default.create_admin.push($scope.all_admins[i].admin.name);
-			};
-
-			$scope.search_task_default.create_admin.push("System");
-			$scope.findTask();
-		});
-	};
-	$scope.getAllAdmins(1);
 
 	$scope.findTask = function () {
 		$scope.search_task_new = new Object();
@@ -143,6 +122,38 @@ adminIndexApp.controller('mainController', function($scope, $resource, $routePar
 		});
 	};
 
+	$scope.getCurrentAdminAvatar = function () {
+		for (var i = 0; i < $scope.all_admins.length; i++) {
+			if ($scope.all_admins[i].admin.name==$scope.current_admin) {
+				$scope.avatar_path = $scope.all_admins[i].admin.avatar||"/storage/Admin/avatar.jpeg";
+				break;
+			};
+		};
+	};
+
+	$scope.getAllAdmins = function  (deleted) {
+		$resource("/admin/get/admin/list").get({
+			deleted: deleted
+		},function(res){
+			$scope.all_admins = res.data;
+			$scope.search_task_default = {
+				assign_admin: [],
+				create_admin: [],
+				task_type: ["SignUpMerchant","AdminCreate","LiveApproval"],
+				status: ["Initial","Processing","Finished"]
+			};
+			$scope.search_task_default.assign_admin.push($scope.current_admin);
+
+			for (var i = $scope.all_admins.length - 1; i >= 0; i--) {
+				$scope.search_task_default.create_admin.push($scope.all_admins[i].admin.name);
+			};
+
+			$scope.search_task_default.create_admin.push("System");
+			$scope.findTask();
+			$scope.getCurrentAdminAvatar();
+		});
+	};
+	$scope.getAllAdmins(1);
 
 	$scope.tasksCurrentAdminCreate = function () {
 		$scope.search_task_default.assign_admin = [];
@@ -263,7 +274,129 @@ adminIndexApp.controller('merchantAddController', function($scope, $resource, $r
 	}
 });
 
-adminIndexApp.controller('adminProfileController', function($scope, $resource, $routeParams, $location) {
+adminIndexApp.controller('adminProfileController', function($scope, $resource, $routeParams, $location, FileUploader, md5) {
+
+	$scope.myImage='';
+	$scope.myCroppedImage='';
+	var uploader = $scope.uploader = new FileUploader({url:"/admin/avatar/upload", removeAfterUpload: true});
+
+	/**
+	 * Show preview with cropping
+	 */
+	uploader.onAfterAddingFile = function(item) {
+	  var reader = new FileReader();
+	  reader.onload = function(event) {
+	    $scope.$apply(function(){
+	      $scope.image = event.target.result;
+	    });
+	  };
+
+	  reader.readAsDataURL(item._file);
+	};
+
+	/**
+	 * Upload Blob (cropped image) instead of file.
+	 * @see
+	 *   https://developer.mozilla.org/en-US/docs/Web/API/FormData
+	 *   https://github.com/nervgh/angular-file-upload/issues/208
+	 */
+	uploader.onBeforeUploadItem = function(item) {
+	  var blob = dataURItoBlob($scope.myCroppedImage);
+	  item._file = blob;
+	  var filename = item.file.type;
+	  filename = filename.substring(filename.indexOf("\/"),filename.length);
+	  filename = filename.replace(/\//,"\.");
+	  filename = $scope.current_admin+filename;
+
+	  item.formData[0] = {admin: $scope.current_admin};
+	  item.formData[1] = {filename: filename};
+	};
+
+	/**
+	 * Converts data uri to Blob. Necessary for uploading.
+	 * @see
+	 *   http://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata
+	 * @param  {String} dataURI
+	 * @return {Blob}
+	 */
+	var dataURItoBlob = function(dataURI) {
+	  var binary = atob(dataURI.split(',')[1]);
+	  var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+	  var array = [];
+	  for(var i = 0; i < binary.length; i++) {
+	    array.push(binary.charCodeAt(i));
+	  }
+	  return new Blob([new Uint8Array(array)], {type: mimeString});
+	};
+
+
+	$scope.uploader.onBeforeUploadItem = function(item) {
+		item.formData = {admin_name:$scope.current_admin};
+	    console.info('onBeforeUploadItem', item);
+	};
+
+	$scope.uploader.onProgressItem = function(fileItem, progress) {
+	    console.info('onProgressItem', fileItem, progress);
+	};
+
+	$scope.uploader.onErrorItem = function(fileItem, response, status, headers) {
+	    console.info('onErrorItem', fileItem, response, status, headers);
+	};
+
+	$scope.uploader.SuccessItem = function(fileItem, response, status, headers) {
+		$scope.getCurrentAdminAvatar();
+	    console.info('onSuccessItem', fileItem, response, status, headers);
+	};
+
+	$scope.getCurrentAdminAvatar = function () {
+		for (var i = 0; i < $scope.all_admins.length; i++) {
+			if ($scope.all_admins[i].admin.name==$scope.current_admin) {
+				$scope.avatar_path = $scope.all_admins[i].admin.avatar||"/storage/Admin/avatar.jpeg";
+				$scope.current_admin_profile = $scope.all_admins[i];
+				$scope.current_admin_profile.admin.password = null;
+				$scope.current_admin_profile.admin.status = "Fulltime";
+				break;
+			};
+		};
+	};
+
+	$scope.getAllAdmins = function  (deleted) {
+		$resource("/admin/get/admin/list").get({
+			deleted: deleted
+		},function(res){
+			$scope.all_admins = res.data;
+			$scope.getCurrentAdminAvatar();
+		});
+	};
+	$scope.getAllAdmins(1);
+
+	$scope.$watch("current_admin_profile.admin.password_confirmation", function(newVal,oldVal,scope){
+		if (newVal === oldVal){
+		}
+		else if(!$scope.current_admin_profile.admin.password_confirmation){
+			$scope.same_password = false;
+		}
+		else if($scope.current_admin_profile.admin.password !== $scope.current_admin_profile.admin.password_confirmation){
+			$scope.same_password = false;
+		}
+		else if($scope.current_admin_profile.admin.password === $scope.current_admin_profile.admin.password_confirmation){
+			$scope.same_password = true;
+		}
+	});
+	/*按监视密码2的方法监视密码1*/
+	$scope.$watch("current_admin_profile.admin.password", function(newVal,oldVal,scope){
+		if (newVal === oldVal){
+		}
+		else if(!$scope.current_admin_profile.admin.password){
+			$scope.same_password=false;
+		}
+		else if($scope.current_admin_profile.admin.password !== $scope.current_admin_profile.admin.password_confirmation){
+			$scope.same_password=false;
+		}
+		else if($scope.current_admin_profile.admin.password === $scope.current_admin_profile.admin.password_confirmation){
+			$scope.same_password=true;
+		}
+	});
 
 });
 adminIndexApp.controller('adminListController', function($scope, $resource, $routeParams, $location) {

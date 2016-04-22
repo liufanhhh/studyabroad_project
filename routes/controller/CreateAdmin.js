@@ -6,6 +6,7 @@ exports.createNewAdmin = function(req,res){
   var admin = req.body.admin;
   admin.password = admin.password_sign;
   admin.deleted = false;
+  admin.avatar = "/storage/Admin/avatar.jpeg";
   var sameName = Q.nfbind(AdminProfile.findAdminByName.bind(AdminProfile));
 
   var handleNameResult = function(exist){

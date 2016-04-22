@@ -16,6 +16,7 @@ var AdminProfileSchema = mongoose.Schema({
         status: String,
         birthday: String,
         title: String,
+        avatar: String,
         create_time: Date
     }
 });
@@ -27,11 +28,20 @@ AdminProfileSchema.statics.findAdminById = function(id, cb) {
 }
 
 AdminProfileSchema.statics.deleteAdminByName = function(name, cb) {
-    console.log(name);
     this.findOneAndUpdate({
         "admin.name": name
     },{
         $set:{"admin.deleted": true}
+    }, cb);
+}
+
+AdminProfileSchema.statics.uploadAvatar = function (name, path, cb) {
+    console.log(1+name);
+    console.log(2+path);
+    this.findOneAndUpdate({
+        "admin.name": name
+    },{
+        $set:{"admin.avatar": path}
     }, cb);
 }
 

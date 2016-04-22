@@ -53,6 +53,8 @@ module.exports = function(app) {
 
     app.get("/website/profile/create", ResetWebsiteProfile.createWebsiteInformation);
 
+    app.post("/admin/avatar/upload", Enter.authenticateAdmin, AdminProfile.adminAvatarUpload);
+
 
 
 

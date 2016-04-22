@@ -132,11 +132,8 @@ exports.returnToken = function (req, res) {
     email: req.body.email
   };
   MerchantProfile.findMerchantByEmail(merchant.email, function (err, profile) {
-    console.log(typeof(profile));
-    console.log(typeof(profile[0]));
-    if (typeof(profile)=="object"&&profile[0]!=null) {
+    if (profile instanceof Array&&profile[0]!=null) {
       token = profile[0].merchant.create_time;
-    console.log(profile);
       res.sendData(token,"获取成功");
     } else{
       res.sendError("邮箱错误");

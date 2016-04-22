@@ -4,19 +4,22 @@ var md5 = require("../md5.min.js");
 var AdminTaskProfile = require("../../model/AdminTaskProfileModel.js");
 var MerchantProfile = require("../../model/MerchantProfileModel.js");
 
-var callbackFunction = function (res, err, profile) {
-  if (profile instanceof undefined||profile instanceof null) {
-    res.sendError("未能查询到");
-  } else if(profile instanceof Array){
+var callbackFunction = function (res, err, profile, data) {
+  var data = data||null;
+  if (data!=null) {
+    res.sendData(data,"获取成功");
+  } else if(profile instanceof Array&&data==null){
     if (profile[0] == null) {
       res.sendData(profile,"没有符合记录");
     } else{
       res.sendData(profile,"获取成功");
     };
+  } else if (profile==undefined||profile==null) {
+    res.sendError("未能查询到");
   } else if(err) {
     res.sendError(err);
   } else{
-  	res.sendData(profile,"获取成功");
+    res.sendData(profile,"获取成功");
   };
 }
 
@@ -61,62 +64,64 @@ exports.searchTaskByAllConditions = function(req, res){
 
 exports.adminTaskCreate = function(req, res){
 	var task = req.body.task;
-	console.log(task);
+	task.merchant_id = parseInt(task.merchant_name_id);
 
-	MerchantProfile.findMerchantById(task.merchant_name_id, function (err, merchant_profile){
-		if(merchant_profile!=null&&merchant_profile[0]==null){
-			MerchantProfile.findMerchantByName(task.merchant_name_id, function (err, merchant_profile){
-				if (err) {
-					res.sendError(err);
-				} else if(merchant_profile!=null&&merchant_profile[0]==null){
-					task.merchant = {
-						id: merchant_profile[0].merchant.id,
-						name: merchant_profile[0].merchant.name,
-						hierarchy: merchant_profile[0].merchant.hierarchy,
-						willing_to_cooperate: merchant_profile[0].merchant.willing_to_cooperate
+	if (task.merchant_id!=task.merchant_id) {
+		task.merchant_name = task.merchant_name_id;
+		MerchantProfile.findMerchantByName(task.merchant_name_id, function (err, merchant_profile){
+			if (err) {
+				res.sendError(err);
+			} else if(merchant_profile instanceof Array&&merchant_profile[0]!=null){
+				task.merchant = {
+					id: merchant_profile[0].merchant.id,
+					name: merchant_profile[0].merchant.name,
+					hierarchy: merchant_profile[0].merchant.hierarchy,
+					willing_to_cooperate: merchant_profile[0].merchant.willing_to_cooperate
+				};
+				console.log("aa");
+				AdminTaskProfile.createNewTask(task, function (err, task_profile){
+					if (err) {
+						res.sendError(err);
+					} else if(task_profile!=null&&task_profile[0]==null){
+						callbackFunction (res, err, task_profile);
+					} else{
+						console.log(merchant_profile);
+						res.sendError("数据库错误");
 					};
-					AdminTaskProfile.createNewTask(task, function (err, task_profile){
-						if (err) {
-							res.sendError(err);
-						} else if(task_profile!=null&&task_profile[0]==null){
-							callbackFunction (res, err, task_profile);
-						} else{
-							console.log(merchant_profile);
-							res.sendError("数据库错误");
-						};
-					});
-				} else{
-					console.log(merchant_profile);
-					res.sendError("商户未查到");
-				};
-			})
-		} else if(merchant_profile!=null&&merchant_profile[0]!=null){
-			task.merchant = {
-				id: merchant_profile[0].merchant.id,
-				name: merchant_profile[0].merchant.name,
-				hierarchy: merchant_profile[0].merchant.hierarchy,
-				willing_to_cooperate: merchant_profile[0].merchant.willing_to_cooperate
+				});
+			} else{
+				console.log(merchant_profile);
+				res.sendError("商户未查到");
 			};
-			AdminTaskProfile.createNewTask(task, function (err, task_profile){
-				if (err) {
-					res.sendError(err);
-				} else if(task_profile!=null&&task_profile[0]==null){
-					callbackFunction (res, err, task_profile);
-				} else{
-					console.log(merchant_profile);
-					res.sendError("数据库错误");
+		})
+	} else{
+		MerchantProfile.findMerchantById(task.merchant_name_id, function (err, merchant_profile){
+			if(merchant_profile instanceof Array&&merchant_profile[0]!=null){
+				task.merchant = {
+					id: merchant_profile[0].merchant.id,
+					name: merchant_profile[0].merchant.name,
+					hierarchy: merchant_profile[0].merchant.hierarchy,
+					willing_to_cooperate: merchant_profile[0].merchant.willing_to_cooperate
 				};
-			});
-		} else {
-			console.log(merchant_profile);
-			res.sendError("商户未查到");
-		};
-
-	});
-	// AdminTaskProfile.searchTaskByAllConditions( task, function (err, tasks) {
-	// 	callbackFunction (res, err, tasks);
-	// });
-}
+				AdminTaskProfile.createNewTask(task, function (err, task_profile){
+					if (err) {
+						res.sendError(err);
+					} else if(task_profile!=null&&task_profile[0]==null){
+						callbackFunction (res, err, task_profile);
+					} else{
+						console.log(merchant_profile);
+						res.sendError("数据库错误");
+					};
+				});
+			} else if(err){
+				res.sendError(err);
+			} else {
+				console.log(merchant_profile);
+				res.sendError("商户未查到");
+			};
+		});
+	};
+};
 
 exports.taskAssignAdminUpdate = function(req, res){
 	var _id = req.query._id;
