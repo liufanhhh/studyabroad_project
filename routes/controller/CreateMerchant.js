@@ -1,6 +1,7 @@
 var Q = require('q');
 var fs = require('fs');
 var MerchantProfile = require("../../model/MerchantProfileModel.js");
+var WebsiteProfile = require("../../model/WebsiteProfileModel.js");
 var AdminTaskProfile = require("../../model/AdminTaskProfileModel.js");
 
 exports.createNewMerchant = function(req,res){
@@ -10,9 +11,10 @@ exports.createNewMerchant = function(req,res){
   var sameName = Q.nfbind(MerchantProfile.findMerchantByName.bind(MerchantProfile));
 
   var handleNameResult = function(exist){
-    console.log(exist);
+    console.log(exist[0]);
+    console.log("aaa");
     var deferred = Q.defer();
-    if (exist) {
+    if (typeof(exist)=="array"&&exist[0]!=null) {
       deferred.reject("商户名重复");
     }else{
       MerchantProfile.countMerchantsAmount(function (err, amount) {
@@ -35,7 +37,7 @@ exports.createNewMerchant = function(req,res){
       deferred.reject("设置失败");
     }else{
       MerchantProfile.findMerchantByEmail(merchant.email, function (err, profile) {
-        if (err||profile!==null) {
+        if (typeof(exist)=="array"&&exist[0]!=null) {
           deferred.reject("邮箱重复");
         } else{
           deferred.resolve(amount);
@@ -110,7 +112,7 @@ exports.createNewMerchant = function(req,res){
         console.log(error);
         res.sendError(error);
     });
-}
+};
 
 
 

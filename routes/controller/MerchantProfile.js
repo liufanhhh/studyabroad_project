@@ -102,12 +102,12 @@ exports.merchantLogin = function (req, res) {
     email: req.body.email,
     password: req.body.password
   };
-  MerchantProfile.findMerchantByEmail( merchant, function (err, merchant_profile) {
-    if (err||merchant_profile.merchant==null) {
+  MerchantProfile.findMerchantByEmail( merchant.email, function (err, merchant_profile) {
+    if (err||merchant_profile[0].merchant==null) {
       res.sendError(err);
-    } else if (merchant.password == merchant_profile.merchant.password){
+    } else if (merchant.password == merchant_profile[0].merchant.password){
       console.log("aa");
-      session.merchant_id = merchant_profile.merchant.id;
+      session.merchant_id = merchant_profile[0].merchant.id;
       res.status(200).send({location:'/merchant/login'});
     } else{
       res.sendError("密码错误");      
@@ -131,14 +131,15 @@ exports.returnToken = function (req, res) {
   var merchant = {
     email: req.body.email
   };
-  MerchantProfile.findMerchantByEmail(merchant, function (err, profile) {
+  MerchantProfile.findMerchantByEmail(merchant.email, function (err, profile) {
+    console.log(typeof(profile));
+    console.log(typeof(profile[0]));
+    if (typeof(profile)=="object"&&profile[0]!=null) {
+      token = profile[0].merchant.create_time;
     console.log(profile);
-    if (err||profile==null) {
-      res.sendError("邮箱错误");
-    } else{
-      console.log(profile);
-      token = profile.merchant.create_time;
       res.sendData(token,"获取成功");
+    } else{
+      res.sendError("邮箱错误");
     };
   })
 }
