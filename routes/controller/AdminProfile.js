@@ -123,12 +123,16 @@ exports.adminAvatarUpload = function(req, res) {
 
   req.busboy.on('field', function(fieldname, value) {
     if (fieldname == "filename") {
+      console.log("filename"+value);
       file_name = value;
-    } else if (fieldname == "admin_name"){
+    } else if (fieldname == "admin"){
       admin_name = value;
+      console.log("admin"+value);
     };
   });
 
+  console.log("aa"+file_name);
+  console.log("bb"+admin_name);
   
   req.busboy.on('file', function (fieldname, file, filename) {
 

@@ -283,11 +283,15 @@ adminIndexApp.controller('adminProfileController', function($scope, $resource, $
 	/**
 	 * Show preview with cropping
 	 */
+	 uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+	     console.info('onWhenAddingFileFailed', item, filter, options);
+	 };
 	uploader.onAfterAddingFile = function(item) {
+		console.info('onAfterAddingFile', item);
 	  var reader = new FileReader();
 	  reader.onload = function(event) {
 	    $scope.$apply(function(){
-	      $scope.image = event.target.result;
+	      $scope.myImage = event.target.result;
 	    });
 	  };
 
@@ -329,24 +333,22 @@ adminIndexApp.controller('adminProfileController', function($scope, $resource, $
 	  return new Blob([new Uint8Array(array)], {type: mimeString});
 	};
 
-
-	$scope.uploader.onBeforeUploadItem = function(item) {
-		item.formData = {admin_name:$scope.current_admin};
-	    console.info('onBeforeUploadItem', item);
-	};
-
-	$scope.uploader.onProgressItem = function(fileItem, progress) {
+	uploader.onProgressItem = function(fileItem, progress) {
 	    console.info('onProgressItem', fileItem, progress);
 	};
 
-	$scope.uploader.onErrorItem = function(fileItem, response, status, headers) {
+	uploader.onErrorItem = function(fileItem, response, status, headers) {
 	    console.info('onErrorItem', fileItem, response, status, headers);
 	};
 
-	$scope.uploader.SuccessItem = function(fileItem, response, status, headers) {
+	uploader.SuccessItem = function(fileItem, response, status, headers) {
 		$scope.getCurrentAdminAvatar();
 	    console.info('onSuccessItem', fileItem, response, status, headers);
 	};
+
+	$scope.uploadAdminAvatar = function(){
+		uploader.uploadAll();
+	}
 
 	$scope.getCurrentAdminAvatar = function () {
 		for (var i = 0; i < $scope.all_admins.length; i++) {
