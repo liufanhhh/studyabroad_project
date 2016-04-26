@@ -108,11 +108,31 @@
 
 	</div>
 
-	<div ng-if = "admin_profile_change_show">
-		<input type="text" ng-model="admin_changing_profile.name">
-		<input type="text" ng-model="admin_changing_profile.email">
-		<input type="text" ng-model="admin_changing_profile.mobile">
-		<input type="text" placeholder="新密码" ng-model="admin_changing_profile.new_password">
+	<div ng-if = "admin_profile_change_show" class="form-actions">
+		<div>
+			<div class="inp-flag">
+				<label>新姓名：</label>
+			</div>		
+			<input type="text" ng-model="admin_changing_profile.name" class="form-control">
+		</div>
+		<div>
+			<div class="inp-flag">
+				<label>新邮箱：</label>
+			</div>		
+			<input type="text" ng-model="admin_changing_profile.email" class="form-control">
+		</div>
+		<div>
+			<div class="inp-flag">
+				<label>新手机：</label>
+			</div>	
+			<input type="text" ng-model="admin_changing_profile.mobile">
+		</div>
+		<div>
+			<div class="inp-flag">
+				<label>新密码：</label>
+			</div>	
+			<input type="text" placeholder="新密码" ng-model="admin_changing_profile.new_password">
+		</div>
 		<button ng-click = "changeAdminProfileConfirm()">修改</button>
 		{{admin_change_result}}
 	</div>

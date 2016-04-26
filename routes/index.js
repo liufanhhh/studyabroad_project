@@ -64,8 +64,6 @@ module.exports = function(app) {
 	//User Area
 	app.get("/user/signup/page", Enter.userSignup);
 	app.get("/user/login/page", Enter.userLogin);
-	// app.get("/user/login", Enter.authenticateUser, Enter.indexpageEnter);
-	app.get("/user/login/profile", Enter.authenticateUser, Enter.userProfilePage);
 	app.post("/user/register", CreateUser.newuserCreate);
 	app.post("/user/profile/token", UserProfile.getToken);
 	app.post("/user/name/checking", UserProfile.nameChecking);
@@ -74,6 +72,12 @@ module.exports = function(app) {
 	app.post("/user/login", UserProfile.userLogin);
 	app.get("/verification", UserProfile.emailVerify);
 	app.get("/user/email/sent", Enter.emailSent);
+	app.get("/user/current/user", function(req, res) {
+		console.log("aaa");
+		console.log(req.session);
+    	res.sendData(req.session.userid,"获取成功");
+    });
+	
 
 
 
