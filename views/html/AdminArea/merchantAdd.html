@@ -1,7 +1,7 @@
 <div class="admin-index-child">
 
-
-	<h1>添加商户</h1>
+	<div class="form-actions">
+		<h1>添加商户</h1>
 		<form name="registerForm" role="form"  novalidate>
 		<div>
 			<div class="inp-flag">
@@ -102,5 +102,5 @@
 		<button ng-click ="merchantRegister()" class="btn btn-primary" ng-disabled="registerForm.$invalid || !same_password" >确定添加商户</button>
 		  		{{register_result}}
 		</form>
-
+	</div>
 </div>
