@@ -24,7 +24,7 @@ exports.initialIoFunction = function(server){
 		socket.on('special', function (data) { 
 			console.log(list[0]._id);
 			console.log(data.message);
-		    socket.broadcast.to(list[0]._id).emit('special message', data.message);  
+		    socket.broadcast.to(list[0]._id).emit('special message', data.message);
 		});
 
 	});
