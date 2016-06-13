@@ -40,9 +40,9 @@ exports.userLogin = function (req, res) {
 		console.log(new Date(user_profile.user.create_time).getTime());
 		if (user_profile.user.password==user.password_sign) {
 			if (user_profile.user.email_confirm) {
-				req.session.userid = user_profile.user._id;
+				req.session.userid = user_profile._id;
 				req.session.user_verify = true;
-				res.status(200).send({location:'/user/login/profile'});
+				res.status(200).send({location:'/'});
 			} else{
 				res.sendError("邮箱未验证");
 			};
