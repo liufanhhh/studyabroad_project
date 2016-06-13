@@ -1,8 +1,5 @@
-// // var md5 = require('./md5.min.js');
-// var nodemailer = require('nodemailer');
-// // console.log(md5("123"));
-
-
+var md5 = require('./md5.min.js');
+console.log(md5("ag_external_id=12685ag_name=7nujoom_coinsag_type=fixedamount=1currencyCode=USDemail=haoxiaohu@feinno.comhistory=1464943972key=d56b2cabc6a041063dfdcaa762d4145eorderId=cb9019a6-1411-49e9-b909-1ca13a978450ps=testsign_version=2uid=541086widget=p2_1139b374e5fadb4aa6931caee0777baae"));
 
 // var transport = nodemailer.createTransport("SMTP", {
 //     host: "smtp.126.com",

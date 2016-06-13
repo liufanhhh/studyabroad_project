@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="cn" ng-app="indexApp">
+  <head>
+    <title>聊天室</title>
+
+    <!-- The information of the website and the valid scale factor -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   
+    <!-- The import of the javascript -->
+    <script src="/bower_components/angular/angular.min.js"></script>
+    <script src="/bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="/bower_components/angular-socket-io/socket.min.js"></script>
+
+    <script src="/js/saindex.js"></script>
+    <script src="/socket.io/socket.io.js"> </script>
+  </head>
+
+<body ng-controller="indexController">
+
+    <div ng-show="step1">
+        <input ng-model="user_name"/>
+        <button ng-click="confirmName()">确定我的名字</button>
+    </div>
+
+    <div ng-show="step2">
+        <input ng-model="message"/>
+        <button ng-click="sendMessage()">发送</button>
+
+        <div>
+        我发的信息
+            <section ng-repeat="message in sending_messages">
+                {{message.status}}
+                <span ng-bind="message.content"></span>
+            </section>
+        </div>
+
+        <div>
+        收到的信息
+            <section ng-repeat="m in received_messages">
+                <span ng-bind="m.create_time"></span>
+                <span ng-bind="m.content"></span>
+            </section>
+        </div>
+    </div>
+
+</body>
+
+
+
+</html>
