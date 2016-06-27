@@ -11,8 +11,6 @@ exports.createNewMerchant = function(req,res){
   var sameName = Q.nfbind(MerchantProfile.findMerchantByName.bind(MerchantProfile));
 
   var handleNameResult = function(exist){
-    console.log(exist[0]);
-    console.log("aaa");
     var deferred = Q.defer();
     if (typeof(exist)=="array"&&exist[0]!=null) {
       deferred.reject("商户名重复");
@@ -31,7 +29,6 @@ exports.createNewMerchant = function(req,res){
   }
 
   var checkEmail = function(amount){
-    console.log(amount);
     var deferred = Q.defer();
     if (!amount) {
       deferred.reject("设置失败");
@@ -49,7 +46,6 @@ exports.createNewMerchant = function(req,res){
   }
 
   var createMerchant = function (amount){
-    console.log(amount);
     var deferred = Q.defer();
     if (!amount) {
       deferred.reject("设置失败");

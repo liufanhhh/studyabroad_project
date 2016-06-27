@@ -135,3 +135,8 @@ exports.emailVerify = function (req, res) {
 		res.status(401).send("<p>验证码错误或已经失效请重新注册</p>");
 	};
 }
+
+exports.profilePageReturn = function (req, res) {
+	res.status(301).sendfile("./views/html/UserArea/userIndex.html");
+}
+

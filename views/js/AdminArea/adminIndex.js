@@ -348,7 +348,7 @@ adminIndexApp.controller('adminProfileController', function($scope, $resource, $
 
 	$scope.uploadAdminAvatar = function(){
 		uploader.uploadAll();
-	}
+	};
 
 	$scope.getCurrentAdminAvatar = function () {
 		for (var i = 0; i < $scope.all_admins.length; i++) {

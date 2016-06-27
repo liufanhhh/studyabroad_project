@@ -88,6 +88,13 @@ MerchantProfileSchema.statics.findMerchantById = function(id, cb) {
     }).exec(cb);
 }
 
+MerchantProfileSchema.statics.getMerchantIndexPageProfile = function(id, cb) {
+    this.findOne({
+        "merchant.id": id
+    }).exec(cb);
+}
+
+
 MerchantProfileSchema.statics.findMerchantByName = function(name, cb) {
     this.find({
         "merchant.name": name

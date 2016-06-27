@@ -72,9 +72,8 @@ module.exports = function(app) {
 	app.post("/user/login", UserProfile.userLogin);
 	app.get("/verification", UserProfile.emailVerify);
 	app.get("/user/email/sent", Enter.emailSent);
+	app.get("/user/center", UserProfile.profilePageReturn);
 	app.get("/user/current/user", function(req, res) {
-		console.log("aaa");
-		console.log(req.session);
     	res.sendData(req.session.userid,"获取成功");
     });
 	
@@ -83,8 +82,11 @@ module.exports = function(app) {
 
 	//Merchant Area
 	app.get("/merchant/cooperate", MerchantProfile.merchantLogin);
-	app.get("/merchant/login", Enter.authenticateMerchant, Enter.merchantProfilePage);
+	app.get("/merchant/center", Enter.authenticateMerchant, Enter.merchantProfilePage);
 
+	app.get("/merchant/login", Enter.authenticateMerchant, function(req, res) {
+    	res.redirect("/merchant/center");
+    });
 	app.post("/merchant/login", MerchantProfile.merchantLogin);
 	app.post("/merchant/profile/password", MerchantProfile.createNewPassword);
 	app.post("/merchant/profile/create", CreateMerchant.createNewMerchant);
@@ -95,5 +97,7 @@ module.exports = function(app) {
 	app.post("/merchant/profile/tax_registration", Enter.authenticateMerchant, MerchantProfile.profileUpload);
 	app.post("/merchant/profile/organization_order", Enter.authenticateMerchant, MerchantProfile.profileUpload);
 	app.get("/merchant/name/complete", MerchantProfile.merchantNameComplete);
+	app.get("/merchant/current/merchant", Enter.authenticateMerchant, MerchantProfile.getMerchantProfile);
 
 }
+

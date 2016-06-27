@@ -86,6 +86,13 @@ exports.findOneMerchant = function (req, res) {
   };
 }
 
+exports.getMerchantProfile = function (req, res) {
+  var merchant_id = req.session.merchant_id;
+  MerchantProfile.getMerchantIndexPageProfile(merchant_id, function(err, merchant_profile){
+    callbackFunction(res, err, merchant_profile);
+  });
+}
+
 exports.getMerchantsLogo = function (req, res) {
   MerchantProfile.getMerchantsLogo(function (err, logos) {
     if (err) {

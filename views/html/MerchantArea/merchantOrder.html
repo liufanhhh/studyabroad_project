@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<!-- The import of the javascript -->
+	<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="/bower_components/angular/angular.min.js"></script>
+	<script src="/bower_components/angular-resource/angular-resource.min.js"></script>
+	<script src="/bower_components/angular-route/angular-route.min.js"></script>
+	<script src="/bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
+	<script src="../../js/merchantController.js"></script>
+   
+    <link rel="stylesheet" href="../css/merchant-form.css">
+</head>	
+
+
+
+<body ng-app="MerchantProfileApp">
+
+	{{create_status}}
+
+	<div  ng-controller="MerchantProfileController" class="merchant-form">
+
+
+		
+		<input type="text" ng-model = "merchant.name" />商户名称
+		<input type="text" ng-model = "merchant.email" />商户邮箱
+		<input type="text" ng-model = "merchant.contact_person" />联系人姓名
+		<input type="text" ng-model = "merchant.website" />商户官网
+		<input type="text" ng-model = "merchant.location" />商户公司地址
+		<input type="text" ng-model = "merchant.score.pass_rate" />申请通过率
+		<input type="text" ng-model = "merchant.score.article_score" />文书评分
+		<input type="text" ng-model = "merchant.score.total_score" />综合评分
+		<br>
+		
+		<button ng-click = "addedNewArea()">增加一个地区</button>
+		<div ng-repeat = "area in merchant.support_area">
+			<input type="text" ng-model = "merchant.support_area[$index]" />
+		</div><br>
+
+		<!-- 例子  -->
+		{{merchant.id}} 商户id
+		{{merchant.contact_person}}联系人姓名 
+		{{merchant.website}}商户官网
+		{{merchant.location}}商户公司地址
+		{{merchant.score.pass_rate}}申请通过率
+		{{merchant.score.article_score}}文书评分
+		{{merchant.score.total_score}}综合评分
+	
+		<div ng-repeat = "file in merchant.identification" ng-if = "profileShow">
+			<label>{{file.name}}: </label>
+
+			<div nv-file-drop="" uploader="uploader" options="{ url: '{{file.url}}'}">
+			    拖动上传文件到这里
+			</div>
+
+			<input type="file" nv-file-select="" uploader="uploader" options="{ url: '{{file.url}}'}">	
+			
+		</div>
+
+	</div>
+
+</body>

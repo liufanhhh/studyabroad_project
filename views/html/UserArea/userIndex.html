@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="cn" ng-app="userIndexApp">
+  <head>
+    <title></title>
+
+    <!-- The information of the website and the valid scale factor -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   
+    <!-- The import of the javascript -->
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/angular/angular.min.js"></script>
+    <script src="/bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="/bower_components/angular-strap/dist/modules/modal.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/bower_components/angular-md5/angular-md5.js"></script>
+    <script src="/js/UserArea/userIndex.js"></script>
+  </head>
+
+  <body ng-controller="indexController">
+    <div>
+      <a href="#/">个人信息</a>
+      <a href="#/pravicy">隐私设置</a>
+      <a href="#/history">动态中心</a>
+      <a href="#/favorite">我的收藏</a>
+      <a href="#/password">密码更改</a>
+      <a href="#/mobile">手机绑定</a>
+    </div>
+    
+    <div ng-view></div>
+  </body>
+</html>

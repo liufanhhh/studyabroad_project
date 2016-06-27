@@ -1,4 +1,4 @@
-var indexApp = angular.module('IndexApp', ['ngResource', 'ngRoute']);
+var indexApp = angular.module('indexApp', ['ngResource', 'ngRoute']);
 
 /*
  * routes for saindex.html
@@ -21,14 +21,14 @@ indexApp.config(function($routeProvider, $locationProvider) {
         templateUrl: 'html/MainHtml/lesson.html',
         controller: 'lessonController'
     }).
+    when('/messagebox', {
+        templateUrl: 'html/MainHtml/messagebox.html',
+        controller: 'messageboxController'
+    }).
     when('/paperwork', {
         templateUrl: 'html/MainHtml/paperwork.html',
         controller: 'paperworkController'
     });
-
-    // configure html5 to get links working on jsfiddle
-    // $locationProvider.html5Mode(true);
-    console.log("initialize route");
 });
 
 indexApp.controller('indexController', function($scope, $resource, $routeParams, $location) {
