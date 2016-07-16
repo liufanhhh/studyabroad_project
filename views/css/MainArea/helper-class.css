@@ -1,0 +1,29 @@
+a {
+	text-decoration: none;
+}
+
+.table-container {
+	display: table;
+}
+
+.table-container > * {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.table-cell-display {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+.gray-border {
+	border: 1px solid #eee;
+}

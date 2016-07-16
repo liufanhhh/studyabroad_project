@@ -1,0 +1,62 @@
+.page-header {
+	background: url(../../images/search-bg.jpg) no-repeat center top;
+	filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  
+	-moz-background-size:100% auto;  
+    background-size:100% auto; 
+
+}
+
+#search-box {
+	float: left;
+	width: 50%;
+	margin: 50px 0 0 0;
+
+}
+#search-box #button {
+	float: left;
+	width: 20%;
+	height: 34px;
+	border: none;
+	background: #46a7ba;
+}
+@media (min-width: 768px) {
+	#search-box{
+		width: 50%;
+		margin: 50px 0 0 0;
+	}
+}
+@media (min-width: 992px) {
+	#search-box{
+		width: 50%;
+		margin: 50px 0 0 30px;
+	}
+}
+@media (min-width: 1200px) {
+	#search-box{
+		width: 50%;
+		margin: 70px 0 82px 400px;
+	}
+	#search-box #button {
+	float: left;
+	width: 100px;
+	height: 34px;
+	border: none;
+	background: #3d8c75;
+	}
+}
+#search-box #text {
+	float: left;
+	border-width: 2px 0 2px 2px;
+	border-style: solid;
+	border-color: #46a7ba;
+	width: 70%;
+	height: 34px;
+	padding: 4px;
+	font-size: 15px;
+}
+#search-box #button em {
+	color: #fff;
+	line-height: 1;
+	font-size: 16px;
+	font-family: "Microsoft YaHei"
+}

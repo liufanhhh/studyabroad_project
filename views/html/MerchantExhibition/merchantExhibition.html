@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>评价</title>
+    <link rel="stylesheet" href="/css/MerchantExhibition/reset.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="/css/MerchantExhibition/pingjia.css" media="screen" title="no title" charset="utf-8">
+
+    <!-- The import of the javascript -->
+    <script src="/bower_components/angular/angular.min.js"></script>
+    <script src="/bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="/bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
+    <script src="/bower_components/angular-md5/angular-md5.js"></script>
+    <script src="/bower_components/ng-img-crop/compile/minified/ng-img-crop.js"></script>
+    <script src="/js/MerchantArea/merchantIndex.js"></script>
+  </head>
+  <body class="body">
+    <header class="header">
+      <div class="width1064">
+        <div class="login">
+          <a href="#">您好，请登录</a>
+        </div>
+        <div class="regist">
+          <a href="#">免费注册</a>
+        </div>
+        <ul class="header_right">
+          <li><a href="">所有项目</a></li>
+          <li><a href="">留学</a></li>
+          <li><a href="">一对一</a></li>
+          <li><a href="">雅思培训</a></li>
+          <li><a href=""><img class="shop_icon" src="images/icons\shop_icon.png" alt="" />商户中心</a></li>
+          <li><a href=""><img class="personal_icon" src="images/icons\personal_icon.png" alt="" />个人中心</a></li>
+        </ul>
+      </div>
+    </header>
+    <div class="main">
+      <div class="main_top">
+        <div class="width1064">
+          <div class="liuxuelogo">
+            <a href="#"><img src="images/icons\liuxue_logo.png" alt="" /></a>
+          </div>
+          <form class="form_search" action="index.html" method="post">
+            <div class="search_box">
+              <input id="search"class="search" type="search" name="name" value="搜索店内商品" onfocus="this.value=''" onblur="if(this.value==''){this.value='搜索店内商品'}">
+            </div>
+            <input id="submit"class="submit" type="submit" name="name" value="搜索">
+          </form>
+        </div>
+      </div>
+      <div class="height6"></div>
+      <div class="height1"></div>
+
+      <div class="business">
+        <div class="width1064">
+          <buttun class="collection">
+            <img src="images/icons\collection.png" alt="" />
+            <span>收藏</span>
+          </buttun>
+          <div class="business_logo">
+            <img src="images/icons\xindongfang_logo.png" alt="" />
+          </div>
+          <div class="business_right">
+            <div class="business_right_up">
+              <div class="business_right_up_title">
+                <h3 href="#">新东方教育机构</h3><span> &nbsp | &nbsp</span>
+                <span>&nbsp质量4.9 <img src="images/icons\higher_than.png" alt="" /></span>
+                <span>&nbsp态度5.0 <img src="images/icons\higher_than.png" alt="" /></span>
+                <span>&nbsp守时4.5 <img src="images/icons\lower_than.png" alt="" /></span>
+                <ul>
+                  <li><img src="images/icons\edu_icon.png" alt="" /><span>教育部登记</span></li>
+                  <li><img src="images/icons\youzhi_icon.png" alt="" /><span>优质商家</span></li>
+                  <li><img src="images/icons\tuihuan_icon.png" alt="" /><span>无理由退款保证</span></li>
+                  <li><img src="images/icons\introduce_icon.png" alt="" /><span>简介认证</span></li>
+                  <li><img src="images/icons\fast_icon.png" alt="" /><span>急极速回复</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="business_right_down">
+              <ul>
+                <li>简介：商户可自行填写的商户简介</li>
+                <li>已有<span class="green">2016</span>人点评</li>
+                <li><span>平均完成时间：</span><span class="green">1.5小时 <img src="images/icons\lower.png" alt="" /></span><span class="margin5"> / </span>
+                  <span>申请成功率：</span><span class="red">98% <img src="images/icons\higher.png" alt="" /></span><span class="margin5"> / </span>
+                  <span>好评率：</span><span class="red">100%</span> <img src="images/icons\higher.png" alt="" /><span class="margin5"> / </span>
+                  <span>平均答复时长：</span><span class="green">15分钟</span> <img src="images/icons\lower.png" alt="" />
+                </li>
+                <li class="pay_way">
+                  <span>支付方式：</span>
+                    <img src="images/icons\fast_pay.png" alt="" />
+                    <span>快捷支付</span>
+                    <img src="images/icons\card_pay.png" alt="" />
+                    <span>信用卡支付</span>
+                    <img src="images/icons\zhifubao_pay.png" alt="" />
+                    <span>支付宝支付</span>
+                    <img src="images/icons\wechat_pay.png" alt="" />
+                    <span>微信支付</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="height1"></div>
+      <div class="comment">
+        <div class="width1064">
+          <div class="path">
+            <span>&nbsp您现在的位置：</span>
+            <a href="">商户中心 ></a>
+            <a href="">商户详情 ></a>
+            <a href="">新东方教育</a>
+          </div>
+          <div class="comment_main">
+            <div class="label">
+              <a class="label_commodity"href="">商品展示</a>
+              <a class="label_evaluate"href="">评价<span class="comment_num">521</span></a>
+              <a class="label_merchant"href="">商户风采</a>
+            </div>
+            <div class="width890">
+                <div class="label_evaluation_statistics">
+                  <ul>
+                    <li><img src="images/icons\good_icon.png" alt="" /><span>好评（<span>256</span>）<span></li>
+                    <li><img src="images/icons\middle_icon.png" alt="" /><span>中评（<span>4</span>）<span></li>
+                    <li><img src="images/icons\bad_icon.png" alt="" /><span>差评（<span>0</span>）<span></li>
+                    <li><span>效率高（<span>15</span>）<span></li>
+                    <li><span>很负责任（<span>9</span>）<span></li>
+                    <li><span>速度快（<span>24</span>）<span></li>
+                  </ul>
+                <div class="clear"></div>
+                <div class="textarea">
+                  <textarea name="" id="" placeholder="我也来说一句..."></textarea>
+                  <input type="submit" name="name" value="提交" class="btn">
+                </div>
+              </div>
+              <div class="comment_content">
+                <div class="comment_content_box">
+                  <p class="replay">回复</p>
+                  <p class="replay_data">2016-10-03</p>
+                  <a class="user_img" href=""><img src="images/icons\head_sculpture.png" alt=""></a>
+                  <div class="say_what">
+                    <p><span class="user_name">王一丁</span><img src="images/icons\good_write.png" alt=""><span class="green user_fraction">4.8分</span></p>
+                    <span>金吉列留学在我出国留学过程中给了我非常大的帮助，在皇家墨尔本理工大学学习期也是我人生中最难忘的时刻，
+感谢你们。在这个学习中学到了很多。</span>
+                  </div>
+                  <div>
+                    <div class="replay_statistics">
+                      <a><img src="images/icons\useful.png" alt="" /><span class="green">有用(</span><span class="green r_num">148</span>)</a>
+                      <a><img src="images/icons\Inconsistent.png" alt="" /><span class="gray">不符（</span><span class="gray r_num">45</span>)</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="comment_content_box">
+                  <p class="replay">回复</p>
+                  <p class="replay_data">2016-10-03</p>
+                  <a class="user_img" href=""><img src="images/icons\head_sculpture.png" alt=""></a>
+                  <div class="say_what">
+                    <p><span class="user_name">王一丁</span><img src="images/icons\good_write.png" alt=""><span class="green user_fraction">4.8分</span></p>
+                    <span>金吉列留学在我出国留学过程中给了我非常大的帮助，在皇家墨尔本理工大学学习期也是我人生中最难忘的时刻，
+感谢你们。在这个学习中学到了很多。</span>
+                  </div>
+                  <div>
+                    <div class="replay_statistics">
+                      <a><img src="images/icons\useful.png" alt="" /><span class="green">有用(</span><span class="green r_num">148</span>)</a>
+                      <a><img src="images/icons\Inconsistent.png" alt="" /><span class="gray">不符（</span><span class="gray r_num">45</span>)</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="comment_content_box">
+                  <p class="replay">回复</p>
+                  <p class="replay_data">2016-10-03</p>
+                  <a class="user_img" href=""><img src="images/icons\head_sculpture.png" alt=""></a>
+                  <div class="say_what">
+                    <p><span class="user_name">王一丁</span><img src="images/icons\good_write.png" alt=""><span class="green user_fraction">4.8分</span></p>
+                    <span>金吉列留学在我出国留学过程中给了我非常大的帮助，在皇家墨尔本理工大学学习期也是我人生中最难忘的时刻，
+感谢你们。在这个学习中学到了很多。</span>
+                  </div>
+                  <div>
+                    <div class="replay_statistics">
+                      <a><img src="images/icons\useful.png" alt="" /><span class="green">有用(</span><span class="green r_num">148</span>)</a>
+                      <a><img src="images/icons\Inconsistent.png" alt="" /><span class="gray">不符（</span><span class="gray r_num">45</span>)</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="comment_content_box">
+                  <p class="replay">回复</p>
+                  <p class="replay_data">2016-10-03</p>
+                  <a class="user_img" href=""><img src="images/icons\head_sculpture.png" alt=""></a>
+                  <div class="say_what">
+                    <p><span class="user_name">王一丁</span><img src="images/icons\good_write.png" alt=""><span class="green user_fraction">4.8分</span></p>
+                    <span>金吉列留学在我出国留学过程中给了我非常大的帮助，在皇家墨尔本理工大学学习期也是我人生中最难忘的时刻，
+感谢你们。在这个学习中学到了很多。</span>
+                  </div>
+                  <div>
+                    <div class="replay_statistics">
+                      <a><img src="images/icons\useful.png" alt="" /><span class="green">有用(</span><span class="green r_num">148</span>)</a>
+                      <a><img src="images/icons\Inconsistent.png" alt="" /><span class="gray">不符（</span><span class="gray r_num">45</span>)</a>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="page">
+                  <ul>
+                    <li><a href="">上一页</a></li>
+                    <li><a href="">1</a></li>
+                    <li><a href="">2</a></li>
+                    <li><a href="">3</a></li>
+                    <li><span>···</span></li>
+                    <li><a href="">下一页</a></li>
+                  </ul>
+                </div>
+
+
+
+              </div>
+            </div>
+            <div class="float_right_block">
+              <div class="feedback">
+                <a href="#"><img src="images/icons\feed_back.png" alt="" /></a>
+              </div>
+              <div class="waiter">
+                <a href="#"><img src="images/icons\customer_service.png" alt="" /></a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="about_us">
+        <img src="images/icons\foot_a.png" alt="">
+        <!-- <ul>
+          <li><a href="">关于我们</a></li>
+          <li><a href="">广告服务</a></li>
+          <li><a href="">联系我们</a></li>
+          <li><a href="">本站声明</a></li>
+        </ul> -->
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="width1064">
+        <div class="foot_b">
+          <img src="images/icons\foot_b.png" alt="">
+        </div>
+        <!-- <div class="foot_up">
+
+        </div>
+        <div class="foot_down">
+          <div><img src="images/icons\national_information.png" alt="" /></div>
+          <div><img src="images/icons\net_police.png" alt="" /></div>
+          <div><img src="images/icons\report_center.png" alt="" /></div>
+        </div> -->
+      </div>
+    </footer>
+  </body>
+</html>
