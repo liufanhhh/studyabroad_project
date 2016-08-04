@@ -1,6 +1,6 @@
 var Q = require('q');
 var fs = require('fs');
-var md5 = require("../md5.min.js");
+var md5 = require("../Util/md5.min.js");
 var AdminTaskProfile = require("../../model/AdminTaskProfileModel.js");
 var MerchantProfile = require("../../model/MerchantProfileModel.js");
 

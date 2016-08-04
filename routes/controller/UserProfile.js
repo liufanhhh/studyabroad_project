@@ -1,6 +1,6 @@
 var Q = require('q');
 var fs = require('fs');
-var signature = require("./Signature.js");
+var signature = require("../Util/Signature.js");
 
 var UserProfileModel = require("../../model/UserProfileModel.js");
 

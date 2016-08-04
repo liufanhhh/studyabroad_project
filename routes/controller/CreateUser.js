@@ -2,7 +2,7 @@ var Q = require('q');
 var fs = require('fs');
 
 var UserProfileModel = require("../../model/UserProfileModel.js");
-var md5 = require("../md5.min.js");
+var md5 = require("../Util/md5.min.js");
 var nodemailer = require("nodemailer");
 
 exports.newuserCreate = function(req, res) {

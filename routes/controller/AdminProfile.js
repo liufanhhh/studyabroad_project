@@ -1,6 +1,6 @@
 var Q = require('q');
 var fs = require('fs');
-var md5 = require("../md5.min.js");
+var md5 = require("../Util/md5.min.js");
 var AdminProfile = require("../../model/AdminProfileModel.js");
 
 var callbackFunction = function (res, err, profile, data) {
