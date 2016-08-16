@@ -21,6 +21,10 @@ module.exports = function(app) {
 	app.all("/", Enter.indexpageEnter);
 	app.all("/admin", Enter.authenticateAdmin, Enter.adminPageEnter);
 
+	app.all("/paymentwall/pingback", function(req,res){
+		console.log("success");
+		res.send("OK");
+	})
     //Admin Area
     app.get("/admin", Enter.authenticateAdmin, Enter.getAllAccess);
     app.post("/admin/password", AdminProfile.companyPasswordChecking);
